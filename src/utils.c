@@ -1,37 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/25 19:01:52 by emorales         ###   ########.fr       */
+/*   Created: 2024/09/25 19:23:58 by emorales          #+#    #+#             */
+/*   Updated: 2024/09/25 19:29:48 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* main.c */
-
 #include "shell.h"
 
-int	main(void)
+char	*ft_strdup(char *src)
 {
-	char	*input;
+	char	*new;
+	int		i;
+	int		size;
 
-	signal_init(); // init signal handling
-	while (1)
+	size = 0;
+	while (src[size])
+		++size;
+	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (src[i])
 	{
-		input = readline("myshell> ");
-		if (!input)
-		{
-			printf("\nExiting shell...\n");
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		printf("You entered: %s\n", input);
-		free(input);
+		new[i] = src[i];
+		i++;
 	}
-	clear_history(); // Clear the history list (readlline f)
-	return (0);
+	new[i] = '\0';
+	return (new);
+}
+
+int	ft_strcmp(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
+		i++;
+	return (s1[i] - s2[i]);
 }
