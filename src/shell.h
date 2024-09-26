@@ -21,6 +21,7 @@
 # include <readline/history.h>
 /* Include Signal */
 # include <signal.h>
+# include "../libft/includes/libft.h"
 
 typedef enum s_token_type
 {
@@ -41,7 +42,6 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-char	*ft_strdup(char *src);
 void	handle_sigint(int sig);
 int		is_operator(char c);
 void	signal_init(void);

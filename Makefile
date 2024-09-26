@@ -1,21 +1,49 @@
-# Makefile
+NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g
-LDFLAGS = -lreadline
-SRC_DIR = src
-INCLUDE_DIR = src
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Isrc/token -Ilibft
+READLINE = -lreadline
 
-all: myshell
+# Source files
+SRCS = src/main.c \
+       src/signal/signals.c \
+       src/token/tokenizer.c
 
-myshell: main.o signal.o
-	$(CC) $(CFLAGS) -o myshell main.o signal.o $(LDFLAGS)
+# Object files directory
+OBJ_DIR = objects
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
-main.o: $(SRC_DIR)/main.c $(INCLUDE_DIR)/shell.h
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/main.c -o main.o
+# Libft library
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-signal.o: $(SRC_DIR)/signal.c $(INCLUDE_DIR)/shell.h
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $(SRC_DIR)/signal.c -o signal.o
+# All target
+all: $(NAME)
 
+# Build minishell
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(READLINE)
+
+# Build object files in the objects directory
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(OBJ_DIR)/$(dir $<)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Build libft
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+# Clean object files
 clean:
-	rm -f myshell *.o
+	rm -rf $(OBJ_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
+
+# Full clean
+fclean: clean
+	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+
+# Rebuild everything
+re: fclean all
+
+.PHONY: all clean fclean re
