@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/09/26 18:07:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:16:02 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,25 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+
+typedef enum s_token_type
+{
+	TOKEN_WORD, //0
+	TOKEN_OPERATOR, // 1
+	TOKEN_PIPE, // 2
+	TOKEN_REDIRECT_IN, //3
+	TOKEN_REDIRECT_OUT, //4
+	TOKEN_REDIRECT_APPEND, //5 
+	TOKEN_HEREDOC, // 6
+	TOKEN_EOF // 7	
+}	t_token_type;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_type	type;
+	struct s_token	*next;
+}	t_token;
 
 // Function prototypes
 t_token *tokenizer(char *input);
