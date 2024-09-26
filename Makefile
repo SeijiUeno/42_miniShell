@@ -46,4 +46,10 @@ fclean: clean
 # Rebuild everything
 re: fclean all
 
+# Full clean
+fclean: clean
+	@echo "Removing executable $(NAME)..."
+	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+
 .PHONY: all clean fclean re
