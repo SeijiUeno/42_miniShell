@@ -6,115 +6,34 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/26 16:26:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:40:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
-
-int is_operator(char c) {
-    return (c == '|' || c == '>' || c == '<' || c == '&' || c == ';');
-}
-
-t_token *create_operator_token(char *input, int *index) {
-    t_token *token;
-    int     i;
-    char    op[3];
-
-    token = (t_token *)malloc(sizeof(t_token));
-    if (!token)
-        return (NULL);
-    i = *index;
-
-    // Handle operators with two characters (like '>>' and '<<')
-    if ((input[i] == '>' && input[i + 1] == '>') ||
-        (input[i] == '<' && input[i + 1] == '<')) {
-        op[0] = input[i++];
-        op[1] = input[i++];
-        op[2] = '\0';
-    } else {
-        op[0] = input[i++];
-        op[1] = '\0';
-    }
-
-    token->value = ft_strdup(op);
-    *index = i;
-
-    // Assign the correct token type based on the operator
-    if (ft_strcmp(token->value, "|") == 0)
-        token->type = TOKEN_PIPE;
-    else if (ft_strcmp(token->value, ">") == 0)
-        token->type = TOKEN_REDIRECT_OUT;
-    else if (ft_strcmp(token->value, ">>") == 0)
-        token->type = TOKEN_REDIRECT_APPEND;
-    else if (ft_strcmp(token->value, "<") == 0)
-        token->type = TOKEN_REDIRECT_IN;
-    else if (ft_strcmp(token->value, "<<") == 0)
-        token->type = TOKEN_HEREDOC;
-    else
-        token->type = TOKEN_OPERATOR; // For any other operators
-    token->next = NULL;
-    return (token);
-}
-
-t_token *create_word_token(char *input, int *index) {
-    t_token *token = malloc(sizeof(t_token));
-    if (!token)
-        return NULL;
-
-    int i = *index;
-    int start = i;
-    int in_single_quote = 0;
-    int in_double_quote = 0;
-
-    while (input[i] != '\0' && 
-          (in_single_quote || in_double_quote || 
-          (!is_operator(input[i]) && input[i] != ' ' && input[i] != '\t'))) {
-
-        if (input[i] == '\'' && !in_double_quote) {
-            in_single_quote = !in_single_quote;
-            i++;
-        } else if (input[i] == '"' && !in_single_quote) {
-            in_double_quote = !in_double_quote;
-            i++;
-        } else if (input[i] == '\\' && !in_single_quote) {
-            i += 2; // Skip the backslash and the next character
-        } else {
-            i++;
-        }
-    }
-
-    if (in_single_quote || in_double_quote) {
-        fprintf(stderr, "Error: Unclosed quote\n");
-        free(token);
-        return NULL;
-    }
-
-    token->value = ft_substr(input, start, i - start);
-    token->type = TOKEN_WORD;
-    token->next = NULL;
-    *index = i;
-    return token;
-}
+#include "tokenizer.h"
 
 t_token *tokenizer(char *input) {
-    int     i;
+    int i = 0;
     t_token *new_token;
-    t_token *head;
-    t_token *current;
+    t_token *head = NULL;
+    t_token *current = NULL;
 
-    i = 0;
-    head = NULL;
-    current = NULL;
     while (input[i] != '\0') {
-        while (input[i] == ' ' || input[i] == '\t')
+        while (isspace((unsigned char)input[i]))
             i++;
         if (input[i] == '\0')
             break;
+
         if (is_operator(input[i]))
             new_token = create_operator_token(input, &i);
         else
-            new_token = create_word_token(input, &i); // to be implemented
+            new_token = create_word_token(input, &i);
+
+        if (!new_token) {
+            free_tokens(head);
+            return NULL;
+        }
+
         if (head == NULL) {
             head = new_token;
             current = new_token;
@@ -123,5 +42,5 @@ t_token *tokenizer(char *input) {
             current = new_token;
         }
     }
-    return (head);
+    return head;
 }

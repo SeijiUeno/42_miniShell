@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/25 19:01:52 by emorales         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:08:55 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,27 @@ void free_tokens(t_token *head) {
     }
 }
 
+const char *get_token_type_name(t_token_type type) {
+    switch (type) {
+        case TOKEN_WORD: return "TOKEN_WORD";
+        case TOKEN_OPERATOR: return "TOKEN_OPERATOR";
+        case TOKEN_PIPE: return "TOKEN_PIPE";
+        case TOKEN_REDIRECT_IN: return "TOKEN_REDIRECT_IN";
+        case TOKEN_REDIRECT_OUT: return "TOKEN_REDIRECT_OUT";
+        case TOKEN_REDIRECT_APPEND: return "TOKEN_REDIRECT_APPEND";
+        case TOKEN_HEREDOC: return "TOKEN_HEREDOC";
+        default: return "UNKNOWN";
+    }
+}
+
 void print_tokens(t_token *head) {
     t_token *current = head;
     while (current != NULL) {
-        printf("Token Value: '%s', Token Type: %d\n", current->value, current->type);
+        printf("Token Value: '%s', Token Type: %s\n", current->value, get_token_type_name(current->type));
         current = current->next;
     }
 }
+
 
 int main(void) {
     char *input;
@@ -46,17 +60,17 @@ int main(void) {
         if (*input)
             add_history(input);
 
-        // Call the tokenizer
         tokens = tokenizer(input);
-
-        // Print the tokens
+        if (tokens == NULL) {
+            // **An error occurred during tokenization**
+            // You can choose to continue or exit
+            free(input);
+            continue; // Skip this iteration and prompt again
+        }
         print_tokens(tokens);
-
-        // Free tokens
-        free_tokens(tokens); // Implement this function to free the token list
-
+        free_tokens(tokens);
         free(input);
     }
-	clear_history(); // Clear the history list (readlline f)
+	clear_history();
     return 0;
 }

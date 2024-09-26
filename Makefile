@@ -7,7 +7,10 @@ READLINE = -lreadline
 # Source files
 SRCS = src/main.c \
        src/signal/signals.c \
-       src/token/tokenizer.c
+       src/token/tokenizer.c \
+	   src/token/word_token.c \
+	   src/token/operator_token.c \
+	   src/token/aux.c
 
 # Object files directory
 OBJ_DIR = objects
@@ -40,16 +43,11 @@ clean:
 
 # Full clean
 fclean: clean
+	@echo "Removing executable $(NAME)..."
 	rm -f $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 # Rebuild everything
-re: fclean all
-
-# Full clean
-fclean: clean
-	@echo "Removing executable $(NAME)..."
-	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
+re:	fclean all
 
 .PHONY: all clean fclean re
