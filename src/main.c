@@ -14,6 +14,23 @@
 
 #include "shell.h"
 
+void print_tokens(t_token *head) {
+    t_token *current = head;
+    while (current != NULL) {
+        printf("Token Value: %s, Token Type: %d\n", current->value, current->type);
+        current = current->next;
+    }
+}
+
+int main(void) {
+    char *input = readline("myshell> ");
+    t_token *tokens = tokenizer(input);
+    print_tokens(tokens);
+    // Free tokens and input
+    return 0;
+}
+
+/*
 int	main(void)
 {
 	char	*input;
@@ -35,3 +52,4 @@ int	main(void)
 	clear_history(); // Clear the history list (readlline f)
 	return (0);
 }
+*/

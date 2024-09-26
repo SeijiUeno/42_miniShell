@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "../shell.h"
 
 	/*  Handle Ctrl-C (SIGINT) 
 		signal: simply print a new prompt on a new line */
