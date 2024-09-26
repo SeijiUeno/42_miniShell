@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/26 17:40:38 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:04:52 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,15 @@ t_token *tokenizer(char *input) {
         }
     }
     return head;
+}
+
+void free_tokens(t_token *head) {
+    t_token *current = head;
+    t_token *next;
+    while (current != NULL) {
+        next = current->next;
+        free(current->value);
+        free(current);
+        current = next;
+    }
 }
