@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/09/26 17:42:58 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:07:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@ t_token *create_word_token(char *input, int *index);
 
 // From utils.c
 int is_operator(char c);
+
+//testing
+const char *get_token_type_name(t_token_type type);
+void print_tokens(t_token *head);
 
 #endif // TOKENIZER_H
