@@ -14,42 +14,49 @@
 
 #include "shell.h"
 
+void free_tokens(t_token *head) {
+    t_token *current = head;
+    t_token *next;
+    while (current != NULL) {
+        next = current->next;
+        free(current->value);
+        free(current);
+        current = next;
+    }
+}
+
 void print_tokens(t_token *head) {
     t_token *current = head;
     while (current != NULL) {
-        printf("Token Value: %s, Token Type: %d\n", current->value, current->type);
+        printf("Token Value: '%s', Token Type: %d\n", current->value, current->type);
         current = current->next;
     }
 }
 
 int main(void) {
-    char *input = readline("myshell> ");
-    t_token *tokens = tokenizer(input);
-    print_tokens(tokens);
-    // Free tokens and input
+    char *input;
+    t_token *tokens;
+
+    while (1) {
+        input = readline("myshell> ");
+        if (!input) {
+            printf("\nExiting shell...\n");
+            break;
+        }
+        if (*input)
+            add_history(input);
+
+        // Call the tokenizer
+        tokens = tokenizer(input);
+
+        // Print the tokens
+        print_tokens(tokens);
+
+        // Free tokens
+        free_tokens(tokens); // Implement this function to free the token list
+
+        free(input);
+    }
+	clear_history(); // Clear the history list (readlline f)
     return 0;
 }
-
-/*
-int	main(void)
-{
-	char	*input;
-
-	signal_init(); // init signal handling
-	while (1)
-	{
-		input = readline("myshell> ");
-		if (!input)
-		{
-			printf("\nExiting shell...\n");
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		printf("You entered: %s\n", input);
-		free(input);
-	}
-	clear_history(); // Clear the history list (readlline f)
-	return (0);
-}
-*/
