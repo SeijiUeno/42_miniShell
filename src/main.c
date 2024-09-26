@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/26 18:10:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:21:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 # include "shell.h"
 # include "token/tokenizer.h"
+# include "signal/signals.h"
 
 int main(void) {
     char *input;
     t_token *tokens;
 
+    signal_init();
     while (1) {
         input = readline("myshell> ");
         if (!input) {
