@@ -3,55 +3,65 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/09/26 18:04:52 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/04 16:42:52 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
-t_token *tokenizer(char *input) {
-    int i = 0;
-    t_token *new_token;
-    t_token *head = NULL;
-    t_token *current = NULL;
+t_token	*tokenizer(char *input)
+{
+	int		i;
+	t_token	*new_token;
+	t_token	*head;
+	t_token	*current;
 
-    while (input[i] != '\0') {
-        while (isspace((unsigned char)input[i]))
-            i++;
-        if (input[i] == '\0')
-            break;
-
-        if (is_operator(input[i]))
-            new_token = create_operator_token(input, &i);
-        else
-            new_token = create_word_token(input, &i);
-
-        if (!new_token) {
-            free_tokens(head);
-            return NULL;
-        }
-
-        if (head == NULL) {
-            head = new_token;
-            current = new_token;
-        } else {
-            current->next = new_token;
-            current = new_token;
-        }
-    }
-    return head;
+	i = 0;
+	head = NULL;
+	current = NULL;
+	while (input[i] != '\0')
+	{
+		while (isspace((unsigned char)input[i]))
+			i++;
+		if (input[i] == '\0')
+			break ;
+		if (is_operator(input[i]))
+			new_token = create_operator_token(input, &i);
+		else
+			new_token = create_word_token(input, &i);
+		if (!new_token)
+		{
+			free_tokens(head);
+			return (NULL);
+		}
+		if (head == NULL)
+		{
+			head = new_token;
+			current = new_token;
+		}
+		else
+		{
+			current->next = new_token;
+			current = new_token;
+		}
+	}
+	return (head);
 }
 
-void free_tokens(t_token *head) {
-    t_token *current = head;
-    t_token *next;
-    while (current != NULL) {
-        next = current->next;
-        free(current->value);
-        free(current);
-        current = next;
-    }
+void	free_tokens(t_token *head)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->value);
+		free(current);
+		current = next;
+	}
 }
