@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/09/26 18:16:02 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/04 17:04:59 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
-#define TOKENIZER_H
+# define TOKENIZER_H
 
-#include "../shell.h"
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
+# include "../shell.h"
+# include <stdlib.h>
+# include <string.h>
+# include <ctype.h>
+# include <stdio.h>
 
 typedef enum s_token_type
 {
@@ -26,9 +26,9 @@ typedef enum s_token_type
 	TOKEN_PIPE, // 2
 	TOKEN_REDIRECT_IN, //3
 	TOKEN_REDIRECT_OUT, //4
-	TOKEN_REDIRECT_APPEND, //5 
+	TOKEN_REDIRECT_APPEND, //5
 	TOKEN_HEREDOC, // 6
-	TOKEN_EOF // 7	
+	TOKEN_EOF // 7
 }	t_token_type;
 
 typedef struct s_token
