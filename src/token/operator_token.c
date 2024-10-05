@@ -35,12 +35,14 @@ static void	extract_operator(char *input, int *i, char *op)
 	{
 		op[0] = input[(*i)++];
 		op[1] = input[(*i)++];
+		//op[2] = '\0';
 	}
 	else
 	{
 		op[0] = input[(*i)++];
+		//op[1] = '\0';
 	}
-	op[2] = '\0';
+	op[2] = '\0'; //nesse caso, não seria melhor determinar o \0 na casa 2 pro caso 1 e na casa 1 pro caso 2?
 }
 
 t_token	*create_operator_token(char *input, int *index)
