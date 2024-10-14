@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:04:59 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:42:42 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ typedef enum s_token_type
 	TOKEN_WORD, //0
 	TOKEN_OPERATOR, // 1
 	TOKEN_PIPE, // 2
-	TOKEN_REDIRECT_IN, //3
-	TOKEN_REDIRECT_OUT, //4
-	TOKEN_REDIRECT_APPEND, //5
+	TOKEN_REDIRECT_IN, // 3
+	TOKEN_REDIRECT_OUT, // 4
+	TOKEN_REDIRECT_APPEND, // 5
 	TOKEN_HEREDOC, // 6
 	TOKEN_EOF // 7
 }	t_token_type;

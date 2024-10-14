@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 16:48:37 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/14 16:42:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,13 @@ static void	extract_operator(char *input, int *i, char *op)
 	{
 		op[0] = input[(*i)++];
 		op[1] = input[(*i)++];
-		//op[2] = '\0';
+		op[2] = '\0';
 	}
 	else
 	{
 		op[0] = input[(*i)++];
-		//op[1] = '\0';
+		op[1] = '\0';
 	}
-	op[2] = '\0'; //nesse caso, não seria melhor determinar o \0 na casa 2 pro caso 1 e na casa 1 pro caso 2?
 }
 
 t_token	*create_operator_token(char *input, int *index)

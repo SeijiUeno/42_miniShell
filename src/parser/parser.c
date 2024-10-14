@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 16:25:18 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/12 16:25:18 by marvin           ###   ########.fr       */
+/*   Updated: 2024/10/14 17:18:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void parse_pipeline() {
     while (current_token && current_token->type == TOKEN_PIPE) {
         printf("Pipe found\n");
         advance_token();  // Consume the '|'
-        
         // Parse the next command after the pipe
         parse_command();
     }
