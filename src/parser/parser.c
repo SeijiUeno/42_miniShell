@@ -6,23 +6,37 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 16:25:18 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/14 17:18:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:56:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-t_token *current_token;
+#include "../token/tokenizer.h"
 
 void advance_token() {
     if (current_token != NULL)
         current_token = current_token->next;
 }
 
+int isheredocORpipe(t_token token);
+
 void parse_input(t_token *head_of_tokens) {
     // Initialize current_token as the head of the token list
-    current_token = head_of_tokens;  // 'head_of_tokens' is the start of the linked list
-
+    current_token = get_token();  // 'head_of_tokens' is the start of the linked list
+    
+    int pipeOrHere = 0;
+    
+    while (current_token != NULL)
+    {
+        if (isheredocORpipe())
+            pipeOrHere++;
+            parse_input(token);
+            exec(input);
+            advance_token()
+        advance_token();
+    }
+    
+    
     // Check if we have a pipeline or a simple command
     if (current_token && current_token->type == TOKEN_WORD) {
         parse_pipeline();
@@ -73,7 +87,7 @@ void parse_redirection() {
             current_token->type == TOKEN_HEREDOC)) {
         
         t_token_type redir_type = current_token->type;
-        advance_token();  // Consume the redirection token
+        advance_token(); 
         
         if (current_token && current_token->type == TOKEN_WORD) {
             printf("Redirection of type %d to file: %s\n", redir_type, current_token->value);

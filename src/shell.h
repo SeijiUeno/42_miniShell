@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/14 18:39:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:20:56 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_minishell
 {
 	char		**env;
 	char		**path;
+
 }t_minishell;
 
 #endif
