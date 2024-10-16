@@ -6,19 +6,18 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/16 19:44:17 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/16 20:01:58 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/* main.c */
 
 #include "shell.h"
 #include "token/tokenizer.h"
 #include "signal/signals.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 #define TABLE_SIZE 100
 
-// Define a function pointer type for commands that take argument arrays
 typedef void (*CommandFunc)(int argc, char *argv[]);
 
 typedef struct Node {
@@ -29,7 +28,7 @@ typedef struct Node {
 
 typedef struct HashMap {
     Node *buckets[TABLE_SIZE];
-} HashMap;
+} t_HashMap;
 
 unsigned int hash(const char *key) {
     unsigned int hash = 0;
@@ -39,7 +38,7 @@ unsigned int hash(const char *key) {
     return hash % TABLE_SIZE;
 }
 
-void init_hashmap(HashMap *map) {
+void init_hashmap(t_HashMap *map) {
     for (int i = 0; i < TABLE_SIZE; i++) {
         map->buckets[i] = NULL;
     }
@@ -53,14 +52,14 @@ Node *create_node(const char *key, CommandFunc func) {
     return new_node;
 }
 
-void hashmap_insert(HashMap *map, const char *key, CommandFunc func) {
+void hashmap_insert(t_HashMap *map, const char *key, CommandFunc func) {
     unsigned int index = hash(key);
     Node *new_node = create_node(key, func);
     new_node->next = map->buckets[index];
     map->buckets[index] = new_node;
 }
 
-CommandFunc hashmap_get(HashMap *map, const char *key) {
+CommandFunc hashmap_get(t_HashMap *map, const char *key) {
     unsigned int index = hash(key);
     Node *current = map->buckets[index];
     while (current != NULL) {
@@ -72,7 +71,7 @@ CommandFunc hashmap_get(HashMap *map, const char *key) {
     return NULL;
 }
 
-void hashmap_free(HashMap *map) {
+void hashmap_free(t_HashMap *map) {
     for (int i = 0; i < TABLE_SIZE; i++) {
         Node *current = map->buckets[i];
         while (current != NULL) {
@@ -92,6 +91,8 @@ void cmd_echo(int argc, char *argv[]) {
 }
 
 void cmd_pwd(int argc, char *argv[]) {
+	(void)argc;
+    (void)argv;
     char cwd[1024];
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         printf("%s\n", cwd);
@@ -101,17 +102,18 @@ void cmd_pwd(int argc, char *argv[]) {
 }
 
 void cmd_exit(int argc, char *argv[]) {
+	(void)argc;
+    (void)argv;
     printf("Exiting...\n");
     exit(0);
 }
 
-void execute_commands(t_token *tokens, HashMap *map) {
+void execute_commands(t_token *tokens, t_HashMap *map) {
     while (tokens) {
-        // If the token is a command (TOKEN_WORD)
         if (tokens->type == TOKEN_WORD) {
             CommandFunc func = hashmap_get(map, tokens->value);
             if (func) {
-                // Collect arguments for the command
+                // Collect arguments testing
                 char *argv[10];
                 int argc = 0;
 
@@ -121,57 +123,59 @@ void execute_commands(t_token *tokens, HashMap *map) {
                 }
                 argv[argc] = NULL;
 
-                // Execute the command function with the collected arguments
+                // Execute the function with arguments
                 func(argc, argv);
             } else {
                 printf("Command not found: %s\n", tokens->value);
                 return;
             }
         } else {
-            // Handle operators like pipes, redirects, etc.
-            tokens = tokens->next;
+            tokens = tokens->next;  // Skip non-command tokens
         }
     }
 }
 
-int	main(void)
-{
-	char	*input;
-	t_token	*tokens;
-	extern char	**environ;
-	
-	HashMap map;
-    init_hashmap(&map);
+// Initializes the HashMap and inserts built-in commands
+void hash_init(t_HashMap *map) {
+    init_hashmap(map);
 
-    // Insert commands into the hashmap
-    hashmap_insert(&map, "echo", cmd_echo);
-    hashmap_insert(&map, "pwd", cmd_pwd);
-    hashmap_insert(&map, "exit", cmd_exit);
-	signal_init();
-	
-	while (1)
-	{
-		input = readline("myshell> ");
-		if (!input)
-		{
-			printf("\nExiting shell...\n");
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		tokens = tokenizer(input);
-		if (tokens == NULL)
-		{
-			free (input);
-			continue ;
-		}
-		CommandFunc func = hashmap_get(&map, tokens);
-    	if (func)
-        	func(argc, args);
-		print_tokens(tokens);
-		free_tokens(tokens);
-		free(input);
-	}
-	clear_history();
-	return (0);
+    hashmap_insert(map, "echo", cmd_echo);
+    hashmap_insert(map, "pwd", cmd_pwd);
+    hashmap_insert(map, "exit", cmd_exit);
+
+}
+
+int main(void) {
+    char *input;
+    t_token *tokens;
+    t_HashMap map;
+
+    hash_init(&map);  // Initialize the hashmap with built-in commands
+    signal_init();    // Initialize signal handling
+
+    while (1) {
+        input = readline("myshell> ");
+        if (!input) {
+            printf("\nExiting shell...\n");
+            break;
+        }
+        if (*input) {
+            add_history(input);
+        }
+
+        tokens = tokenizer(input);
+        if (!tokens) {
+            free(input);
+            continue;
+        }
+
+        execute_commands(tokens, &map);  // Execute parsed commands
+
+        free_tokens(tokens);
+        free(input);
+    }
+
+    clear_history();
+    hashmap_free(&map);  // Clean up allocated memory
+    return 0;
 }
