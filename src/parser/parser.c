@@ -12,7 +12,22 @@
 
 #include "parser.h"
 
-t_token *current_token;
+/*
+-Casos a considerar:
+Comandos sem nome (por exemplo, uma linha começando com um operador)
+Redirecionamentos sem arquivo
+Pipes sem comandos em um ou ambos os lados
+Uso incorreto de operadores (como ||| ou >>|)
+*/
+
+t_token *current_token; //e se ao invés de uma "função global" criarmos uma struct e passarmos para parse_command?
+/*
+typedef struct s_parser_variable {
+    t_token *current_token;
+} t_parser_variable;
+
+Substituir todos current_token por context->current_token nas funções
+*/
 
 void advance_token() {
     if (current_token != NULL)
@@ -20,12 +35,20 @@ void advance_token() {
 }
 
 void parse_input(t_token *head_of_tokens) {
-    // Initialize current_token as the head of the token list
-    current_token = head_of_tokens;  // 'head_of_tokens' is the start of the linked list
+    t_command *cmd_list;
 
-    // Check if we have a pipeline or a simple command
+    current_token = head_of_tokens;
+
     if (current_token && current_token->type == TOKEN_WORD) {
-        parse_pipeline();
+        cmd_list = parse_pipeline();
+        if (!cmd_list) {
+            printf("Error: Parsing failed\n");
+            return;
+        }
+
+        /* Futura função de execução de comandos
+        execute_commands(cmd_list);*/
+        free_command_list(cmd_list);
     } else if (current_token && current_token->type == TOKEN_EOF) {
         printf("End of input\n");
     } else {
@@ -33,54 +56,108 @@ void parse_input(t_token *head_of_tokens) {
     }
 }
 
-void parse_command() {
+
+t_command *parse_command() {
+    t_command   *cmd;
+    
+    cmd = create_new_command();
+    if (!cmd)
+        return (NULL);
     // The command should start with a TOKEN_WORD (command name)
     if (current_token && current_token->type == TOKEN_WORD) {
-        printf("Command: %s\n", current_token->value);
+        add_argument_to_command(cmd, current_token->value); //tratar erros pra liberar comando em caso de !add_argument_to_command
         advance_token();
         
         // While we have TOKEN_WORD, continue as arguments
         while (current_token && current_token->type == TOKEN_WORD) {
-            printf("Argument: %s\n", current_token->value);
+            add_argument_to_command(cmd, current_token->value); //tratar erros pra liberar comando em caso de !add_argument_to_command
             advance_token();
         }
 
         // Handle possible redirections
-        parse_redirection();
+        parse_redirection(); //tratar erros pra liberar comando em caso de !parse_redirection
     } else {
         printf("Error: Expected a command\n");
+        free_command(cmd);
+        return NULL;
     }
+    return (cmd);
 }
 
-void parse_pipeline() {
-    // Start with the first command
-    parse_command();
+t_command *parse_pipeline() {
+    t_command *cmd_head;
+    t_command *cmd_current;
+    t_command *cmd_new;
 
-    // While we find TOKEN_PIPE, continue parsing the next command
+    cmd_head = NULL;
+    cmd_current = NULL;
+    cmd_new = NULL;
+    // Parse first command
+    cmd_new = parse_command();
+    if (!cmd_new)
+        return (NULL); //melhorar tratamento de erro?
+
+    cmd_head = cmd_new; // Inicio da lista
+    cmd_current = cmd_new;
+
+    // While in TOKEN_PIPE, keep parsing
     while (current_token && current_token->type == TOKEN_PIPE) {
-        printf("Pipe found\n");
-        advance_token();  // Consume the '|'
-        
-        // Parse the next command after the pipe
-        parse_command();
+        advance_token();
+
+        // Next command after pipe
+        cmd_new = parse_command();
+        if (!cmd_new) {
+            free_command_list(cmd_head);
+            return (NULL);
+        }
+
+        // Link the command to the rest of the list
+        cmd_current->next = cmd_new;
+        cmd_current = cmd_new;
     }
+
+    return (cmd_head);
 }
 
-void parse_redirection() {
+
+int parse_redirection(t_command *cmd) {
+            t_token_type redir_type;
+    
     while (current_token && 
            (current_token->type == TOKEN_REDIRECT_IN ||
             current_token->type == TOKEN_REDIRECT_OUT ||
             current_token->type == TOKEN_REDIRECT_APPEND ||
             current_token->type == TOKEN_HEREDOC)) {
         
-        t_token_type redir_type = current_token->type;
+        redir_type = current_token->type;
         advance_token();  // Consume the redirection token
         
         if (current_token && current_token->type == TOKEN_WORD) {
-            printf("Redirection of type %d to file: %s\n", redir_type, current_token->value);
-            advance_token();  // Consume the file name
+            if (redir_type == TOKEN_REDIRECT_IN) {
+                cmd->input_file = strdup(current_token->value);
+                if (!cmd->input_file)
+                    return (0); // Falha na alocação
+            } else if (redir_type == TOKEN_REDIRECT_OUT) {
+                cmd->output_file = strdup(current_token->value);
+                if (!cmd->output_file)
+                    return (0);
+                cmd->append = 0;
+            } else if (redir_type == TOKEN_REDIRECT_APPEND) {
+                cmd->output_file = strdup(current_token->value);
+                if (!cmd->output_file)
+                    return (0);
+                cmd->append = 1;
+            } else if (redir_type == TOKEN_HEREDOC) {
+                // for heredoc
+                cmd->heredoc_delimiter = strdup(current_token->value);
+                if (!cmd->heredoc_delimiter)
+                    return (0);
+            }
+            advance_token();  // Advance through filename
         } else {
             printf("Error: Expected a file name after redirection\n");
+            return (0);
         }
     }
+    return (1); // Success
 }
