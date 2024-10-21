@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:04:59 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:28:07 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,26 @@ typedef enum s_token_type
 
 typedef struct s_token
 {
-	char			*value;
-	t_token_type	type;
-	struct s_token	*next;
+	char *value;
+	t_token_type type;
+	struct s_token *next;
 }	t_token;
 
 // Function prototypes
-t_token *tokenizer(char *input);
-void free_tokens(t_token *head);
+t_token		*tokenizer(char *input);
+void		free_tokens(t_token *head);
 
 // From operator_token.c
-t_token *create_operator_token(char *input, int *index);
+t_token		*create_operator_token(char *input, int *index);
 
 // From word_token.c
-t_token *create_word_token(char *input, int *index);
+t_token		*create_word_token(char *input, int *index);
 
 // From utils.c
-int is_operator(char c);
+int			is_operator(char c);
 
 //testing
-const char *get_token_type_name(t_token_type type);
-void print_tokens(t_token *head);
+const char	*get_token_type_name(t_token_type type);
+void		print_tokens(t_token *head);
 
 #endif // TOKENIZER_H
