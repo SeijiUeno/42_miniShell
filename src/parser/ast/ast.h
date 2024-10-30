@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:40:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 17:20:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:10:27 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ typedef struct s_ast
 }	t_ast;
 
 t_ast   *tree_constructor(t_token *tokens);
+void 	print_ast(t_ast *node, int indent);
 
 #endif
