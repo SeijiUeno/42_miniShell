@@ -6,20 +6,22 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 18:43:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 20:51:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-t_token *pipe_search(t_token *list_tokens) {
+// check case where the operator is the first token !?
+
+t_token *operator_search(t_token *list_tokens) {
     t_token *token = list_tokens;
     t_token *before_split = NULL;
 
     while (token != NULL) {
         if (token->type == TOKEN_OPERATOR) {
             return before_split;
-        }
+        }   
         before_split = token; // Move after checking the pipe
         token = token->next;
     }
@@ -56,18 +58,23 @@ int single_node_creation(t_ast *ast_node, t_token *list_tokens, t_token *boundar
     return(0);
 }
 
+//t_token_type find_type(t_token token_command)
+//{
+
 static void create_nodes(t_ast *ast_node, t_token *list_tokens)
 {
-    t_token *boundary_token;
-
-    boundary_token = pipe_search(list_tokens);
+    t_token         *boundary_token;
+    t_token_type    operator_type;
+    
+    boundary_token = operator_search(list_tokens);
     if (boundary_token != NULL)
     {
+        operator_type = ((boundary_token->next)->type);
         if (single_node_creation(ast_node, list_tokens, boundary_token) != 0)
         {
             return;
         }
-        ast_node->type = TOKEN_PIPE;
+        ast_node->type = (operator_type);
         ast_node->exec = NULL;
     }
     else
