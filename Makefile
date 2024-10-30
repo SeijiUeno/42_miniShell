@@ -1,4 +1,4 @@
-NAME = minishell
+NAME = Minishell
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -Isrc/token -Ilibft

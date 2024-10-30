@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:24:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:34:24 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:01:36 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strdup(const char *s);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
+void	*ft_calloc(size_t number_elements, size_t size);
+void	ft_bzero(void *s, size_t n);
 
 #endif
