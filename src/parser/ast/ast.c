@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 18:24:38 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:43:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,26 @@ int single_node_creation(t_ast *ast_node, t_token *list_tokens, t_token *boundar
 static void create_nodes(t_ast *ast_node, t_token *list_tokens)
 {
     t_token *boundary_token;
-    
-    boundary_token = NULL;
+
     boundary_token = pipe_search(list_tokens);
-    if (boundary_token != NULL){
-        single_node_creation(ast_node, list_tokens, boundary_token);
+    if (boundary_token != NULL)
+    {
+        if (single_node_creation(ast_node, list_tokens, boundary_token) != 0)
+        {
+            return;
+        }
         ast_node->type = TOKEN_PIPE;
         ast_node->exec = NULL;
     }
-    if(boundary_token == NULL)
+    else
     {
-    ast_node->type = TOKEN_WORD;
-    ast_node->exec = list_tokens;
-    ast_node->right = NULL;
-    ast_node->left = NULL;
+        ast_node->type = list_tokens->type;
+        ast_node->exec = list_tokens;
+        ast_node->left = NULL;
+        ast_node->right = NULL;
     }
 }
+
 
 t_ast   *tree_constructor(t_token *tokens)
 {
