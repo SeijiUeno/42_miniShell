@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:40:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 15:48:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:20:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ typedef struct s_ast
 {
   struct s_ast		    *left;
   struct s_ast		    *right;
-  t_list				*exec;
+  t_token				*exec;
   int					type;
 }	t_ast;
+
+t_ast   *tree_constructor(t_token *tokens);
 
 #endif
