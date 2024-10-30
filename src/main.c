@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/30 15:45:03 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:21:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(void)
 {
 	char	*input;
 	t_token	*tokens;
+	t_ast	*tree;
 
 	signal_init();
 	while (1)
@@ -42,7 +43,9 @@ int	main(void)
 			continue ;// Skip this iteration and prompt again
 		}
 		print_tokens(tokens);
+		tree = tree_constructor(tokens);
 		free_tokens(tokens);
+		free(tree); // free_tree to be build!!! must free all of it
 		free(input);
 	}
 	clear_history();
