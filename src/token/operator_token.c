@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 20:44:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:00:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void assign_operator_token_type(t_token *token)
 
 static void extract_operator(char *input, int *i, char *op)
 {
-    op[0] = '\0'; // Clear buffer
+    op[0] = '\0';
+    op[1] = '\0';
     if ((input[*i] == '>' && input[*i + 1] == '>') || (input[*i] == '<' && input[*i + 1] == '<'))
     {
         op[0] = input[(*i)++];
@@ -44,7 +45,7 @@ static void extract_operator(char *input, int *i, char *op)
     {
         op[0] = input[(*i)++];
     }
-    op[1] = '\0'; // Null-terminate the string
+    op[2] = '\0'; // Null-terminate the string
 }
 
 t_token *create_operator_token(char *input, int *index)
