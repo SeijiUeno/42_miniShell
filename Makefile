@@ -1,6 +1,6 @@
-NAME = minishell
+NAME = Minishell
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror -Iinclude -Isrc/token -Ilibft
 READLINE = -lreadline
 
@@ -10,7 +10,8 @@ SRCS = src/main.c \
        src/token/tokenizer.c \
 	   src/token/word_token.c \
 	   src/token/operator_token.c \
-	   src/token/aux.c
+	   src/token/auxiliary.c \
+	   src/parser/ast/ast.c
 
 # Object files directory
 OBJ_DIR = objects

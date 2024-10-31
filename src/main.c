@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/04 16:35:14 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:26:58 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include "shell.h"
 #include "token/tokenizer.h"
 #include "signal/signals.h"
+#include "parser/ast/ast.h"
 
 int	main(void)
 {
 	char	*input;
 	t_token	*tokens;
+	t_ast	*tree;
 
 	signal_init();
 	while (1)
@@ -41,7 +43,10 @@ int	main(void)
 			continue ;// Skip this iteration and prompt again
 		}
 		print_tokens(tokens);
+		tree = tree_constructor(tokens);
+		print_ast(tree, 6);
 		free_tokens(tokens);
+		free(tree); // free_tree to be build!!! must free all of it
 		free(input);
 	}
 	clear_history();

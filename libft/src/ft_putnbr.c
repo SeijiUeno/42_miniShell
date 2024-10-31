@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/21 17:02:12 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/09/21 17:02:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:59:10 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@
 
 void	ft_putnbr(int n)
 {
-	unsigned int	nb;
+	unsigned int	number;
 	char			x;
 
 	if (n < 0)
 	{
 		write(1, "-", 1);
-		nb = -n;
+		number = -n;
 	}
 	else
-		nb = n;
-	if (nb >= BASE)
-		ft_putnbr(nb / BASE);
-	x = (nb % BASE) + '0';
+		number = n;
+	if (number >= BASE)
+		ft_putnbr(number / BASE);
+	x = (number % BASE) + '0';
 	write(1, &x, 1);
 }
