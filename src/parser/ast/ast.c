@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 20:51:08 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:44:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,23 @@
 
 // check case where the operator is the first token !?
 
+int    find_command(t_token_type type_token)
+{
+    if(type_token == TOKEN_PIPE)
+        return(1);
+    if(type_token == TOKEN_REDIRECT_IN)
+        return(1);
+    if(type_token == TOKEN_REDIRECT_OUT)
+        return(1);
+    return(0);
+}
+
 t_token *operator_search(t_token *list_tokens) {
     t_token *token = list_tokens;
     t_token *before_split = NULL;
 
     while (token != NULL) {
-        if (token->type == TOKEN_OPERATOR) {
+        if (find_command(token->type)) {
             return before_split;
         }   
         before_split = token; // Move after checking the pipe
@@ -58,9 +69,6 @@ int single_node_creation(t_ast *ast_node, t_token *list_tokens, t_token *boundar
     return(0);
 }
 
-//t_token_type find_type(t_token token_command)
-//{
-
 static void create_nodes(t_ast *ast_node, t_token *list_tokens)
 {
     t_token         *boundary_token;
@@ -86,7 +94,6 @@ static void create_nodes(t_ast *ast_node, t_token *list_tokens)
     }
 }
 
-
 t_ast   *tree_constructor(t_token *tokens)
 {
     // main root
@@ -102,16 +109,19 @@ t_ast   *tree_constructor(t_token *tokens)
     return(tree_root);
 }
 
-
 // print aux
 
 void print_type(int type) {
     if (type == TOKEN_PIPE)
         printf("Type: PIPE\n");
+    else if (type == TOKEN_REDIRECT_IN)
+        printf("Type: REDIRECT_IN\n");
+    else if (type == TOKEN_REDIRECT_OUT)
+        printf("Type: REDIRECT_OUT\n");
     else if (type == TOKEN_WORD)
         printf("Type: WORD\n");
     else
-        printf("Type: UNKNOWN (%d)\n", type);
+        printf("Type: UNKNOWN !!!(%d)\n", type);
 }
 
 // Print a single token's value (handles null tokens safely)

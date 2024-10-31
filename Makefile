@@ -1,6 +1,6 @@
 NAME = Minishell
 
-CC = gcc
+CC = gcc -g
 CFLAGS = -Wall -Wextra -Werror -Iinclude -Isrc/token -Ilibft
 READLINE = -lreadline
 
