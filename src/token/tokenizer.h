@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/21 19:28:07 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/06 19:18:08 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "../shell.h"
 # include <stdlib.h>
 # include <string.h>
-# include <ctype.h>
 # include <stdio.h>
 
 typedef enum s_token_type
