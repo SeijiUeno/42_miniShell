@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/04 16:42:52 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/06 19:18:29 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_token	*tokenizer(char *input)
 	current = NULL;
 	while (input[i] != '\0')
 	{
-		while (isspace((unsigned char)input[i]))
+		while (ft_isspace(input[i]))
 			i++;
 		if (input[i] == '\0')
 			break ;
