@@ -11,7 +11,8 @@ SRCS = src/main.c \
 	   src/token/word_token.c \
 	   src/token/operator_token.c \
 	   src/token/auxiliary.c \
-	   src/parser/ast/ast.c
+	   src/parser/ast/ast.c \
+	   src/garbage_collector/garbage_collector.c 
 
 # Object files directory
 OBJ_DIR = objects
