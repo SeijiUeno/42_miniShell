@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   aux.c                                              :+:      :+:    :+:   */
+/*   auxiliary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 16:59:36 by emorales         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:47:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,62 +16,25 @@ int	is_operator(char c)
 {
 	return (c == '|' || c == '>' || c == '<' || c == '&' || c == ';');
 }
-/*test main funtion
-# include "shell.h"
-# include "token/tokenizer.h"
 
-int main(void) {
-    char *input;
-    t_token *tokens;
-
-    while (1) {
-        input = readline("myshell> ");
-        if (!input) {
-            printf("\nExiting shell...\n");
-            break;
-        }
-        if (*input)
-            add_history(input);
-
-        tokens = tokenizer(input);
-        if (tokens == NULL) {
-            // **An error occurred during tokenization**
-            // You can choose to continue or exit
-            free(input);
-            continue; // Skip this iteration and prompt again
-        }
-        print_tokens(tokens);
-        free_tokens(tokens);
-        free(input);
-    }
-	clear_history();
-    return 0;
-}
-
-*/
-// Function to get the token type as a string
-
-const char	*get_token_type_name(t_token_type type)
+const char *get_token_type_name(t_token_type type)
 {
-	switch (type) // NÃO É PERMITIDO USO DE SWITCH/CASE
-	{
-		case TOKEN_WORD:
-			return ("TOKEN_WORD");
-		case TOKEN_OPERATOR:
-			return ("TOKEN_OPERATOR");
-		case TOKEN_PIPE:
-			return ("TOKEN_PIPE");
-		case TOKEN_REDIRECT_IN:
-			return ("TOKEN_REDIRECT_IN");
-		case TOKEN_REDIRECT_OUT:
-			return ("TOKEN_REDIRECT_OUT");
-		case TOKEN_REDIRECT_APPEND:
-			return ("TOKEN_REDIRECT_APPEND");
-		case TOKEN_HEREDOC:
-			return ("TOKEN_HEREDOC");
-		default :
-			return ("UNKNOWN");
-	}
+    if (type == TOKEN_WORD)
+        return "TOKEN_WORD";
+    else if (type == TOKEN_OPERATOR)
+        return "TOKEN_OPERATOR";
+    else if (type == TOKEN_PIPE)
+        return "TOKEN_PIPE";
+    else if (type == TOKEN_REDIRECT_IN)
+        return "TOKEN_REDIRECT_IN";
+    else if (type == TOKEN_REDIRECT_OUT)
+        return "TOKEN_REDIRECT_OUT";
+    else if (type == TOKEN_REDIRECT_APPEND)
+        return "TOKEN_REDIRECT_APPEND";
+    else if (type == TOKEN_HEREDOC)
+        return "TOKEN_HEREDOC";
+    else
+        return "UNKNOWN";
 }
 
 // Function to print tokens
