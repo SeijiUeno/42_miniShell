@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:40:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/30 18:10:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:55:37 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 # include "../../libft/includes/libft.h"
-# include "../../token/tokenizer.h"
+# include "../token/tokenizer.h"
 
 // doubled linked list
 typedef struct s_element
