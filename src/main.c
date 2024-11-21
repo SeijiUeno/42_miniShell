@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/30 19:26:58 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/21 14:57:45 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "shell.h"
 #include "token/tokenizer.h"
 #include "signal/signals.h"
-#include "parser/ast/ast.h"
+#include "ast/ast.h"
 
 int	main(void)
 {
