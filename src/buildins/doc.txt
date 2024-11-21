@@ -84,3 +84,103 @@ Deliberately constructed inputs with many long arguments could cause slower perf
 This isn't likely to be a concern in normal operations but is worth noting for stress-testing 
 or malicious scenarios.
 
+
+#pwd 
+command retrieves and displays the current working directory. 
+This implementation involves two key components:
+
+malloc_pwd(): Dynamically allocates memory to store the current working directory.
+pwd(): Serves as the main function that invokes malloc_pwd() and prints the directory.
+Key Features
+Dynamic Buffer Management: Automatically resizes the buffer to handle directories of varying lengths.
+Garbage Collection-Like Mechanism: Uses custom functions (gc_allocate and gc_deallocate) to manage memory safely, minimizing leaks.
+Error Handling: Checks for potential issues such as insufficient buffer size or permission errors, using errno for diagnostics.
+
+Detailed Analysis
+Auxiliary Function: malloc_pwd()
+Purpose
+malloc_pwd() allocates memory dynamically to store the current working directory. It ensures the buffer is sufficiently large, resizing if necessary.
+
+How It Works
+Initial Buffer Allocation:
+
+Starts with a buffer size of 1024 bytes.
+Allocates memory using gc_allocate().
+If allocation fails, the function returns NULL.
+Retrieve Current Directory:
+
+Calls getcwd(buffer, chars) to fetch the directory path.
+If successful, returns the buffer containing the directory.
+Handle Buffer Size Issues:
+
+If getcwd() fails with errno == ERANGE, the buffer size is insufficient.
+Deallocates the current buffer using gc_deallocate(), doubles the buffer size, and retries.
+Repeats until the buffer is large enough or the maximum limit (PATH_MAX * 8) is reached.
+Handle Other Errors:
+
+If getcwd() fails for reasons other than ERANGE (e.g., permission errors), the function deallocates the buffer and returns NULL.
+Return Value
+Returns the buffer containing the directory path if successful.
+Returns NULL on error or if the buffer size exceeds the maximum limit.
+Why It’s Useful
+Dynamic Buffer Management ensures flexibility for directories of varying depths.
+Memory Safety minimizes the risk of leaks through explicit garbage collection.
+Main Function: pwd()
+Purpose
+Implements the behavior of the pwd command by printing the current working directory or handling errors gracefully.
+
+How It Works
+Initialization:
+
+Accepts arguments, marking them as unused with (void)args; to suppress warnings.
+Retrieve Directory:
+
+Calls malloc_pwd() to fetch the directory.
+If malloc_pwd() returns NULL, prints an error to stderr and exits with EXIT_FAILURE.
+Print Directory:
+
+If successful, prints the directory to stdout using ft_putendl_fd().
+Optional Memory Cleanup:
+
+Optionally deallocates the directory buffer with gc_deallocate() if the garbage collector does not handle it automatically.
+Return Value:
+Returns EXIT_SUCCESS on success or EXIT_FAILURE on error.
+
+Behavior Examples
+
+
+Command	Output
+pwd	                    /home/user
+pwd (error)         	Error: Failed to get current working directory.
+
+Complexity Analysis
+
+
+Space Complexity
+O(n)
+where n is the length of the current working directory.
+The buffer dynamically resizes to fit the directory path.
+
+Time Complexity
+Best Case: O(1) 
+if the initial buffer is sufficient to store the path.
+Worst Case: O(log n) 
+due to exponential buffer resizing when the path is exceptionally long.
+
+
+Real-World Considerations
+Typical Usage
+The implementation handles most scenarios efficiently, accommodating deep directory structures with its dynamic resizing mechanism.
+Edge Cases
+Very Deep Directory Paths:
+For paths longer than the initial buffer size, the function resizes the buffer iteratively until the path fits.
+If the path exceeds the maximum allowed size (PATH_MAX * 8), the function reports an error.
+Memory Constraints:
+In low-memory environments, repeated resizing might fail due to insufficient memory.
+Summary
+The pwd command implementation for the mini-shell project balances flexibility, efficiency, and safety:
+
+Dynamic Buffer Management ensures adaptability to paths of varying lengths.
+Garbage Collection Mechanism minimizes memory leaks.
+Error Handling reports issues clearly to maintain a robust user experience.
+
