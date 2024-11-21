@@ -1,0 +1,86 @@
+#Echo
+
+AUX: check_if_arg_minus_n :
+This function checks if a given string (arg) is a valid -n flag. 
+It supports:
+The exact -n.
+Flags like -nn, -nnnn, etc., which are common in GNU-compatible echo.
+How It Works:
+*
+If the arg is NULL or doesn’t start with -n, return 0 (not a valid -n flag).
+ft_strncmp ensures that the first two characters are exactly -n.
+Starts checking from index 2 (immediately after -n).
+Loops through any additional n characters.
+If it reaches the end of the string (\0), the argument is a valid -n flag, so it returns 1
+If any non-n character is found, it’s not a valid -n flag.
+*
+Why It’s Useful?
+Modularizes flag checking, making the code reusable and testable.
+Handles both simple and complex -n flag cases efficiently.
+
+& Main Function: echo
+Purpose
+Implements the behavior of the echo command:
+
+Prints arguments, separated by spaces.
+By default, appends a newline unless the -n flag is used.
+How It Works:
+*
+1-
+Tracks the index of the current argument (args[i]).
+print_newline: A flag indicating whether a newline (\n) should be printed at the end. 
+It defaults to 1 (true).
+2- 
+Iterates through the arguments starting from args[1].
+Calls check_if_arg_minus_n for each argument:
+    If a valid -n flag is found, it sets print_newline to 0 (disable newline).
+    Increments i to move to the next argument.
+Stops at the first non--n argument.
+Why This Step Exists?
+Ensures compatibility with multiple -n flags, like echo -n -n hello.
+Avoids printing -n flags as part of the output.
+3-
+Loops through the remaining arguments:
+Prints the current argument with ft_putstr_fd.
+Checks if another argument exists (args[++i]) after the current one.
+If yes, prints a space between arguments.
+Stops when all arguments are printed.
+Why This Step Exists?
+Ensures arguments are separated by spaces.
+Avoids trailing spaces at the end of the output.
+4 - (if applicable)
+If print_newline is still 1, appends a newline to the output.
+Skipped if the -n flag was detected earlier.
+Why This Step Exists:
+
+Mimics the default behavior of echo, which appends a newline unless told not to
+5 - return success
+*
+
+Behavior Examples:
+Command	Output
+echo hello world	        hello world\n
+echo -n hello world	        hello world
+echo -nn hello world	    hello world
+echo -n -n hello world	    hello world
+echo
+
+Complexity Analysis
+The overall space complexity is:
+O(1)
+Time complexity
+Best Case: O(1)
+(no -n flag and only one short argument is printed)
+Worst Case: O(m * k)
+-m represents the total number of arguments passed to the echo function (args).
+-k represents the average length of the arguments that are checked
+
+What This Means for Real-World Usage
+Typical Usage:
+The echo implementation will run efficiently for most shell scripts or command-line inputs.
+
+Unusual Edge Cases:
+Deliberately constructed inputs with many long arguments could cause slower performance. 
+This isn't likely to be a concern in normal operations but is worth noting for stress-testing 
+or malicious scenarios.
+
