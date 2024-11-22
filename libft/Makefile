@@ -16,7 +16,10 @@ SOURCES = \
 	ft_strdup.c \
 	ft_strlcpy.c \
 	ft_calloc.c \
-	ft_bzero.c 
+	ft_bzero.c \
+	ft_putchar_fd.c \
+	ft_putstr_fd.c \
+	ft_putendl_fd.c
 
 OBJECTS = $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SRC = $(addprefix $(SRC_DIR), $(SOURCES))
