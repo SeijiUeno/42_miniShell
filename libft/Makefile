@@ -1,8 +1,15 @@
-# Makefile for Libft Library
+# Makefile for Libft Library (with Colors)
 
 # Compiler and Flags
 CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror
+
+# Colors
+GREEN   = \033[32m
+YELLOW  = \033[33m
+BLUE    = \033[34m
+RED     = \033[31m
+RESET   = \033[0m
 
 # Target and Directories
 NAME    = libft.a
@@ -25,28 +32,29 @@ all: $(NAME)
 
 # Build the library
 $(NAME): $(OBJ_FILES)
+	@echo "$(BLUE)Creating library: $(NAME)$(RESET)"
 	@ar rcs $(NAME) $(OBJ_FILES)
-	@echo "Created $(NAME)"
+	@echo "$(GREEN)Library $(NAME) created successfully!$(RESET)"
 
 # Compile source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(YELLOW)Compiling $< -> $@$(RESET)"
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "Compiled $< -> $@"
 
 # Create object directory if it doesn't exist
 $(OBJ_DIR):
+	@echo "$(BLUE)Creating directory: $(OBJ_DIR)$(RESET)"
 	@mkdir -p $(OBJ_DIR)
-	@echo "Created directory: $(OBJ_DIR)"
 
 # Clean object files
 clean:
+	@echo "$(RED)Cleaning object files...$(RESET)"
 	@rm -rf $(OBJ_DIR)
-	@echo "Cleaned object files"
 
 # Full clean (object files and library)
 fclean: clean
+	@echo "$(RED)Removing library $(NAME)...$(RESET)"
 	@rm -f $(NAME)
-	@echo "Removed $(NAME)"
 
 # Rebuild everything
 re: fclean all
