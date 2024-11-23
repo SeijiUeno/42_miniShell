@@ -6,17 +6,17 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:16:00 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/21 14:41:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:36:46 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <errno.h>
-#include <stdio.h>
 #include <limits.h>
 #include <unistd.h> // For STDOUT_FILENO and getcwd
 #include <stdlib.h> // For EXIT_FAILURE and EXIT_SUCCESS
-#include "../garbage_collector/garbage_collector.h"
+#include "../../libft/includes/garbage_collector.h"
 #include "buildins.h"
+#include "../shell.h"
 
 char *malloc_pwd(void)
 {
@@ -41,38 +41,34 @@ char *malloc_pwd(void)
 
         if (errno != ERANGE)
         {
-            // An error occurred that is not due to buffer size
-            perror("getcwd error");
+            ft_putendl_fd("getcwd error", STDERR_FILENO);
             gc_deallocate(buffer);
-            return NULL;
+            return (NULL);
         }
         gc_deallocate(buffer);
         chars *= 2;
         if (chars > max_limit)
         {
-            fprintf(stderr, "Error: Exceeded maximum buffer size for getcwd.\n");
-            return NULL;
+            ft_putendl_fd("Error: Exceeded maximum buffer size for getcwd.\n", STDERR_FILENO);
+            return (NULL);
         }
 
         buffer = gc_allocate(chars * sizeof(char));
         if (!buffer)
-            return NULL; // Allocation failed
+            return (NULL);
     }
-
-    // Should not reach here
-    return NULL;
+    return (NULL);
 }
 
 int pwd(const char **args)
 {
     char *cwd;
-
+    
     (void)args;
-
     cwd = malloc_pwd();
     if (!cwd)
     {
-        fprintf(stderr, "Error: Failed to get current working directory.\n");
+        ft_putendl_fd("Error: Failed to get current working directory.\n", STDERR_FILENO);
         return EXIT_FAILURE;
     }
 
@@ -81,8 +77,8 @@ int pwd(const char **args)
     // Deallocate cwd if it's no longer needed
     if (gc_deallocate(cwd) != GC_SUCCESS)
     {
-        fprintf(stderr, "Warning: Failed to deallocate memory for cwd.\n");
+        ft_putendl_fd("Warning: Failed to deallocate memory for cwd.\n", STDERR_FILENO);
     }
 
-    return EXIT_SUCCESS;
+    return (EXIT_SUCCESS);
 }
