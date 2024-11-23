@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:31:48 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/22 20:05:27 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+#include "../includes/garbage_collector.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -18,7 +19,7 @@ char	*ft_strdup(const char *s)
 	size_t	len;
 
 	len = ft_strlen(s);
-	str = malloc(len + 1);
+	str = gc_allocate(len + 1);
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, s, len + 1);

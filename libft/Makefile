@@ -20,7 +20,8 @@ SOURCES = \
 	ft_putchar_fd.c \
 	ft_putstr_fd.c \
 	ft_putendl_fd.c \
-	ft_strncmp.c 
+	ft_strncmp.c \
+	garbage_collector.c
 
 OBJECTS = $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 SRC = $(addprefix $(SRC_DIR), $(SOURCES))
