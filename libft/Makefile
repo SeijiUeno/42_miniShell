@@ -1,48 +1,52 @@
-# Variables
-NAME = libft.a
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra
-OBJ_DIR = obj/
-SRC_DIR = src/
+# Makefile for Libft Library
 
-SOURCES = \
-	ft_isdigit.c \
-	ft_strlen.c \
-	ft_atoi.c \
-	ft_putnbr.c \
-	ft_strcmp.c \
-	ft_substr.c \
-	ft_memcpy.c \
-	ft_strdup.c \
-	ft_strlcpy.c \
-	ft_calloc.c \
-	ft_bzero.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_strncmp.c \
-	garbage_collector.c
+# Compiler and Flags
+CC      = gcc
+CFLAGS  = -Wall -Wextra -Werror
 
-OBJECTS = $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
-SRC = $(addprefix $(SRC_DIR), $(SOURCES))
+# Target and Directories
+NAME    = libft.a
+SRC_DIR = src
+OBJ_DIR = obj
 
+# Source and Object Files
+SRC_FILES = ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
+            ft_strcmp.c ft_substr.c ft_memcpy.c ft_strdup.c \
+            ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putchar_fd.c \
+            ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
+            garbage_collector.c
+
+OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+
+# Rules
 .PHONY: all clean fclean re
 
-all: $(OBJ_DIR) $(NAME)
+all: $(NAME)
 
+# Build the library
+$(NAME): $(OBJ_FILES)
+	@ar rcs $(NAME) $(OBJ_FILES)
+	@echo "Created $(NAME)"
+
+# Compile source files into object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiled $< -> $@"
+
+# Create object directory if it doesn't exist
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+	@echo "Created directory: $(OBJ_DIR)"
 
-$(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Clean object files
 clean:
-	rm -rf $(OBJ_DIR)
+	@rm -rf $(OBJ_DIR)
+	@echo "Cleaned object files"
 
+# Full clean (object files and library)
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
+	@echo "Removed $(NAME)"
 
+# Rebuild everything
 re: fclean all
