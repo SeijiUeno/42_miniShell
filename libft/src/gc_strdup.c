@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   gc_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 02:03:33 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:33:31 by emorales         ###   ########.fr       */
+/*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 13:08:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
+#include "../includes/garbage_collector.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*gc_strdup(const char *s)
 {
 	char	*str;
-	size_t	slen;
+	size_t	len;
 
-	slen = ft_strlen(s);
-	if (start > slen)
-		return (ft_strdup(""));
-	if (len > slen - start)
-		return (ft_strdup(s + start));
-	str = malloc(len + 1);
+	len = ft_strlen(s);
+	str = gc_allocate(len + 1);
 	if (!str)
 		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
+	ft_strlcpy(str, s, len + 1);
 	return (str);
 }

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:44 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/22 18:57:37 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/22 19:01:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096 // or another reasonable default
-#endif
+#include <stddef.h>
 
-int pwd(const char **args);
-int	echo(char **args);
-int cd(char **args);
-int unset(char **args);
-int env(const char **args);
-int export(char **args);
-
-
-int is_valid_identifier(const char *identifier);
-void ft_unsetenv(const char *name);
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	if (!n)
+		return (0);
+	while ((*s1 || *s2) && (n-- > 0))
+	{
+		if (*(s1++) != *(s2++))
+			return (*(unsigned char *)(--s1) - *(unsigned char *)(--s2));
+	}
+	return (0);
+}

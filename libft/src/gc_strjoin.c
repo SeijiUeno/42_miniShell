@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   gc_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:54:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 20:04:47 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/25 17:21:11 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 17:22:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 #include "../includes/garbage_collector.h"
 
-void	*ft_calloc(size_t number_elements, size_t size)
+char	*gc_strjoin(char const *s1, char const *s2)
 {
-	void	*ptr;
-	size_t	total;
+	size_t	len;
+	char	*joined;
+	char	*origin;
 
-	total = number_elements * size;
-	if (number_elements && total / number_elements != size)
+	if (!s1 || !s2)
 		return (NULL);
-	ptr = gc_allocate(total);
-	if (!ptr)
+	len = ft_strlen(s1) + ft_strlen(s2);
+	joined = gc_allocate(len + 1);
+	if (joined == NULL)
 		return (NULL);
-	ft_bzero(ptr, total);
-	return (ptr);
+	origin = joined;
+	while (*s1)
+		*(joined++) = *(s1++);
+	while (*s2)
+		*(joined++) = *(s2++);
+	*joined = '\0';
+	return (origin);
 }
