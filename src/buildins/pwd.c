@@ -6,15 +6,10 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:16:00 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 20:36:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 17:37:46 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
-#include <limits.h>
-#include <unistd.h> // For STDOUT_FILENO and getcwd
-#include <stdlib.h> // For EXIT_FAILURE and EXIT_SUCCESS
-#include "../../libft/includes/garbage_collector.h"
 #include "buildins.h"
 #include "../shell.h"
 

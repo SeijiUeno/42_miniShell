@@ -22,7 +22,7 @@ SRC_FILES = ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
             ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putchar_fd.c \
             ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
             garbage_collector.c ft_error.c gc_strndup.c \
-			ft_isalpha.c ft_strchr.c ft_isalnum.c
+			ft_isalpha.c ft_strchr.c ft_isalnum.c gc_strjoin.c
 
 OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
