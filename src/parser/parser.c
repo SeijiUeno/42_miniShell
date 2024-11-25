@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 16:25:18 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/21 19:31:49 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:15:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	parse_input(t_token *head_of_tokens)
 		}
 		/* Futura função de execução de comandos
 		execute_commands(cmd_list);*/
-		free_command_list(cmd_list);
+		gc_deallocate_command_list(cmd_list);
 	}
 	else if (current_token && current_token->type == TOKEN_EOF)
 		printf("End of input\n");
@@ -82,7 +82,7 @@ t_command	*parse_command(void)
 	else
 	{
 		printf("Error: Expected a command\n");
-		free_command(cmd);
+		gc_deallocate_command(cmd);
 		return (NULL);
 	}
 	return (cmd);
@@ -111,7 +111,7 @@ t_command	*parse_pipeline(void)
 		cmd_new = parse_command();
 		if (!cmd_new)
 		{
-			free_command_list(cmd_head);
+			gc_deallocate_command_list(cmd_head);
 			return (NULL);
 		}
 		// Link the command to the rest of the list
@@ -137,27 +137,27 @@ int	parse_redirection(t_command *cmd)
 		{
 			if (redir_type == TOKEN_REDIRECT_IN)
 			{
-				cmd->input_file = strdup(current_token->value);
+				cmd->input_file = gc_strdup(current_token->value);
 				if (!cmd->input_file)
 					return (0); // Falha na alocação
 			}
 			else if (redir_type == TOKEN_REDIRECT_OUT)
 			{
-				cmd->output_file = strdup(current_token->value);
+				cmd->output_file = gc_strdup(current_token->value);
 				if (!cmd->output_file)
 					return (0);
 				cmd->append = 0;
 			}
 			else if (redir_type == TOKEN_REDIRECT_APPEND)
 			{
-				cmd->output_file = strdup(current_token->value);
+				cmd->output_file = gc_strdup(current_token->value);
 				if (!cmd->output_file)
 					return (0);
 				cmd->append = 1;
 			}
 			else if (redir_type == TOKEN_HEREDOC)
 			{
-				cmd->heredoc_delimiter = strdup(current_token->value);
+				cmd->heredoc_delimiter = gc_strdup(current_token->value);
 				if (!cmd->heredoc_delimiter)
 					return (0);
 			}

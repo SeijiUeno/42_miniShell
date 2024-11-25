@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/31 17:00:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:15:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ t_token *create_operator_token(char *input, int *index)
     char op[3];
 
     i = *index;
-    token = malloc(sizeof(t_token)); // Allocate memory for the token
+    token = gc_allocate(sizeof(t_token)); // Allocate memory for the token
     if (!token)
         return NULL; // Return NULL if allocation fails
 
     extract_operator(input, &i, op); // Extract operator from input
-    token->value = strdup(op); // Duplicate the operator string
+    token->value = gc_strdup(op); // Duplicate the operator string
     if (!token->value)
     {
-        free(token); // Free memory on failure
+        gc_deallocate(token); // gc_deallocate memory on failure
         return NULL;
     }
     *index = i; // Update the index

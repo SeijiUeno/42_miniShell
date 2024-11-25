@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/10/04 16:42:52 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:07:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_token	*tokenizer(char *input)
 			new_token = create_word_token(input, &i);
 		if (!new_token)
 		{
-			free_tokens(head);
+			gc_deallocate_tokens(head);
 			return (NULL);
 		}
 		if (head == NULL)
@@ -51,7 +51,7 @@ t_token	*tokenizer(char *input)
 	return (head);
 }
 
-void	free_tokens(t_token *head)
+void	gc_deallocate_tokens(t_token *head)
 {
 	t_token	*current;
 	t_token	*next;
@@ -60,8 +60,8 @@ void	free_tokens(t_token *head)
 	while (current != NULL)
 	{
 		next = current->next;
-		free(current->value);
-		free(current);
+		gc_deallocate(current->value);
+		gc_deallocate(current);
 		current = next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/31 16:45:56 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:07:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_token *token_spliter(t_token *list, t_token *boundary) {
         new_node = temp->next;
 
     boundary->next = NULL;
-    free(temp); // Ensure this is safe to do
+    gc_deallocate(temp); // Ensure this is safe to do
     return new_node;
 }
 
@@ -99,7 +99,7 @@ t_ast   *tree_constructor(t_token *tokens)
     // main root
     t_ast   *tree_root;
     
-    // !!!!!ALOCATION - do not forget to free!!!!!
+    // !!!!!ALOCATION - do not forget to gc_deallocate!!!!!
     tree_root = ft_calloc(1, sizeof(t_ast));
     if (!tree_root)
     {
