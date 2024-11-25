@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 16:06:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:35:01 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
 
-int is_valid_identifier(char *identifier)
+int is_valid_identifier(const char *identifier)
 {
     if (*identifier != '=' && !ft_isdigit(*identifier))
     {

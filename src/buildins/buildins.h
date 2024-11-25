@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 18:58:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:34:44 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ int pwd(const char **args);
 int	echo(char **args);
 int cd(char **args);
 int unset(char **args);
+int env(const char **args);
+int export(char **args);
 
 
-int is_valid_identifier(char *identifier);
+int is_valid_identifier(const char *identifier);
 void ft_unsetenv(const char *name);

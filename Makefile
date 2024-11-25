@@ -30,6 +30,7 @@ SRC_FILES = signal/signals.c \
             buildins/pwd.c \
 			buildins/unset.c \
 			buildins/export.c \
+			buildins/env.c \
 			buildins/cd.c \
 			env/get_env.c \
 			env/path_holders.c \
