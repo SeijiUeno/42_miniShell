@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/21 19:28:07 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:07:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_token
 
 // Function prototypes
 t_token		*tokenizer(char *input);
-void		free_tokens(t_token *head);
+void		gc_deallocate_tokens(t_token *head);
 
 // From operator_token.c
 t_token		*create_operator_token(char *input, int *index);
