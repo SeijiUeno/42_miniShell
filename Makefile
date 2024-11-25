@@ -2,7 +2,7 @@
 
 # Compiler and Flags
 CC       = gcc
-CFLAGS   = -Wall -Wextra -Werror -Iinclude -Isrc/token -Ilibft
+CFLAGS   = -Iinclude -Isrc/token -Ilibft
 READLINE = -lreadline
 
 # Colors
@@ -20,15 +20,17 @@ LIBFT_DIR = libft
 LIBFT    = $(LIBFT_DIR)/libft.a
 
 # Source and Object Files
-SRC_FILES = main.c \
-            signal/signals.c \
+SRC_FILES = signal/signals.c \
             token/tokenizer.c \
             token/word_token.c \
             token/operator_token.c \
             token/auxiliary.c \
             ast/ast.c \
             buildins/echo.c \
-            buildins/pwd.c
+            buildins/pwd.c \
+			buildins/unset.c \
+			env/get_env.c \
+			main.c
 
 SRCS      = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 OBJS      = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
