@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/11/25 18:12:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:33:04 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "token/tokenizer.h"
 #include "signal/signals.h"
 #include "ast/ast.h"
+#include "buildins/buildins.h"
 
 int	main(void)
 {
@@ -24,6 +25,7 @@ int	main(void)
 	t_ast	*tree;
 
 	signal_init();
+	pwd(*input);
 	while (1)
 	{
 		input = readline("myshell> ");
@@ -44,7 +46,6 @@ int	main(void)
 			gc_deallocate (input);
 			continue ;// Skip this iteration and prompt again
 		}
-		print_tokens(tokens);
 		tree = tree_constructor(tokens);
 		print_ast(tree, 6);
 		gc_deallocate_tokens(tokens);

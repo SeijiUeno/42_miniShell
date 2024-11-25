@@ -1,24 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 18:58:23 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 19:06:55 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096 // or another reasonable default
-#endif
-
-int pwd(const char **args);
-int	echo(char **args);
-int cd(char **args);
-int unset(char **args);
-
-
-int is_valid_identifier(char *identifier);
-void ft_unsetenv(const char *name);
