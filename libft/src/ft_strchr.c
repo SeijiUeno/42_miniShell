@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 02:03:33 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 20:05:51 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/25 15:58:26 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 15:59:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include "../includes/garbage_collector.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strchr(const char *s, int c)
 {
-	char	*str;
-	size_t	slen;
-
-	slen = ft_strlen(s);
-	if (start > slen)
-		return (ft_strdup(""));
-	if (len > slen - start)
-		return (ft_strdup(s + start));
-	str = gc_allocate(len + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
-	return (str);
+	while (*s)
+	{
+		if (*s == (unsigned char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (unsigned char)c)
+		return ((char *)s);
+	return (NULL);
 }

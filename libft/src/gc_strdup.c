@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   gc_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 20:05:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 #include "../includes/garbage_collector.h"
 
-char	*ft_strdup(const char *s)
+char	*gc_strdup(const char *s)
 {
 	char	*str;
 	size_t	len;
