@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:39:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:29:50 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:15:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int	initialize_token_buffer(t_token **token, char **buffer, char *input, int index)
 {
-	*token = malloc(sizeof(t_token));
+	*token = gc_allocate(sizeof(t_token));
 	if (!(*token))
 		return (0);
-	*buffer = malloc(strlen(input) - index + 1);
+	*buffer = gc_allocate(strlen(input) - index + 1);
 	if (!(*buffer))
 	{
-		free(*token);
+		gc_deallocate(*token);
 		return (0);
 	}
 	return (1);
@@ -74,11 +74,11 @@ static int	process_quotes_and_escapes(char *input, int *i, char *buffer, int *bu
 
 static t_token	*finalize_word_token(t_token *token, char *buffer)
 {
-	token->value = strdup(buffer);
-	free(buffer);
+	token->value = gc_strdup(buffer);
+	gc_deallocate(buffer);
 	if (!token->value)
 	{
-		free(token);
+		gc_deallocate(token);
 		return (NULL);
 	}
 	token->type = TOKEN_WORD;
@@ -99,8 +99,8 @@ t_token	*create_word_token(char *input, int *index)
 		return (NULL);
 	if (process_quotes_and_escapes(input, &i, buffer, &buf_index) == -1)
 	{
-		free(token);
-		free(buffer);
+		gc_deallocate(token);
+		gc_deallocate(buffer);
 		return (NULL);
 	}
 	token = finalize_word_token(token, buffer);

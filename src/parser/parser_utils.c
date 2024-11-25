@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:44:14 by marvin            #+#    #+#             */
-/*   Updated: 2024/10/21 19:31:45 by emorales         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:15:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_command	*create_new_command(void)
 {
 	t_command	*cmd;
 
-	cmd = malloc(sizeof(t_command));
+	cmd = gc_allocate(sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	cmd->args = NULL;
@@ -27,7 +27,7 @@ t_command	*create_new_command(void)
 	return (cmd);
 }
 
-void	free_command(t_command *cmd)
+void	gc_deallocate_command(t_command *cmd)
 {
 	int	i;
 
@@ -38,27 +38,27 @@ void	free_command(t_command *cmd)
 			i = 0;
 			while (cmd->args[i])
 			{
-				free(cmd->args[i]);
+				gc_deallocate(cmd->args[i]);
 				i++;
 			}
-			free(cmd->args);
+			gc_deallocate(cmd->args);
 		}
 		if (cmd->input_file)
-			free(cmd->input_file);
+			gc_deallocate(cmd->input_file);
 		if (cmd->output_file)
-			free(cmd->output_file);
-		free(cmd);
+			gc_deallocate(cmd->output_file);
+		gc_deallocate(cmd);
 	}
 }
 
-void	free_command_list(t_command *cmd_head)
+void	gc_deallocate_command_list(t_command *cmd_head)
 {
 	t_command	*tmp;
 
 	while (cmd_head)
 	{
 		tmp = cmd_head->next;
-		free_command(cmd_head);
+		gc_deallocate_command(cmd_head);
 		cmd_head = tmp;
 	}
 }
@@ -80,7 +80,7 @@ int	add_argument_to_command(t_command *cmd, char *arg)
 			argc++;
 	}
 	//Allocate memory for new_args (argc + 2 for the new arg and NULL terminator)
-	new_args = malloc(sizeof(char *) * (argc + 2));
+	new_args = gc_allocate(sizeof(char *) * (argc + 2));
 	if (!new_args)
 		return (0); // Allocation failed
 	// Copy existing arguments to new_args
@@ -91,15 +91,15 @@ int	add_argument_to_command(t_command *cmd, char *arg)
 		i++;
 	}
 	//Duplicate the new argument and add to new_args
-	new_args[argc] = strdup(arg);
+	new_args[argc] = gc_strdup(arg);
 	if (!new_args[argc])
 	{
-		free(new_args);
+		gc_deallocate(new_args);
 		return (0); // Allocation failed
 	}
 	new_args[argc + 1] = NULL; // Null-terminate the array
-	//Free the old args array if it exists
-	free(cmd->args);
+	//gc_deallocate the old args array if it exists
+	gc_deallocate(cmd->args);
 	//Update cmd->args to point to the new array
 	cmd->args = new_args;
 	return (1); // Success

@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:44 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/25 13:24:05 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 13:26:57 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096 // or another reasonable default
-#endif
+# include "../includes/libft.h"
 
-int pwd(const char **args);
-int	echo(char **args);
-int cd(char **args);
-int unset(char **args);
-int env(const char **args);
-int export(char **args);
-
-
-int is_valid_identifier(const char *identifier);
-void ft_unsetenv(const char *name);
+void ft_error(const char *prefix, const char *arg, const char *suffix) {
+    ft_putstr_fd((char *)prefix, 2); // Write prefix to stderr
+    ft_putstr_fd((char *)arg, 2);    // Write argument to stderr
+    ft_putendl_fd((char *)suffix, 2); // Write suffix to stderr with newline
+}

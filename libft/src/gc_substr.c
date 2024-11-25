@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   gc_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:44 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/03/02 02:03:33 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 13:15:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096 // or another reasonable default
-#endif
+#include "../includes/libft.h"
+#include "../includes/garbage_collector.h"
 
-int pwd(const char **args);
-int	echo(char **args);
-int cd(char **args);
-int unset(char **args);
-int env(const char **args);
-int export(char **args);
+char	*gc_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+	size_t	slen;
 
-
-int is_valid_identifier(const char *identifier);
-void ft_unsetenv(const char *name);
+	slen = ft_strlen(s);
+	if (start > slen)
+		return (gc_strdup(""));
+	if (len > slen - start)
+		return (gc_strdup(s + start));
+	str = gc_allocate(len + 1);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s + start, len + 1);
+	return (str);
+}

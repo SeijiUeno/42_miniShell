@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   buildins.h                                         :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/21 13:34:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:44 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/22 18:50:07 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/22 18:50:58 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PATH_MAX
-#define PATH_MAX 4096 // or another reasonable default
-#endif
+#include <unistd.h>
 
-int pwd(const char **args);
-int	echo(char **args);
-int cd(char **args);
-int unset(char **args);
-int env(const char **args);
-int export(char **args);
+void	ft_putstr_fd(char *s, int fd)
+{
+	unsigned int	i;
 
-
-int is_valid_identifier(const char *identifier);
-void ft_unsetenv(const char *name);
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+		i++;
+	write(fd, s, i);
+}
