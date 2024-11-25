@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:23:39 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 17:40:48 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:34:15 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ char *gc_strndup(const char *s, size_t n)
     while (i < len)
     {
         copy[i] = s[i];
+        i++;
     }
     copy[len] = '\0';
 

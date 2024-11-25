@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/11/25 18:33:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:39:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 
 int	main(void)
 {
-	char	*input;
+	char	*input = NULL;
 	t_token	*tokens;
 	t_ast	*tree;
-
+	
+	environ_list_initializer();
 	signal_init();
-	pwd(*input);
+	pwd(NULL);
+	env(NULL);
 	while (1)
 	{
 		input = readline("myshell> ");
