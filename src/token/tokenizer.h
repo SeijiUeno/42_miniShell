@@ -6,53 +6,52 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 18:07:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:10:34 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
-# define TOKENIZER_H
+#define TOKENIZER_H
 
-# include "../shell.h"
-# include <stdlib.h>
-# include <string.h>
-# include <ctype.h>
-# include <stdio.h>
+#include "../shell.h"
 
-typedef enum s_token_type
-{
-	TOKEN_WORD, //0
-	TOKEN_OPERATOR, // 1
-	TOKEN_PIPE, // 2
-	TOKEN_REDIRECT_IN, //3
-	TOKEN_REDIRECT_OUT, //4
-	TOKEN_REDIRECT_APPEND, //5
-	TOKEN_HEREDOC, // 6
-	TOKEN_EOF // 7
-}	t_token_type;
+# define WHITESPACE " \t\n\r\v\f"
+# define SYMBOLS "|<>"
+# define QUOTES "'\""
 
-typedef struct s_token
-{
-	char *value;
-	t_token_type type;
-	struct s_token *next;
-}	t_token;
+typedef enum e_token_type {
+    WORD,
+    OPERATOR,
+    PIPE,
+    REDIR_IN,
+    REDIR_OUT,
+    HEREDOC,
+    APPEND
+} t_token_type;
 
-// Function prototypes
-t_token		*tokenizer(char *input);
-void		gc_deallocate_tokens(t_token *head);
+typedef struct s_token {
+    t_token_type type;
+    char *content;
+    struct s_token *next;
+    struct s_token *prev;
+} t_token;
 
-// From operator_token.c
-t_token		*create_operator_token(char *input, int *index);
+// Function declarations
+void generate_tokens(char *input, t_token **tokens);
+int validate_tokens(t_token *tokens);
+void assign_operator_token_types(t_token **tokens);
 
-// From word_token.c
-t_token		*create_word_token(char *input, int *index);
+// Utility functions
+void initialize_token_list(t_token **tokens);
+void append_token(t_token **lst, t_token *new);
+void free_all_tokens(t_token **tokens);
+void skip_whitespace(char *input, int *i);
+void create_new_token(t_token **tokens, char *input, int start, int end);
 
-// From utils.c
-int			is_operator(char c);
+// Internal helper functions
+int validate_all_quotes(char *input);
+void skip_quoted_token(char *input, int *i);
+void process_operator_token(char *input, t_token **tokens, int *i);
+void extract_word_token(char *input, t_token **tokens, int *i);
 
-//testing
-const char	*get_token_type_name(t_token_type type);
-void		print_tokens(t_token *head);
-
-#endif // TOKENIZER_H
+#endif
