@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/01 16:12:24 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/01 18:13:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* main.c */
 
-#include "shell.h"
-#include "token/tokenizer.h"
-#include "signal/signals.h"
-#include "ast/ast.h"
-#include "buildins/buildins.h"
+#include <termios.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int	main(void)
+typedef s_minishell t_myShell;
+
+struct s_minishell
 {
-	return (0);
-}
+	int			status;
+	char		*input;
+	char		**env;
+	char		**path;
+	int			stdin_backup;
+	int			stdout_backup;
+	t_token		*tokens;
+	t_command	*tree_cmd;
+	t_list		*pid_list;
+};
