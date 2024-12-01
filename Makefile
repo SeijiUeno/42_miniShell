@@ -21,10 +21,11 @@ LIBFT    = $(LIBFT_DIR)/libft.a
 
 # Source and Object Files
 SRC_FILES = signal/signals.c \
-            token/tokenizer.c \
-            token/word_token.c \
-            token/operator_token.c \
-            token/auxiliary.c \
+            token/generate_tokens.c \
+            token/operator_tokens.c \
+            token/quoted_tokens.c \
+            token/token_utils.c \
+			token/validate_tokens.c \
             ast/ast.c \
             buildins/echo.c \
             buildins/pwd.c \
