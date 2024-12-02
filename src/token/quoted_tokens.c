@@ -6,78 +6,68 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 18:51:36 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/01 20:06:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:51:55 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
-// token_utils.c
+// Count and validate a quoted section in the input
+int validate_and_count_quote(char quote, int start_index, char *input) {
+    int index = start_index;
 
-// Initialize a new token
-void initialize_token_list(t_token **tokens) {
-    *tokens = (t_token *)malloc(sizeof(t_token));
-    if (!(*tokens))
-        return;
-    (*tokens)->type = -1;
-    (*tokens)->content = NULL;
-    (*tokens)->next = NULL;
-    (*tokens)->prev = NULL;
-}
-
-// Add a new token to the end of the list
-void append_token(t_token **token_list, t_token *new_token) {
-    t_token *current = *token_list;
-
-    // If the list is empty, set the new token as the first element
-    if (!current) {
-        *token_list = new_token;
-        return;
-    }
-
-    // Traverse the list to find the last token
-    while (current->next) {
-        current = current->next;
-    }
-
-    // Add the new token at the end of the list
-    current->next = new_token;
-    new_token->prev = current; // Link the new token back to the previous one
-}
-
-// Free all tokens in the list
-void free_all_tokens(t_token **token_list) {
-    t_token *current = *token_list;
-    t_token *next_token;
-
-    // Iterate through the list and free each token
-    while (current) {
-        next_token = current->next; // Save the next token
-        if (current->content) {
-            free(current->content); // Free the token's content
+    // Check for the opening quote
+    if (input[index] && input[index] == quote) {
+        index++;
+        // Look for the closing quote
+        while (input[index] && input[index] != quote) {
+            index++;
         }
-        free(current);             // Free the token itself
-        current = next_token;      // Move to the next token
+        // If no closing quote is found, return an error
+        if (!input[index]) {
+            return -1;
+        }
     }
-
-    *token_list = NULL; // Set the list pointer to NULL after freeing
+    return index + 1; // Move past the closing quote
 }
 
-// Skip whitespace characters in the input string
-void skip_whitespace(char *input, int *index) {
-    // Advance the index while the current character is a whitespace
-    while (input[*index] && ft_strchr(WHITESPACE, input[*index])) {
-        (*index)++;
+// Count and validate all quotes in the input
+int validate_all_quotes(char *input) {
+    int index = 0;
+
+    while (input[index]) {
+        if (ft_strchr(QUOTES, input[index])) {
+            // Handle either single or double quotes
+            if (input[index] == '"') {
+                index = validate_and_count_quote('"', index, input);
+            } else {
+                index = validate_and_count_quote('\'', index, input);
+            }
+            // Return an error if unmatched quotes are found
+            if (index < 0) {
+                return error("minishell: ", "You need to close your quotes!", 1);
+            }
+        } else {
+            index++; // Move to the next character
+        }
     }
+    return 0; // No unmatched quotes
 }
 
-// Allocate a new token with content from input[start] to input[end]
-void create_new_token(t_token **tokens, char *input, int start, int end) {
-    tokens[0]->content = ft_substr(input, start, end - start);
+// Process a quoted token in the input
+void skip_quoted_token(char *input, int *current_index) {
+    int index = *current_index;
+    char quote_type = input[index];
 
-    if (input[end] != '\0') {
-        initialize_token_list(&(tokens[0]->next)); // Initialize the next token
-        tokens[0]->next->prev = tokens[0];        // Link the new token to the current one
-        tokens[0] = tokens[0]->next;              // Move to the new token
+    index++; // Move past the opening quote
+    // Look for the closing quote
+    while (input[index] && input[index] != quote_type) {
+        index++;
     }
+    // Move past the closing quote if it exists
+    if (input[index] == quote_type) {
+        index++;
+    }
+
+    *current_index = index; // Update the original index
 }

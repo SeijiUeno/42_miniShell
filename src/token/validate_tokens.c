@@ -6,77 +6,57 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:07:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:50:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
-// Initialize a new token
-void initialize_token_list(t_token **tokens) {
-    *tokens = (t_token *)malloc(sizeof(t_token));
-    if (!(*tokens))
-        return;
-    (*tokens)->type = -1;
-    (*tokens)->content = NULL;
-    (*tokens)->next = NULL;
-    (*tokens)->prev = NULL;
+static int syntax_error(const char *message, const char *token) 
+{
+	error((char *)"syntax error near unexpected token ", (char *)token, 1);
+
+	return (1);
 }
 
-// Add a new token to the end of the list
-void append_token(t_token **token_list, t_token *new_token) {
-    t_token *current = *token_list;
+// Check if the first token is an invalid leading pipe
+static int check_leading_pipe(t_token *token) {
+    if (token && token->type == OPERATOR && token->content[0] == '|') {
+        return syntax_error("leading pipe", token->content);
+    }
+    return 0;
+}
 
-    // If the list is empty, set the new token as the first element
-    if (!current) {
-        *token_list = new_token;
-        return;
+// Check for syntax errors between consecutive operators or trailing operators
+static int check_consecutive_operators(t_token *current) {
+    if (current->type == OPERATOR) {
+        if (!current->next) {
+            // Trailing operator (e.g., "echo hello |")
+            return syntax_error("trailing operator", "`newline'");
+        } else if (current->next->type == OPERATOR) {
+            // Consecutive operators (e.g., "echo hello ||")
+            return syntax_error("consecutive operators", current->next->content);
+        }
+    }
+    return 0;
+}
+
+// Validate the token list for syntax errors
+int validate_tokens(t_token *tokens) {
+    t_token *current = tokens;
+
+    // Step 1: Check for a leading pipe
+    if (check_leading_pipe(current)) {
+        return 1;
     }
 
-    // Traverse the list to find the last token
-    while (current->next) {
+    // Step 2: Iterate through tokens and check for syntax errors
+    while (current) {
+        if (check_consecutive_operators(current)) {
+            return 1;
+        }
         current = current->next;
     }
 
-    // Add the new token at the end of the list
-    current->next = new_token;
-    new_token->prev = current; // Link the new token back to the previous one
+    return EXIT_SUCCESS; // No syntax errors found
 }
-
-// Free all tokens in the list
-void free_all_tokens(t_token **token_list) {
-    t_token *current = *token_list;
-    t_token *next_token;
-
-    // Iterate through the list and free each token
-    while (current) {
-        next_token = current->next; // Save the next token
-        if (current->content) {
-            free(current->content); // Free the token's content
-        }
-        free(current);             // Free the token itself
-        current = next_token;      // Move to the next token
-    }
-
-    *token_list = NULL; // Set the list pointer to NULL after freeing
-}
-
-// Skip whitespace characters in the input string
-void skip_whitespace(char *input, int *index) {
-    // Advance the index while the current character is a whitespace
-    while (input[*index] && ft_strchr(WHITESPACE, input[*index])) {
-        (*index)++;
-    }
-}
-
-// Allocate a new token with content from input[start] to input[end]
-void create_new_token(t_token **tokens, char *input, int start, int end) {
-    tokens[0]->content = ft_substr(input, start, end - start);
-
-    if (input[end] != '\0') {
-        initialize_token_list(&(tokens[0]->next)); // Initialize the next token
-        tokens[0]->next->prev = tokens[0];        // Link the new token to the current one
-        tokens[0] = tokens[0]->next;              // Move to the new token
-    }
-}
-

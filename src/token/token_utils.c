@@ -6,14 +6,14 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:39:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:13:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:39:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
 
 void initialize_token_list(t_token **tokens) {
-    *tokens = (t_token *)malloc(sizeof(t_token));
+    *tokens = (t_token *)gc_allocate(sizeof(t_token));
     if (!(*tokens))
         return;
     (*tokens)->type = -1;
@@ -51,9 +51,9 @@ void free_all_tokens(t_token **token_list) {
     while (current) {
         next_token = current->next; // Save the next token
         if (current->content) {
-            free(current->content); // Free the token's content
+            gc_deallocate(current->content); // Free the token's content
         }
-        free(current);             // Free the token itself
+        gc_deallocate(current);             // Free the token itself
         current = next_token;      // Move to the next token
     }
 
@@ -70,7 +70,7 @@ void skip_whitespace(char *input, int *index) {
 
 // Allocate a new token with content from input[start] to input[end]
 void create_new_token(t_token **tokens, char *input, int start, int end) {
-    tokens[0]->content = ft_substr(input, start, end - start);
+    tokens[0]->content = gc_substr(input, start, end - start);
 
     if (input[end] != '\0') {
         initialize_token_list(&(tokens[0]->next)); // Initialize the next token
