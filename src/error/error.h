@@ -1,14 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 16:26:04 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/01 21:06:56 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/01 21:20:05 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/01 21:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
-#include "../src/tokenizer/tokenizer.h"
+#ifndef ERROR_H
+# define ERROR_H
+
+int	error(char *content, char *error, int num_error);
+
+#endif

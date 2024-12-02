@@ -6,18 +6,22 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:57 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:10:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:45:48 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#include "../shell.h"
+# include "../../libft/includes/libft.h"
+# include "../../libft/includes/garbage_collector.h"
+# include "../error/error.h" 
 
 # define WHITESPACE " \t\n\r\v\f"
 # define SYMBOLS "|<>"
 # define QUOTES "'\""
+
+typedef struct s_token t_token;
 
 typedef enum e_token_type {
     WORD,
@@ -29,12 +33,12 @@ typedef enum e_token_type {
     APPEND
 } t_token_type;
 
-typedef struct s_token {
-    t_token_type type;
-    char *content;
+struct s_token {
+    t_token_type 	type;
+    char 			*content;
     struct s_token *next;
     struct s_token *prev;
-} t_token;
+};
 
 // Function declarations
 void generate_tokens(char *input, t_token **tokens);

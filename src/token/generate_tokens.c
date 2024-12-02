@@ -6,13 +6,12 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:05:50 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 21:16:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+# include "tokenizer.h"
 
-// Advance the current index until whitespace, symbols, or the end of input
 static void advance_until_delimiter(char *input, int *current_index) {
     while (input[*current_index]
            && !ft_strchr(WHITESPACE, input[*current_index])
@@ -67,7 +66,7 @@ static void remove_empty_tokens(t_token **tokens) {
             else
                 *tokens = current->next;
             current = current->next;
-            free(to_free);
+            gc_deallocate(to_free);
         } else {
             prev = current;
             current = current->next;

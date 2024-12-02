@@ -6,13 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:06:25 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/01 20:49:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
-
-// operator_tokens.c
 
 // Set the type of a redirection token based on its content
 static void determine_redirection_type(t_token *token, char redir_char) {

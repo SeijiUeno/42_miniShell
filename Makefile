@@ -21,6 +21,7 @@ LIBFT    = $(LIBFT_DIR)/libft.a
 
 # Source and Object Files
 SRC_FILES = signal/signals.c \
+			error/error.c \
             token/generate_tokens.c \
             token/operator_tokens.c \
             token/quoted_tokens.c \
