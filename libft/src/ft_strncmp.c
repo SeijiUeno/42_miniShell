@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/01 16:12:24 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/22 18:57:37 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/22 19:01:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* main.c */
+#include <stddef.h>
 
-#include "shell.h"
-#include "token/tokenizer.h"
-#include "signal/signals.h"
-#include "ast/ast.h"
-#include "buildins/buildins.h"
-
-int	main(void)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
+	if (!n)
+		return (0);
+	while ((*s1 || *s2) && (n-- > 0))
+	{
+		if (*(s1++) != *(s2++))
+			return (*(unsigned char *)(--s1) - *(unsigned char *)(--s2));
+	}
 	return (0);
 }

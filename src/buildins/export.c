@@ -1,26 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/10/04 17:31:48 by emorales         ###   ########.fr       */
+/*   Created: 2024/11/25 18:44:18 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 19:40:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
-
-char	*ft_strdup(const char *s)
-{
-	char	*str;
-	size_t	len;
-
-	len = ft_strlen(s);
-	str = malloc(len + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s, len + 1);
-	return (str);
-}
+#include "../shell.h"
+#include "buildins.h"

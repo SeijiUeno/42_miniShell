@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/21 11:26:42 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/22 19:00:46 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	echo(char **args)
 
 	i = 1;
 	print_newline = 1;
-	while (arg[i] && check_args_minus_n(args[i]))
+	while (args[i] && check_args_minus_n(args[i]))
 	{
 		print_newline = 0;
 		i++;

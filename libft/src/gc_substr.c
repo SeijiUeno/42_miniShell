@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   gc_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/01 16:12:24 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/03/02 02:03:33 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 13:15:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* main.c */
+#include "../includes/libft.h"
+#include "../includes/garbage_collector.h"
 
-#include "shell.h"
-#include "token/tokenizer.h"
-#include "signal/signals.h"
-#include "ast/ast.h"
-#include "buildins/buildins.h"
-
-int	main(void)
+char	*gc_substr(char const *s, unsigned int start, size_t len)
 {
-	return (0);
+	char	*str;
+	size_t	slen;
+
+	slen = ft_strlen(s);
+	if (start > slen)
+		return (gc_strdup(""));
+	if (len > slen - start)
+		return (gc_strdup(s + start));
+	str = gc_allocate(len + 1);
+	if (!str)
+		return (NULL);
+	ft_strlcpy(str, s + start, len + 1);
+	return (str);
 }

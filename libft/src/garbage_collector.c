@@ -6,13 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:15:41 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/19 17:14:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:08:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* garbage_collector.c */
-
-#include "garbage_collector.h"
+#include "../includes/garbage_collector.h"
 
 static t_garbage_node **get_garbage_list(void)
 {
@@ -98,8 +96,10 @@ void gc_cleanup(void)
     {
         temp = current;
         current = current->next;
-        free(temp->address);
-        free(temp);  
+        if (temp->address)
+            free(temp->address);
+        if (temp)
+            free(temp);  
     }
     *garbage_list = NULL;
 }

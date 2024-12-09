@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   gc_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 15:54:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 20:04:47 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/11/25 15:23:39 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/11/25 19:34:15 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
 #include "../includes/garbage_collector.h"
+#include "../includes/libft.h"
 
-void	*ft_calloc(size_t number_elements, size_t size)
+char *gc_strndup(const char *s, size_t n)
 {
-	void	*ptr;
-	size_t	total;
+    size_t len;
+    char *copy;
+    size_t i;
 
-	total = number_elements * size;
-	if (number_elements && total / number_elements != size)
-		return (NULL);
-	ptr = gc_allocate(total);
-	if (!ptr)
-		return (NULL);
-	ft_bzero(ptr, total);
-	return (ptr);
+    len = 0;
+    if (!s)
+        return NULL;
+    while (s[len] && len < n)
+        len++;
+    copy = gc_allocate(len + 1); 
+    if (!copy)
+        return NULL;
+    i = 0;
+    while (i < len)
+    {
+        copy[i] = s[i];
+        i++;
+    }
+    copy[len] = '\0';
+
+    return copy;
 }
