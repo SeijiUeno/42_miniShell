@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 16:58:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:00:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define QUOTES "'\""
 
 typedef struct s_minishell	t_minishell;
+typedef struct s_token		t_token;
+typedef enum e_token_type	t_token_type;
 
 struct s_minishell
 {
