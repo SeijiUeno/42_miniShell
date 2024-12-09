@@ -6,87 +6,180 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 21:16:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:51:02 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "tokenizer.h"
 
-static void advance_until_delimiter(char *input, int *current_index) {
-    while (input[*current_index]
-           && !ft_strchr(WHITESPACE, input[*current_index])
-           && !ft_strchr(SYMBOLS, input[*current_index])) {
-        if (ft_strchr(QUOTES, input[*current_index])) {
-            skip_quoted_token(input, current_index); // Handle quoted sections
-        } else {
-            (*current_index)++;
-        }
+
+int validate_input(char *input);
+t_token *tokenize_input(char *input);
+int validate_all_quotes(char *input);
+
+void generate_tokens(char *input, t_token **tokens)
+{
+    if (validate_input(input))
+    {
+        *tokens = NULL; // Set tokens to NULL if input is invalid
+        return;
     }
+    *tokens = tokenize_input(input);
+    if (tokens)
+        assign_operator_token_types(tokens);
 }
 
-// Process a word token from the input
-void extract_word_token(char *input, t_token **tokens, int *current_index) {
-    int start_index = *current_index;
-
-    (*tokens)->type = WORD;
-
-    // Use the auxiliary function to advance the index
-    advance_until_delimiter(input, current_index);
-
-    if (*current_index > start_index) {
-        create_new_token(tokens, input, start_index, *current_index);
-    }
-}
-
-
-// Split the input into tokens
-static void tokenize_input(char *input, t_token **tokens) {
-    t_token *aux = *tokens;
-    int i = 0;
-
-    while (input[i]) {
-        skip_whitespace(input, &i);
-        if (input[i] && ft_strchr(SYMBOLS, input[i]))
-            process_operator_token(input, &aux, &i);
-        else if (input[i])
-            extract_word_token(input, &aux, &i);
-    }
-}
-
-// Remove tokens with null content from the list
-static void remove_empty_tokens(t_token **tokens) {
-    t_token *current = *tokens;
-    t_token *prev = NULL;
-
-    while (current) {
-        if (!current->content) {
-            t_token *to_free = current;
-            if (prev)
-                prev->next = current->next;
-            else
-                *tokens = current->next;
-            current = current->next;
-            gc_deallocate(to_free);
-        } else {
-            prev = current;
-            current = current->next;
-        }
-    }
-}
-
-// Check if the input contains only whitespace characters
-static int is_only_spaces(char *input) {
+int is_only_spaces(char *input)
+{
     int i = 0;
     while (input[i] && ft_strchr(WHITESPACE, input[i]))
         i++;
     return (input[i] == '\0');
 }
 
-// Main function to tokenize the input string
-void generate_tokens(char *input, t_token **tokens) {
-    if (!input || !input[0] || validate_all_quotes(input) || is_only_spaces(input))
-        return;
-    initialize_token_list(tokens);
-    tokenize_input(input, tokens);
-    remove_empty_tokens(tokens);
+int validate_input(char *input)
+{
+    if (!input || !input[0])
+        return error("minishell: ", "Empty input", EXIT_FAILURE);
+
+    if (validate_all_quotes(input) != EXIT_SUCCESS)
+        return error("minishell: ", "Unmatched quotes in input", EXIT_FAILURE);
+
+    if (is_only_spaces(input))
+        return error("minishell: ", "Input contains only whitespace", EXIT_FAILURE);
+
+    return EXIT_SUCCESS;
+}
+
+void skip_quoted_token(char *input, int *index)
+{
+    char quote = input[*index];
+    (*index)++; // Skip opening quote
+
+    while (input[*index] && input[*index] != quote)
+        (*index)++;
+
+    if (input[*index] == quote)
+        (*index)++; // Skip closing quote
+}
+
+void skip_whitespace(char *input, int *index)
+{
+    while (input[*index] && ft_strchr(WHITESPACE, input[*index]))
+        (*index)++;
+}
+
+int validate_all_quotes(char *input)
+{
+    int index = 0;
+
+    while (input[index])
+    {
+        if (ft_strchr(QUOTES, input[index]))
+        {
+            char quote = input[index];
+            index++;
+            while (input[index] && input[index] != quote)
+                index++;
+
+            if (!input[index])
+                return EXIT_FAILURE;
+        }
+        index++;
+    }
+    return EXIT_SUCCESS;
+}
+
+
+void add_token(t_token **tokens, t_token **current, char *input, int start, int end)
+{
+    t_token *new_token = (t_token *)malloc(sizeof(t_token));
+    if (!new_token)
+    {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    new_token->content = ft_substr(input, start, end - start);
+    new_token->type = ft_strchr(SYMBOLS, input[start]) ? OPERATOR : WORD;
+    new_token->next = NULL;
+    new_token->prev = NULL;
+
+    if (*current)
+    {
+        (*current)->next = new_token;
+        new_token->prev = *current;
+    }
+    else
+    {
+        *tokens = new_token;
+    }
+    *current = new_token;
+}
+
+void assign_operator_token_types(t_token **tokens)
+{
+    t_token *current = *tokens;
+
+    while (current)
+    {
+        if (current->type == OPERATOR) // Only process operator tokens
+        {
+            char op_char = current->content[0];
+
+            // Assign specific operator type
+            if (op_char == '|')
+            {
+                current->type = PIPE;
+            }
+            else if (op_char == '<')
+            {
+                if (current->content[1] == '<') // Handle '<<'
+                    current->type = HEREDOC;
+                else
+                    current->type = REDIR_IN;
+            }
+            else if (op_char == '>')
+            {
+                if (current->content[1] == '>') // Handle '>>'
+                    current->type = APPEND;
+                else
+                    current->type = REDIR_OUT;
+            }
+        }
+        current = current->next;
+    }
+}
+
+t_token *tokenize_input(char *input)
+{
+    t_token *tokens = NULL;
+    t_token *current = NULL;
+    int index = 0;
+
+    while (input[index])
+    {
+        skip_whitespace(input, &index); // Skip leading whitespace
+
+        if (input[index] && ft_strchr(SYMBOLS, input[index]))
+        {
+            // Process symbols (|, <, >, etc.)
+            add_token(&tokens, &current, input, index, index + 1);
+            index++;
+        }
+        else if (input[index])
+        {
+            // Process words (handles quotes)
+            int start = index;
+            while (input[index] && !ft_strchr(WHITESPACE, input[index]) && !ft_strchr(SYMBOLS, input[index]))
+            {
+                if (ft_strchr(QUOTES, input[index]))
+                    skip_quoted_token(input, &index); // Skip quoted segments
+                else
+                    index++;
+            }
+            add_token(&tokens, &current, input, start, index);
+        }
+    }
+
+    return tokens;
 }
