@@ -36,6 +36,7 @@ SRC_FILES = signal/signals.c \
 			buildins/cd.c \
 			env/get_env.c \
 			env/path_holders.c \
+			env/env_s.c \
 			main.c
 
 SRCS      = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

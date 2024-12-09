@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:06:50 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 16:35:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/07 16:30:42 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "env.h"
 
 /*
 ** Copies the environment variables from envp into a new dynamically allocated
@@ -143,4 +143,18 @@ char	**get_paths(char **env)
 		temp++;
 	}
 	return (NULL);
+}
+
+int	print_env(char **envp)
+{
+	char	**temp;
+
+	temp = envp;
+	while (*temp != NULL)
+	{
+		if (ft_strchr(*temp, '='))
+			ft_printf("%s\n", *temp);
+		temp++;
+	}
+	return (0);
 }
