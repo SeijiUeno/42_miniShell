@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 17:00:05 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:59:10 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@
 # include "token/tokenizer.h"
 # include "execution/execution.h"
 
-# define STATUS_GET -1
-# define STATUS_SIGINT 130
-# define STATUS_SIGQUIT 131
+	# define STATUS_GET -1
+	# define STATUS_SIGINT 130
+	# define STATUS_SIGQUIT 131
 
 # define WHITESPACE " \t\n\r\v\f"
 # define SYMBOLS "|<>"
