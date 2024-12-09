@@ -1,43 +1,62 @@
-# Variables
-NAME = libft.a
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra
-OBJ_DIR = obj/
-SRC_DIR = src/
+# Makefile for Libft Library (with Colors)
 
-SOURCES = \
-	ft_isdigit.c \
-	ft_strlen.c \
-	ft_atoi.c \
-	ft_putnbr.c \
-	ft_strcmp.c \
-	ft_substr.c \
-	ft_memcpy.c \
-	ft_strdup.c \
-	ft_strlcpy.c \
-	ft_calloc.c \
-	ft_bzero.c 
+# Compiler and Flags
+CC      = gcc
+CFLAGS  = -Wall -Wextra -Werror
 
-OBJECTS = $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
-SRC = $(addprefix $(SRC_DIR), $(SOURCES))
+# Colors
+GREEN   = \033[32m
+YELLOW  = \033[33m
+BLUE    = \033[34m
+RED     = \033[31m
+RESET   = \033[0m
 
+# Target and Directories
+NAME    = libft.a
+SRC_DIR = src
+OBJ_DIR = obj
+
+# Source and Object Files
+SRC_FILES = ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
+            ft_strcmp.c gc_substr.c ft_memcpy.c gc_strdup.c \
+            ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putchar_fd.c \
+            ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
+            garbage_collector.c ft_error.c gc_strndup.c \
+			ft_isalpha.c ft_strchr.c ft_isalnum.c gc_strjoin.c \
+			gc_split.c
+
+OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+
+# Rules
 .PHONY: all clean fclean re
 
-all: $(OBJ_DIR) $(NAME)
+all: $(NAME)
 
+# Build the library
+$(NAME): $(OBJ_FILES)
+	@echo "$(BLUE)Creating library: $(NAME)$(RESET)"
+	@ar rcs $(NAME) $(OBJ_FILES)
+	@echo "$(GREEN)Library $(NAME) created successfully!$(RESET)"
+
+# Compile source files into object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(YELLOW)Compiling $< -> $@$(RESET)"
+	@$(CC) $(CFLAGS) -c $< -o $@
+
+# Create object directory if it doesn't exist
 $(OBJ_DIR):
+	@echo "$(BLUE)Creating directory: $(OBJ_DIR)$(RESET)"
 	@mkdir -p $(OBJ_DIR)
 
-$(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
+# Clean object files
 clean:
-	rm -rf $(OBJ_DIR)
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@rm -rf $(OBJ_DIR)
 
+# Full clean (object files and library)
 fclean: clean
-	rm -f $(NAME)
+	@echo "$(RED)Removing library $(NAME)...$(RESET)"
+	@rm -f $(NAME)
 
+# Rebuild everything
 re: fclean all

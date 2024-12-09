@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 19:14:55 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/01 16:12:24 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/01 21:20:05 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/01 21:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* main.c */
+#ifndef ERROR_H
+# define ERROR_H
 
-#include "shell.h"
-#include "token/tokenizer.h"
-#include "signal/signals.h"
-#include "ast/ast.h"
-#include "buildins/buildins.h"
+int	error(char *content, char *error, int num_error);
 
-int	main(void)
-{
-	return (0);
-}
+#endif

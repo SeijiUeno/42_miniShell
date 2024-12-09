@@ -6,27 +6,57 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/09/26 18:20:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/05 18:28:50 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../shell.h"
+#include "../../libft/includes/garbage_collector.h"
 
-	/*  Handle Ctrl-C (SIGINT) 
-		signal: simply print a new prompt on a new line */
-static	void	handle_sigint(int sig)
+int	control_status(int status)
 {
-	if (sig)
+	static int	status_backup;
+
+	if (status == -1)
+		return (status_backup);
+	status_backup = status;
+	return (status_backup);
+}
+
+int	filter_status(int status)
+{
+	if (control_status(-1) && (status == 2 || status == 3))
+		status = control_status(-1);
+	else if (status > 255)
+		status = (status >> 8) & 0xff;
+	return (status);
+}
+
+void	handle_signal_exec(int signum)
+{
+	if (signum == SIGINT || signum == SIGQUIT)
 	{
-		printf("\n");
-		rl_on_new_line(); // Tell readline a new line was printed
-		rl_replace_line("", 0); // Clear the current input line
-		rl_redisplay(); // Redisplay the prompt
+		if (signum == SIGQUIT)
+			ft_putstr_fd("Quit: 3", STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		control_status(signum + 128);
 	}
 }
 
-void	signal_init(void)
+void	handle_signal(int signum)
 {
-	signal(SIGINT, handle_sigint); // Set up signal handling for Ctrl-C
-	signal(SIGQUIT, SIG_IGN); // Ignore Ctrl-\ (SIGQUIT)
+	if (signum == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		rl_on_new_line();
+		rl_replace_line("", STDIN_FILENO);
+		rl_redisplay();
+		control_status(signum + 128);
+	}
+}
+
+void	prepare_signals(void)
+{
+	signal(SIGINT, &handle_signal);
+	signal(SIGQUIT, SIG_IGN);
 }
