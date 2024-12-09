@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 16:46:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:42:04 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,9 +162,17 @@ t_token *tokenize_input(char *input)
 
         if (input[index] && ft_strchr(SYMBOLS, input[index]))
         {
-            // Process symbols (|, <, >, etc.)
-            add_token(&tokens, &current, input, index, index + 1);
-            index++;
+            if ((input[index] == '<' && input[index + 1] == '<') 
+                || (input[index] == '>' && input[index + 1] == '>'))
+            {
+                add_token(&tokens, &current, input, index, index + 2);
+                index += 2;
+            }
+            else
+            {
+                add_token(&tokens, &current, input, index, index + 1);
+                index++;
+            }
         }
         else if (input[index])
         {
