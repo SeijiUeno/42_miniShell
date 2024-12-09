@@ -6,166 +6,218 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 21:48:17 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/09 19:54:54 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ast.h"
 
-static int count_args(t_token *tokens)
-{
-    int count = 0;
-    t_token *current = tokens;
+#include "../includes/minishell.h"
 
-    while (current && current->type != PIPE)
-    {
-        if (current->type == WORD)
-            count++;
-        current = current->next;
+// Count the number of command arguments before a pipe
+static int count_command_arguments(t_token *tokens) {
+    int arg_count = 0;
+    
+    while (tokens && tokens->type != PIPE) {
+        if (tokens->type == WORD) {
+            arg_count++;
+        }
+        tokens = tokens->next;
     }
-    return count;
+    
+    return arg_count;
 }
 
-char **generate_argv(t_token *tokens, t_minishell *minishell)
-{
-    int arg_count;
-    char **argv;
-    t_token *current;
-    int index;
-
-    arg_count = count_args(tokens);
-    if (arg_count == 0)
-        return NULL;
-
-    argv = (char **)ft_calloc(arg_count + 1, sizeof(char *));
-    if (!argv)
-        return NULL;
-
-    current = tokens;
-    index = 0;
-    while (current && current->type != PIPE)
-    {
-        if (current->type == WORD)
-            // WIP: argv[index++] = expand_vars_and_quotes(current->content, minishell);
-        current = current->next;
+// Safely free a partially allocated argument array
+static void free_argument_array_partially(char **argv, int used) {
+    while (used--) {
+        free(argv[used]);
     }
+    free(argv);
+}
+
+// Allocate and populate an argument array with expanded variables and quotes
+static char **allocate_argument_array(t_token *tokens, t_minishell *minishell, int count) {
+    char **argv = malloc(sizeof(char*) * (count + 1));
+    int index = 0;
+    
+    if (!argv) {
+        return NULL;
+    }
+    
+    while (tokens && tokens->type != PIPE) {
+        if (tokens->type == WORD) {
+            argv[index] = expand_vars_and_quotes(tokens->content, minishell);
+            
+            if (!argv[index]) {
+                free_argument_array_partially(argv, index);
+                return NULL;
+            }
+            
+            index++;
+        }
+        tokens = tokens->next;
+    }
+    
     argv[index] = NULL;
     return argv;
 }
 
-t_token *find_last_pipe(t_token *tokens)
-{
-    t_token *current = tokens;
-    t_token *last_pipe = tokens;
-
-    while (current)
-    {
-        if (current->type == PIPE)
-            last_pipe = current;
-        current = current->next;
+// Build an argument vector from tokens
+static char **build_argument_vector(t_token *tokens, t_minishell *minishell) {
+    int count = count_command_arguments(tokens);
+    
+    if (!count) {
+        return NULL;
     }
-    return last_pipe;
+    
+    return allocate_argument_array(tokens, minishell, count);
 }
 
-t_token *find_previous_pipe(t_token *token, t_minishell *minishell)
-{
-    t_token *current;
-
-    if (!token)
+// Create a new command node with the given data
+static t_command *create_command_node_data(
+    char **argv, 
+    t_token *redirections, 
+    int type
+) {
+    t_command *new_node = malloc(sizeof(t_command));
+    
+    if (!new_node) {
         return NULL;
-
-    current = token;
-    while (current)
-    {
-        if (current->type == PIPE)
-            return current;
-        current = current->prev;
     }
-    return minishell->tokens;
-}
-
-t_command *new_tree_node(char **args)
-{
-    t_command *node = gc_allocate(sizeof(t_command));
-    if (!node)
-        return NULL;
-
-    node->argv = args;
-    node->argc = 0;
-    node->type = -1;
-    node->left = NULL;
-    node->right = NULL;
-    node->parent = NULL;
-    node->redir = NULL;
-    return node;
-}
-
-t_command *generate_command_node(t_token *token, t_minishell *minishell)
-{
-    t_command *new_node = new_tree_node(NULL);
-    if (!new_node)
-        return NULL;
-
-    new_node->argv = generate_argv(token, minishell);
-    // WIP: new_node->redir = generate_redirs(&token, minishell); // Use original function name
-    new_node->type = WORD;
+    
+    new_node->argv = argv;
+    new_node->redir = redirections;
+    new_node->type = type;
+    
+    // Initialize other fields to default values
+    new_node->argc = 0;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    new_node->parent = NULL;
+    new_node->fd[0] = -1;
+    new_node->fd[1] = -1;
+    
     return new_node;
 }
 
-t_command *generate_pipe_node(t_token *token, t_minishell *minishell)
-{
-    t_command *new_node = new_tree_node(NULL);
-    if (!new_node)
-        return NULL;
+// Create a command node with arguments and redirections
+static t_command *create_command_node(
+    t_token *tokens, 
+    t_minishell *minishell
+) {
+    // Extract and remove redirections from tokens
+    t_token *redirections = ft_generate_redirs(&tokens, minishell);
 
-    new_node->argv = gc_split("|", ' '); // Keep original behavior
-    new_node->type = PIPE;
-    new_node->right = generate_command_node(token->next, minishell);
-    if (new_node->right)
-        new_node->right->parent = new_node;
-    return new_node;
+    // Build argument vector (now without redirection tokens)
+    char **argv = build_argument_vector(tokens, minishell);
+
+    // Create and return the command node
+    return create_command_node_data(argv, redirections, WORD);
 }
 
-void tree_add_on_left(t_command **tree_root, t_command *new_node)
-{
-    t_command *current;
+// Create a pipe node connecting two commands
+static t_command *create_pipe_node(
+    t_command *left_cmd, 
+    t_command *right_cmd
+) {
+    // Create a pipe node with a simple "|" argv
+    t_command *pipe_node = create_command_node_data(
+        ft_split("|", ' '), 
+        NULL, 
+        PIPE
+    );
+    
+    if (!pipe_node) {
+        return NULL;
+    }
+    
+    // Set child and parent relationships
+    pipe_node->left = left_cmd;
+    pipe_node->right = right_cmd;
+    
+    if (left_cmd) {
+        left_cmd->parent = pipe_node;
+    }
+    
+    if (right_cmd) {
+        right_cmd->parent = pipe_node;
+    }
+    
+    return pipe_node;
+}
 
-    if (!tree_root || !new_node)
+// Move tokens to the next pipe or end of list
+static void advance_to_next_pipe(t_token **tokens) {
+    while (*tokens && (*tokens)->type != PIPE) {
+        *tokens = (*tokens)->next;
+    }
+}
+
+// Build a pipeline Abstract Syntax Tree (AST)
+static t_command *build_pipeline_ast(
+    t_minishell *minishell, 
+    t_command *root_cmd
+) {
+    t_token *tokens = minishell->tokens;
+    
+    advance_to_next_pipe(&tokens);
+    
+    while (tokens) {
+        if (tokens->type == PIPE) {
+            // Move to the next token after the pipe
+            tokens = tokens->next;
+            
+            if (!tokens) {
+                break;
+            }
+            
+            // Create a new command node
+            t_command *new_cmd = create_command_node(tokens, minishell);
+            
+            if (!new_cmd) {
+                return root_cmd;
+            }
+            
+            // Create a pipe node connecting previous and new commands
+            t_command *pipe_node = create_pipe_node(root_cmd, new_cmd);
+            
+            if (!pipe_node) {
+                return root_cmd;
+            }
+            
+            // Update root to the new pipe node
+            root_cmd = pipe_node;
+            
+            // Advance to the next pipe
+            advance_to_next_pipe(&tokens);
+        } else {
+            tokens = tokens->next;
+        }
+    }
+    
+    return root_cmd;
+}
+
+// Generate the Abstract Syntax Tree for the minishell
+void generate_ast(t_minishell *minishell) {
+    // Handle empty token list
+    if (!minishell->tokens) {
+        minishell->tree_cmd = NULL;
         return;
-
-    if (!*tree_root)
-    {
-        *tree_root = new_node;
     }
-    else
-    {
-        current = *tree_root;
-        while (current->left)
-            current = current->left;
-        current->left = new_node;
-        new_node->parent = current;
+    
+    // Create the first command node
+    t_command *first_cmd = create_command_node(minishell->tokens, minishell);
+    
+    if (!first_cmd) {
+        minishell->tree_cmd = NULL;
+        return;
     }
-}
-
-void generate_tree(t_minishell *minishell)
-{
-    t_token *current;
-    t_command *node;
-
-    current = find_last_pipe(minishell->tokens);
-    while (current)
-    {
-        if (current->type == PIPE)
-        {
-            node = generate_pipe_node(current, minishell);
-            tree_add_on_left(&minishell->tree_cmd, node);
-        }
-        else
-        {
-            node = generate_command_node(current, minishell);
-            tree_add_on_left(&minishell->tree_cmd, node);
-            break;
-        }
-        current = find_previous_pipe(current->prev, minishell);
-    }
+    
+    // Build the full pipeline AST
+    minishell->tree_cmd = build_pipeline_ast(minishell, first_cmd);
+    
+    // Debug print the generated tree
+    debug_print_tree(minishell->tree_cmd, 3);
 }
