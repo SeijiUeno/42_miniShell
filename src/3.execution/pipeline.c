@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:25:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:25:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:56:47 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../shell.c"
 
 int run_single_command(t_minishell *m, t_command *c) {
     if (c->redir && setup_redirs(c->redir) != 0)

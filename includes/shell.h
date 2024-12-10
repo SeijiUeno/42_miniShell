@@ -6,11 +6,12 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:46:01 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:17:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# define MINISHELL_H
+#ifndef SHELL_H
+# define SHELL_H
 
 # include <limits.h>
 # include <stdio.h>
@@ -44,11 +45,11 @@ typedef enum e_token_type	t_token_type;
 struct s_minishell
 {
 	int			status;
-	char		*input;
-	char		**envp;
-	char		**path;
 	int			stdin_backup;
 	int			stdout_backup;
+	char		**envp;
+	char		**path;
+	char		*input;
 	t_token		*tokens;
 	t_command	*tree_cmd;
 	t_list		*pid_list;
@@ -60,18 +61,6 @@ struct s_token
 	char			*content;
 	struct s_token	*next;
 	struct s_token	*prev;
-};
-
-struct s_command
-{
-	char				**argv;
-	t_token				*redir;
-	int					argc;
-	int					fd[2];
-	int					type;
-	struct s_command	*left;
-	struct s_command	*right;
-	struct s_command	*parent;
 };
 
 struct s_pid
@@ -89,6 +78,18 @@ enum e_operator_type
 	HEREDOC,
 	WORD,
 	OPERATOR,
+};
+
+struct s_command
+{
+	int					argc;
+	int					type;
+	int					fd[2];
+	char				**argv;
+	t_token				*redir;
+	t_command			*left;
+	t_command			*right;
+	t_command			*root;
 };
 
 
@@ -180,7 +181,7 @@ char		*verify_path(char *bin, char **path);
 int			print_env(char **envp);
 void		execute_tree_commands(t_minishell *minishell);
 void		execute_single_command(t_minishell *minishell);
-void		close_upcoming_fds(t_command *parent);
+void		close_upcoming_fds(t_command *root);
 void		close_all_fds(t_minishell *minishell);
 void		execute_pipe_command(t_minishell *minishell, t_command *temp_tree);
 void		child_process(t_minishell *minishell, t_command *temp_tree,

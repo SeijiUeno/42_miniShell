@@ -6,9 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:36:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:50:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../shell.h"
 
 static char *handle_input(void)
 {

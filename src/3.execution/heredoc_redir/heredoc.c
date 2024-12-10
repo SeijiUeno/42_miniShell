@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 20:37:17 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:55:44 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../../shell.c"
 
 void	handle_sig_heredoc(int signal)
 {

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:24:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 17:47:26 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:16:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ void    ft_error(const char *prefix, const char *arg, const char *suffix);
 int	    ft_isalnum(int c);
 int	    ft_isalpha(int c);
 char	*ft_strchr(const char *s, int c);
+char	        *ft_strdup(const char *s);
+char	        *ft_substr(char const *s, unsigned int start, size_t len);
+char            *ft_strndup(const char *s, size_t n);
+char	        *ft_strjoin(char const *s1, char const *s2);
+char	        **ft_split(char const *s, char c);
+
 
 #endif

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:23:39 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:34:15 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:15:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/garbage_collector.h"
 #include "../includes/libft.h"
 
-char *gc_strndup(const char *s, size_t n)
+char *ft_strndup(const char *s, size_t n)
 {
     size_t len;
     char *copy;
@@ -24,7 +24,7 @@ char *gc_strndup(const char *s, size_t n)
         return NULL;
     while (s[len] && len < n)
         len++;
-    copy = gc_allocate(len + 1); 
+    copy = (char *)malloc(len + 1); 
     if (!copy)
         return NULL;
     i = 0;

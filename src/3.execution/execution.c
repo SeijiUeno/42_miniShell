@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:25:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:56:39 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include ""
+#include "../shell.c"
 
 void execute_tree_commands(t_minishell *m) {
     t_command **commands = ast_to_command_list(m->tree_cmd);

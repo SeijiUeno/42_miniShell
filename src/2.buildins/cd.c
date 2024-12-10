@@ -6,9 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 16:25:24 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:51:39 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../shell.h"
 
 static int	is_current_or_empty_dir(const char *path)
 {

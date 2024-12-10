@@ -6,13 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 19:54:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:52:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ast.h"
-
-#include "../includes/minishell.h"
+#include "../../shell.h"
 
 // Count the number of command arguments before a pipe
 static int count_command_arguments(t_token *tokens) {
@@ -94,7 +92,7 @@ static t_command *create_command_node_data(
     new_node->argc = 0;
     new_node->left = NULL;
     new_node->right = NULL;
-    new_node->parent = NULL;
+    new_node->root = NULL;
     new_node->fd[0] = -1;
     new_node->fd[1] = -1;
     
@@ -132,16 +130,16 @@ static t_command *create_pipe_node(
         return NULL;
     }
     
-    // Set child and parent relationships
+    // Set child and root relationships
     pipe_node->left = left_cmd;
     pipe_node->right = right_cmd;
     
     if (left_cmd) {
-        left_cmd->parent = pipe_node;
+        left_cmd->root = pipe_node;
     }
     
     if (right_cmd) {
-        right_cmd->parent = pipe_node;
+        right_cmd->root = pipe_node;
     }
     
     return pipe_node;

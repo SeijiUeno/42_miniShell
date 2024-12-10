@@ -6,18 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 17:31:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:58:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static void cleanup_minishell(t_minishell *minishell)
-{
-    free_all(minishell);
-    if (minishell->stdin_backup >= 0)
-        close(minishell->stdin_backup);
-    if (minishell->stdout_backup >= 0)
-        close(minishell->stdout_backup);
-}
+#include "../shell.c"
 
 int	get_and_reset_status(void)
 {

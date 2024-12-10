@@ -6,9 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:24:44 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:24:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:56:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../shell.c"
 
 void wait_for_children(t_minishell *minishell, pid_t *pids, int count) {
     int status;

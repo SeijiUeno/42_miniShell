@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 16:15:41 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 18:08:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:28:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/garbage_collector.h"
 
-static t_garbage_node **get_garbage_list(void)
+t_garbage_node **get_garbage_list(void)
 {
     static t_garbage_node   *garbage_list;
     return (&garbage_list);
