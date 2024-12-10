@@ -1,86 +1,166 @@
-# Makefile for Minishell Project (with Colors)
+#! ******************************************************************************#
+#                                   NAME                                         #
+#! ******************************************************************************#
 
-# Compiler and Flags
-CC       = gcc
-CFLAGS   = -Iinclude -Isrc/token -Ilibft
-READLINE = -lreadline
+NAME := minishell
+.DEFAULT_GOAL := all
+.PHONY: all clean fclean re rebonus help
+.SILENT:
 
-# Colors
-GREEN    = \033[32m
-YELLOW   = \033[33m
-BLUE     = \033[34m
-RED      = \033[31m
-RESET    = \033[0m
+#! ******************************************************************************#
+#                                   COLORS                                       #
+#! ******************************************************************************#
 
-# Target and Directories
-NAME     = Minishell
-SRC_DIR  = src
-OBJ_DIR  = objects
-LIBFT_DIR = libft
-LIBFT    = $(LIBFT_DIR)/libft.a
+DEFAULT=\033[39m
+BLACK=\033[30m
+DARK_RED=\033[31m
+DARK_GREEN=\033[32m
+DARK_YELLOW=\033[33m
+DARK_BLUE=\033[34m
+DARK_MAGENTA=\033[35m
+DARK_CYAN=\033[36m
+LIGHT_GRAY=\033[37m
+DARK_GRAY=\033[90m
+RED=\033[91m
+GREEN=\033[92m
+ORANGE=\033[93m
+BLUE=\033[94m
+MAGENTA=\033[95m
+CYAN=\033[96m
+WHITE=\033[97m
+YELLOW=\033[33m
+RESET=\033[0m
 
-# Source and Object Files
-SRC_FILES = signal/signals.c \
-			error/error.c \
-            token/generate_tokens.c \
-            token/operator_tokens.c \
-            token/quoted_tokens.c \
-            token/token_utils.c \
-			token/validate_tokens.c \
-            ast/ast.c \
-            buildins/echo.c \
-            buildins/pwd.c \
-			buildins/unset.c \
-			buildins/export.c \
-			buildins/env.c \
-			buildins/cd.c \
-			env/get_env.c \
-			env/path_holders.c \
-			env/env_s.c \
-			main.c
+#! ******************************************************************************#
+#                                   PATHS                                        #
+#! ******************************************************************************#
 
-SRCS      = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS      = $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+SRCS_PATH := src/
+INCS_PATH := includes/ libs/libft/include/
+BUILD_DIR := build/
+LIBFT_DIR := libs/libft/
+GARB_DIR := libs/garbage_collector/
+TEST_DIR := tests/
 
-# Rules
-.PHONY: all clean fclean re
+#! ******************************************************************************#
+#                                   FILES                                        #
+#! ******************************************************************************#
 
-all: $(NAME)
+SRCS := $(addprefix $(SRCS_PATH), \
+	1.initialization/0.env/env.c \
+	1.initialization/1.main/main.c \
+	1.initialization/1.main/init_shell_env.c \
+	1.initialization/1.main/shell_loop.c \
+	1.initialization/2.tokenizer/token_generate.c \
+	1.initialization/2.tokenizer/token_aux.c \
+	1.initialization/2.tokenizer/token_validate.c \
+	1.initialization/3.expansor/expansor.c \
+	1.initialization/4.ast/ast.c \
+	1.initialization/5.parser/parser.c \
+	1.initialization/5.parser/command_array.c \
+	2.buildins/buildin_handler.c \
+	2.buildins/cd.c \
+	2.buildins/echo.c \
+	2.buildins/env.c \
+	2.buildins/export.c \
+	2.buildins/pwd.c \
+	2.buildins/unset.c \
+	3.execution/heredoc_redir/fds_health.c \
+	3.execution/heredoc_redir/heredoc.c \
+	3.execution/heredoc_redir/redir.c \
+	3.execution/heredoc_redir/set_redir \
+	3.execution/signal/signals.c \
+	3.execution/child_process.c \
+	3.execution/execution.c \
+	3.execution/path_handler.c \
+	3.execution/pipeline.c \
+	3.execution/pipes.c \
+	aux/debug.c \
+	aux/error.c \
+	aux/free_sec.c \
+	aux/free.c \
+	aux/terminal_health.c \
+)
 
-# Build the executable
-$(NAME): $(OBJS) $(LIBFT)
-	@echo "$(BLUE)Linking objects and building executable: $(NAME)$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(READLINE)
-	@echo "$(GREEN)Executable $(NAME) created successfully!$(RESET)"
+LIBFT := $(LIBFT_DIR)libft.a
+GARB := $(GARB_DIR)garbage_collector.a
+LIBS := $(LIBFT) $(GARB)
+OBJS := $(SRCS:%.c=$(BUILD_DIR)%.o)
+DEPS := $(OBJS:.o=.d)
 
-# Compile source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling $< -> $@$(RESET)"
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -c $< -o $@
+#! ******************************************************************************#
+#                                   COMMANDS                                     #
+#! ******************************************************************************#
 
-# Build libft library
+MKDIR := mkdir -p
+RM := rm -rf
+CC := $(shell which cc || echo gcc)
+CFLAGS := -Wall -Wextra -Werror -g3
+DFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address
+CPPFLAGS := $(addprefix -I, $(INCS_PATH)) -MMD -MP
+LDLIBS := -ldl -pthread -lreadline
+
+#! ******************************************************************************#
+#                                   FUNCTIONS                                    #
+#! ******************************************************************************#
+
+define create_dir
+	$(MKDIR) $(dir $@)
+endef
+
+define comp_objs
+	$(call create_dir)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	printf "$(YELLOW)Compiling: $(RESET)$<\n"
+endef
+
+define build_lib
+	printf "$(YELLOW)Building library: $(RESET)$(1)\n"
+	$(MAKE) -C $(1)
+endef
+
+define display_help
+	printf "$(DARK_RED)Available targets:$(RESET)\n"
+	printf "$(DARK_BLUE)all:$(RESET)        Build $(GREEN)$(NAME)$(RESET)\n"
+	printf "$(DARK_BLUE)clean:$(RESET)      Remove object files\n"
+	printf "$(DARK_BLUE)fclean:$(RESET)     Clean all files\n"
+	printf "$(DARK_BLUE)re:$(RESET)         Rebuild everything\n"
+endef
+
+#! ******************************************************************************#
+#                                   TARGETS                                      #
+#! ******************************************************************************#
+
+all: $(LIBFT) $(GARB) $(NAME)
+
+$(BUILD_DIR)%.o: %.c
+	$(call comp_objs)
+
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) $(LIBS) $(LDLIBS) -o $@
+	printf "$(GREEN)$(NAME) is ready!$(RESET)\n"
+
 $(LIBFT):
-	@echo "$(BLUE)Building libft library...$(RESET)"
-	@$(MAKE) -C $(LIBFT_DIR)
-	@echo "$(GREEN)Libft library built successfully!$(RESET)"
+	$(call build_lib, $(LIBFT_DIR))
 
-# Create object directory if it doesn't exist
-$(OBJ_DIR):
-	@echo "$(BLUE)Creating directory: $(OBJ_DIR)$(RESET)"
-	@mkdir -p $(OBJ_DIR)
+$(GARB):
+	$(call build_lib, $(GARB_DIR))
 
-# Clean object files
 clean:
-	@echo "$(RED)Cleaning object files...$(RESET)"
-	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	$(RM) $(BUILD_DIR)
+	$(MAKE) -C $(LIBFT_DIR) clean
+	$(MAKE) -C $(GARB_DIR) clean
+	printf "$(RED)Cleaned object files.$(RESET)\n"
 
-# Full clean (object files, library, and executable)
 fclean: clean
-	@echo "$(RED)Removing executable $(NAME) and cleaning libft...$(RESET)"
-	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(MAKE) -C $(GARB_DIR) fclean
+	printf "$(RED)Cleaned all files.$(RESET)\n"
 
-# Rebuild everything
 re: fclean all
+
+help:
+	$(call display_help)
+
+-include $(DEPS)

@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/01 21:20:05 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 21:21:23 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/09/24 17:16:19 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 17:30:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+#include "./includes/minishell.h"
 
-int	error(char *content, char *error, int num_error);
+int main(void)
+{
+    t_minishell minishell;
 
-#endif
+    init_minishell(&minishell);
+    shell_loop(&minishell);
+    cleanup_minishell(&minishell);
+
+    return EXIT_SUCCESS;
+}
