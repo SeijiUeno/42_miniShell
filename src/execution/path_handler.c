@@ -1,16 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_acess.c                                       :+:      :+:    :+:   */
+/*   path_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 20:29:30 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 20:37:21 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/10 14:21:48 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 14:23:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+
+int verify_abs_path(char *path) {
+    if (access(path, F_OK) == 0 && access(path, X_OK) == 0)
+        return (1);
+    return (0);
+}
+
+int is_valid_command(char **full_path, char *path, t_minishell *minishell) {
+    if (verify_abs_path(path)) {
+        *full_path = path;
+        return (EXIT_SUCCESS);
+    }
+    *full_path = verify_path(path, minishell->path);
+    if (!*full_path)
+        return (error(path, ": Command not found", 127));
+    return (0);
+}
+
+char *define_full_path(char *cmd, char **path) {
+    char *full_path;
+
+    if (verify_abs_path(cmd))
+        return (cmd);
+    full_path = verify_path(cmd, path);
+    return (full_path);
+}
 
 char	*ft_strjoin_three(char *s1, char *s2, char *s3)
 {
