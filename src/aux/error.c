@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:16:50 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/01 20:46:01 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 19:39:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/shell.h"
 
-char	*ft_strdup(const char *s)
+int	error(char *content, char *error, int num_error)
 {
-	char	*str;
-	size_t	len;
-
-	len = ft_strlen(s);
-	str = (char*)malloc(len + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s, len + 1);
-	return (str);
+	ft_putstr_fd(content, STDERR_FILENO);
+	if (error)
+		ft_putendl_fd(error, STDERR_FILENO);
+	else
+		perror(NULL);
+	return (num_error);
 }

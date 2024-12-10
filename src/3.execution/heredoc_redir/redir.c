@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 20:26:11 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:55:48 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:55:34 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.c"
+#include "../../../includes/shell.h"
 
 int	redirect_input(char *filename)
 {

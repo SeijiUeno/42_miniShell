@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:55:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.c"
+#include "../../../includes/shell.h"
 
 int	filter_status(int status)
 {

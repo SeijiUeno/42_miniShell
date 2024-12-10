@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 20:12:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:55:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:55:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.c"
+#include "../../../includes/shell.h"
 
 static void remove_token_from_list(t_token **head, t_token *node) {
     if (!head || !*head || !node)
@@ -45,6 +45,7 @@ static void append_redirection_node(t_token **redirs, int type, char *filename) 
  * - Adds a corresponding node to the `redirs` list with the expanded filename.
  * Returns the `redirs` list containing all redirection info for the command.
  */
+ 
 t_token *ft_generate_redirs(t_token **token_list, t_minishell *minishell) {
     t_token *redirs = NULL;
     t_token *current = *token_list;

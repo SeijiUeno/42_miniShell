@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:16:32 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:51:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:03:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../includes/shell.h"
 
 static int	handle_builtin(char **command, t_minishell *minishell, size_t index)
 {

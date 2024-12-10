@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/22 19:00:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:39:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../includes/shell.h"
 
 int	check_args_minus_n(const char *arg)
 {

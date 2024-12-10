@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:21:11 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:14:27 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:16:46 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include "../includes/garbage_collector.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

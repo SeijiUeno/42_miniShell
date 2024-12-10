@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:58:12 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.c"
+#include "../includes/shell.h"
 
 int	get_and_reset_status(void)
 {

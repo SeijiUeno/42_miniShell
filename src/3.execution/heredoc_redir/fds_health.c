@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:55:38 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:55:45 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.c"
+#include "../../../includes/shell.h"
 
 void	reset_fds(t_minishell *minishell)
 {

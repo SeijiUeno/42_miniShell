@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:50:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:49:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.h"
+#include "../../../includes/shell.h"
 
 static char *handle_input(void)
 {
@@ -39,7 +39,7 @@ void shell_loop(t_minishell *minishell)
         minishell->input = handle_input();
         if (!minishell->input) // Handle EOF (Ctrl+D)
         {
-            ft_printf("BY SHELL!\n");
+            //**************** ft_printf("BY SHELL!\n");
             break;
         }
         process_commands(minishell);

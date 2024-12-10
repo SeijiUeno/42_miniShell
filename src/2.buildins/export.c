@@ -6,9 +6,8 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:44:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 19:40:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:02:45 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
-#include "buildins.h"
+#include "../includes/shell.h"
