@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   terminal_health.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/24 17:16:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:38:26 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 17:31:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/minishell.h"
+static void cleanup_minishell(t_minishell *minishell)
+{
+    free_all(minishell);
+    if (minishell->stdin_backup >= 0)
+        close(minishell->stdin_backup);
+    if (minishell->stdout_backup >= 0)
+        close(minishell->stdout_backup);
+}
 
 int	get_and_reset_status(void)
 {
@@ -56,24 +63,4 @@ void	free_prompt(t_minishell *minishell)
 	minishell->tokens = NULL;
 	minishell->tree_cmd = NULL;
 	minishell->pid_list = NULL;
-}
-
-static void cleanup_minishell(t_minishell *minishell)
-{
-    free_all(minishell);
-    if (minishell->stdin_backup >= 0)
-        close(minishell->stdin_backup);
-    if (minishell->stdout_backup >= 0)
-        close(minishell->stdout_backup);
-}
-
-int main(void)
-{
-    t_minishell minishell;
-
-    init_minishell(&minishell);
-    shell_loop(&minishell);
-    cleanup_minishell(&minishell);
-
-    return EXIT_SUCCESS;
 }
