@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_tokens.c                                  :+:      :+:    :+:   */
+/*   token_validate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 20:50:12 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:50:50 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "../../shell.h"
+
 
 static int syntax_error(const char *message, const char *token) 
 {

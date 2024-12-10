@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_split.c                                         :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:22:20 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 21:46:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:13:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char **ft_alloc_words(char const *s, char **arr_str, char c, int arr_s)
         str = (char *)s + i;
         while (s[i] && s[i++] != c)
             j++;
-        arr_str[a] = gc_substr(str, 0, j);
+        arr_str[a] = ft_substr(str, 0, j);
         if (!arr_str[a])
             return (NULL);
         a++;
@@ -62,7 +62,7 @@ static char **ft_alloc_words(char const *s, char **arr_str, char c, int arr_s)
     return (arr_str);
 }
 
-char    **gc_split(char const *s, char c)
+char    **ft_split(char const *s, char c)
 {
     int     count_words;
     char    **arr_str;
@@ -70,7 +70,7 @@ char    **gc_split(char const *s, char c)
     if (!s || !*s)
         return (NULL);
     count_words = ft_count_words(s, c);
-    arr_str = (char **)gc_allocate(sizeof(char *) * (count_words + 1));
+    arr_str = (char **)malloc(sizeof(char *) * (count_words + 1));
     if (!arr_str)
         return (NULL);
     if (count_words == 0)

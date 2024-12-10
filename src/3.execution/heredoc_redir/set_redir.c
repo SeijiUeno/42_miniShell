@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 20:12:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/09 20:37:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:55:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.h"
+#include "../../shell.c"
 
 static void remove_token_from_list(t_token **head, t_token *node) {
     if (!head || !*head || !node)

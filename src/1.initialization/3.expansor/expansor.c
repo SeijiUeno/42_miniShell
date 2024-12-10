@@ -6,9 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:45:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 14:45:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:50:58 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../shell.h"
 
 // Static function prototypes
 static char *expand_single_quotes(const char *input_str, int *index);

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_strdup.c                                        :+:      :+:    :+:   */
+/*   gc_tracker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 02:02:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 13:08:33 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/12/10 19:18:43 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 19:19:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
 #include "../includes/garbage_collector.h"
 
-char	*gc_strdup(const char *s)
+t_gc_status gc_track(void *address)
 {
-	char	*str;
-	size_t	len;
+    t_garbage_node  *new_node;
+    t_garbage_node  **garbage_list;
 
-	len = ft_strlen(s);
-	str = gc_allocate(len + 1);
-	if (!str)
-		return (NULL);
-	ft_strlcpy(str, s, len + 1);
-	return (str);
+    if (!address)
+        return (GC_FAILURE);
+
+    new_node = malloc(sizeof(t_garbage_node));
+    if (!new_node)
+        return (GC_FAILURE);
+
+    garbage_list = get_garbage_list();
+    new_node->address = address;
+    new_node->next = *garbage_list;
+    *garbage_list = new_node;
+
+    return (GC_SUCCESS);
 }

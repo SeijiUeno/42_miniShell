@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gc_strjoin.c                                       :+:      :+:    :+:   */
+/*   gc_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 17:21:11 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 17:22:31 by sueno-te         ###   ########.fr       */
+/*   Created: 2024/03/02 02:03:33 by sueno-te          #+#    #+#             */
+/*   Updated: 2024/12/10 19:11:52 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include "../includes/garbage_collector.h"
 
-char	*gc_strjoin(char const *s1, char const *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	len;
-	char	*joined;
-	char	*origin;
+	char	*str;
+	size_t	slen;
 
-	if (!s1 || !s2)
+	slen = ft_strlen(s);
+	if (start > slen)
+		return (ft_strdup(""));
+	if (len > slen - start)
+		return (ft_strdup(s + start));
+	str = (char*)malloc(len + 1);
+	if (!str)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
-	joined = gc_allocate(len + 1);
-	if (joined == NULL)
-		return (NULL);
-	origin = joined;
-	while (*s1)
-		*(joined++) = *(s1++);
-	while (*s2)
-		*(joined++) = *(s2++);
-	*joined = '\0';
-	return (origin);
+	ft_strlcpy(str, s + start, len + 1);
+	return (str);
 }
