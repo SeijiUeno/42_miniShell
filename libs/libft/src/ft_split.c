@@ -6,12 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 21:22:20 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:13:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:16:55 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
-#include "../includes/garbage_collector.h"
 
 static int  ft_count_words(char const *s, char c)
 {

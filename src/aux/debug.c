@@ -1,4 +1,4 @@
-#include "../shell.c"
+#include "../includes/shell.h"
 
 void debug_print_tree(t_command *node, int level)
 {

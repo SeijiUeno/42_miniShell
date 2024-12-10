@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:21:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:56:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.c"
+#include "../includes/shell.h"
 
 int verify_abs_path(char *path) {
     if (access(path, F_OK) == 0 && access(path, X_OK) == 0)

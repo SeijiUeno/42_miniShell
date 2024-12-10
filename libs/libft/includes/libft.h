@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:24:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:16:38 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:00:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,16 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+typedef struct s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
+int	    ft_tochr(int c);
 int		ft_isdigit(int c);
 size_t	ft_strlen(const char *s);
+char	*ft_itoa(int n);
 int		ft_atoi(const char *str);
 void	ft_putnbr(int n);
 int		ft_strcmp(const char *s1, const char *s2);

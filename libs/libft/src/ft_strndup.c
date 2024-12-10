@@ -6,11 +6,10 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 15:23:39 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:15:09 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:16:36 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/garbage_collector.h"
 #include "../includes/libft.h"
 
 char *ft_strndup(const char *s, size_t n)

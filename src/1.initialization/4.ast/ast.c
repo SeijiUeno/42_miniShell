@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:52:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.h"
+#include "../../../includes/shell.h"
 
 // Count the number of command arguments before a pipe
 static int count_command_arguments(t_token *tokens) {

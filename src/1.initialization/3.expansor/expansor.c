@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:45:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:50:58 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:58:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.h"
+#include "../../../includes/shell.h"
 
 // Static function prototypes
 static char *expand_single_quotes(const char *input_str, int *index);
@@ -130,8 +130,6 @@ char *join_word(char *word, char *new_word)
 
     return combined;
 }
-
-#include "../includes/minishell.h"
 
 // Static function prototypes
 static char *get_env_value_from_envp(const char *env_entry, int var_len);

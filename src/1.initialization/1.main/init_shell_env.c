@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:35:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:49:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.h"
+#include "../../../includes/shell.h"
 
 static void initialize_signals(void)
 {

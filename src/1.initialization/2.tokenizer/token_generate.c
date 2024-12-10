@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:50:37 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.h"
+#include "../../../includes/shell.h"
 
 
 int validate_input(char *input);

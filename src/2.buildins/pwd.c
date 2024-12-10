@@ -6,12 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:16:00 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 16:57:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:03:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "buildins.h"
-#include "../shell.h"
+#include "../includes/shell.h"
 
 int	ft_pwd(void)
 {

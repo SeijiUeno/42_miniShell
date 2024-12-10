@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:41:27 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:57:29 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../shell.c"
+#include "../includes/shell.h"
 // Frees a null-terminated array of strings.
 void free_arr(char **arr)
 {

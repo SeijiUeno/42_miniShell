@@ -68,7 +68,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/heredoc_redir/fds_health.c \
 	3.execution/heredoc_redir/heredoc.c \
 	3.execution/heredoc_redir/redir.c \
-	3.execution/heredoc_redir/set_redir \
+	3.execution/heredoc_redir/set_redir.c \
 	3.execution/signal/signals.c \
 	3.execution/child_process.c \
 	3.execution/execution.c \
@@ -79,8 +79,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	aux/error.c \
 	aux/free_sec.c \
 	aux/free.c \
-	aux/terminal_health.c \
-)
+	aux/terminal_health.c)
 
 LIBFT := $(LIBFT_DIR)libft.a
 GARB := $(GARB_DIR)garbage_collector.a

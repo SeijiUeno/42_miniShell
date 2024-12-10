@@ -6,13 +6,15 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:17:25 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:12:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
+# include "../libs/libft/includes/libft.h"
+# include "../libs/garbage_collector/includes/garbage_collector.h"
 # include <limits.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -27,6 +29,10 @@
 # include <errno.h>
 # include <sys/types.h>
 # include <dirent.h>
+
+#define STATUS_QUIT 3
+#define STATUS_CTRL_C 2
+#define STATUS_MAX 255
 
 # define STATUS_GET -1
 # define STATUS_SIGINT 130
@@ -125,6 +131,11 @@ t_command *parse_pipeline(t_token **tokens, t_minishell *minishell);
 t_command *parse_command(t_token **tokens, t_minishell *minishell);
 t_token *parse_redirections(t_token **tokens, t_minishell *minishell);
 void free_tree(t_command **tree);
+
+// parsing
+t_command **ast_to_command_list(t_command *root);
+int count_commands_in_array(t_command **commands);
+
 // Argument Parsing for Commands
 char **generate_argv(t_token *tokens, t_minishell *minishell);
 int count_args(t_token *tokens);
@@ -190,7 +201,15 @@ void		execute_command(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
 int			handle_fds(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
-int	is_valid_command(char **full_path, char *path, t_minishell *minishell);
+int			is_valid_command(char **full_path, char *path, t_minishell *minishell);
+void run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]);
+void wait_for_children(t_minishell *minishell, pid_t *pids, int count);
+//pipes
+void 		close_all_pipes(int *pipes, int total_fds);
+int			create_pipes(int *pipes, int command_count);
+void 		run_pipeline(t_minishell *m, t_command **cmds, int cmd_count);
+//paths
+char 		*define_full_path(char *cmd, char **path);
 
 // utils
 void		free_arr(char **arr);
@@ -205,5 +224,9 @@ void		free_all_tokens(t_token **tokens);
 void		free_all(t_minishell *minishell);
 void		free_tree(t_command **tree);
 void		free_list(t_list **list);
+
+
+//debug
+void debug_print_commands_array(t_command **commands);
 
 #endif

@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 18:55:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/10 20:01:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../shell.c"
+#include "../../../includes/shell.h"
 
 void	handle_sig_heredoc(int signal)
 {
@@ -94,7 +94,7 @@ int	read_heredoc(char *delim, int fd)
 		{
 			// Handle EOF case, print warning if necessary
 			if (!control_status(-1))
-				ft_fdprintf("Warning: heredoc delimited by EOF. Wanted delim: %s\n", 2, delim);
+				// ************************* ft_fdprintf("Warning: heredoc delimited by EOF. Wanted delim: %s\n", 2, delim);
 			break ;
 		}
 
