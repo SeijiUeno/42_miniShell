@@ -6,9 +6,22 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:16:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:02:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:03:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
+int	print_env(char **envp)
+{
+	char	**temp;
+
+	temp = envp;
+	while (*temp != NULL)
+	{
+		if (ft_strchr(*temp, '='))
+			//**************** ft_printf("%s\n", *temp);
+		temp++;
+	}
+	return (0);
+}

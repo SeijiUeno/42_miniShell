@@ -65,6 +65,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	2.buildins/export.c \
 	2.buildins/pwd.c \
 	2.buildins/unset.c \
+	2.buildins/exit.c \
 	3.execution/heredoc_redir/fds_health.c \
 	3.execution/heredoc_redir/heredoc.c \
 	3.execution/heredoc_redir/redir.c \

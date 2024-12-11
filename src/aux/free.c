@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:41:27 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:10:42 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,23 +66,6 @@ void free_tree(t_command **tree)
 
     free(node);
     *tree = NULL; // Prevent dangling pointer
-}
-
-//free 
-void	free_prompt(t_minishell *minishell)
-{
-	if (minishell->input)
-		free(minishell->input);
-	if (minishell->tokens)
-		free_all_tokens(&(minishell->tokens));
-	if (minishell->tree_cmd)
-		free_tree(&(minishell->tree_cmd));
-	if (minishell->pid_list)
-		free_list(&(minishell->pid_list));
-	minishell->input = NULL;
-	minishell->tokens = NULL;
-	minishell->tree_cmd = NULL;
-	minishell->pid_list = NULL;
 }
 
 // Frees all resources associated with the minishell and exits.
