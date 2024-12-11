@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:17:42 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,28 @@ void	free_prompt(t_minishell *minishell)
 	minishell->tokens = NULL;
 	minishell->tree_cmd = NULL;
 	minishell->pid_list = NULL;
+}
+
+void free_all(t_minishell *minishell)
+{
+    if (!minishell)
+        return;
+
+    free_arr(minishell->path);
+    free_arr(minishell->envp);
+    if (minishell->pid_list)
+        free_list(&minishell->pid_list);
+    if (minishell->input)
+        free(minishell->input);
+    if (minishell->tokens)
+        free_all_tokens(&minishell->tokens);
+    if (minishell->tree_cmd)
+        free_tree(&minishell->tree_cmd);
+
+    if (minishell->stdin_backup >= 0)
+        close(minishell->stdin_backup);
+    if (minishell->stdout_backup >= 0)
+        close(minishell->stdout_backup);
+
+    rl_clear_history();
 }
