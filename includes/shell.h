@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:43:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:58:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			control_status(int status);
 int			filter_status(int status);
 void		save_terminal_settings(struct termios *original);
 void	restore_terminal_settings(const struct termios *original);
+
 // Tokenizer Functions
 void generate_tokens(char *input, t_token **tokens);
 void assign_operator_token_types(t_token **tokens);
@@ -177,12 +178,23 @@ char *expand_num_or_status(const char *input_str, int *index, t_minishell *minis
 char *expand_until_char(const char *input_str, int *index, char stop_char);
 
 // redirections
+
+/* Utils */
+int open_file(char *filename, int flags, int mode);
+int redirect_fd(int fd, int std_fd);
+void remove_token_from_list(t_token **head, t_token *node);
+
+/* Redirections */
+int redirect_input(char *filename);
+int redirect_output(char *filename);
+int append_output(char *filename);
+
+/* Setup */
+int process_redirection(t_token *redir);
+int setup_redirs(t_token *redir);
+void append_redirection_node(t_token **redirs, int type, char *filename);
 t_token		*ft_generate_redirs(t_token **token, t_minishell *minishell);
 void		add_redir(t_token **rds, t_token *new_rd, t_minishell *minishell);
-int			setup_redirs(t_token *redir);
-int			redirect_input(char *filename);
-int			redirect_output(char *filename);
-int			append_output(char *filename);
 int			heredoc(char **str, int index);
 int			verify_heredoc(t_minishell *minishell);
 void		reset_fds(t_minishell *minishell);

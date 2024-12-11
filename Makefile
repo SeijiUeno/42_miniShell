@@ -66,11 +66,14 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	2.buildins/pwd.c \
 	2.buildins/unset.c \
 	2.buildins/exit.c \
-	3.execution/heredoc_redir/fds_health.c \
-	3.execution/heredoc_redir/heredoc.c \
-	3.execution/heredoc_redir/redir.c \
-	3.execution/heredoc_redir/set_redir.c \
+	3.execution/heredoc/heredoc.c \
+	3.execution/redir/redirect.c \
+	3.execution/redir/redirect_input.c \
+	3.execution/redir/redirect_output.c \
+	3.execution/redir/setup_redirs.c \
+	3.execution/redir/utils.c \
 	3.execution/signal/signals.c \
+	3.execution/fds_health.c \
 	3.execution/child_process.c \
 	3.execution/execution.c \
 	3.execution/path_handler.c \
