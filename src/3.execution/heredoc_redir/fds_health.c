@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:55:45 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:34:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,4 @@ void	reset_fds(t_minishell *minishell)
 		perror("dup2");
 		return;
 	}
-
-	// Close backup file descriptors to avoid resource leaks
-	if (close(minishell->stdin_backup) < 0)
-		perror("close stdin_backup");
-	if (close(minishell->stdout_backup) < 0)
-		perror("close stdout_backup");
-
-	// Reset backups to invalid values to prevent accidental reuse
-	minishell->stdin_backup = -1;
-	minishell->stdout_backup = -1;
 }
