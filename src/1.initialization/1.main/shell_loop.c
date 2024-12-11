@@ -6,11 +6,20 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:49:28 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:49:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
+
+static int get_and_reset_status(void)
+{
+    int current_status;
+
+    current_status = control_status(STATUS_GET);
+    control_status(0);
+    return (current_status);
+}
 
 static char *handle_input(void)
 {
@@ -34,9 +43,13 @@ static void cleanup_iteration(t_minishell *minishell)
 
 void shell_loop(t_minishell *minishell)
 {
+    static struct termios original_term;
+    
+    save_terminal_settings(&original_term);
     while (1)
     {
         minishell->input = handle_input();
+        minishell->status = get_and_reset_status();
         if (!minishell->input) // Handle EOF (Ctrl+D)
         {
             //**************** ft_printf("BY SHELL!\n");
@@ -45,4 +58,5 @@ void shell_loop(t_minishell *minishell)
         process_commands(minishell);
         cleanup_iteration(minishell);
     }
+    restore_terminal_settings(&original_term); // Final cleanup
 }
