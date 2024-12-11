@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:12:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:43:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void		handle_signal_exec(int signum);
 // status
 int			control_status(int status);
 int			filter_status(int status);
-
+void		save_terminal_settings(struct termios *original);
+void	restore_terminal_settings(const struct termios *original);
 // Tokenizer Functions
 void generate_tokens(char *input, t_token **tokens);
 void assign_operator_token_types(t_token **tokens);
