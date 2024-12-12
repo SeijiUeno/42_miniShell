@@ -6,12 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:57:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:01:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
-
 
 static int syntax_error(const char *message, const char *token) 
 {
