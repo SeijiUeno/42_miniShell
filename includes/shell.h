@@ -6,11 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/12 15:52:21 by sueno-te         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/12 16:08:07 by emorales         ###   ########.fr       */
->>>>>>> ac017f4ff51eb6a3e6a344cf1ffebb274269a2b4
+/*   Updated: 2024/12/12 16:25:35 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +125,9 @@ void skip_quoted_token(char *input, int *index);
 int	validate_all_quotes(char *input);
 int	is_only_spaces(char *input);
 int assign_redirection_type(char op_char, char *content);
+void process_symbol(char *input, int *index, t_token **tokens, t_token **current);
+void process_word(char *input, int *index, t_token **tokens, t_token **current);
+void	add_token(t_token **tokens, t_token **current, char *input, int start, int end);
 
 // Token Validation Functions
 int validate_tokens(t_token *tokens);
