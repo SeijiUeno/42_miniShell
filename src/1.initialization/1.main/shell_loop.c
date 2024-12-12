@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:36:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char *handle_input(void)
 static void process_commands(t_minishell *minishell)
 {
     if (build_commands(minishell) == EXIT_SUCCESS)
-        execute_tree_commands(minishell);
+        execute(minishell);
 }
 
 static void cleanup_iteration(t_minishell *minishell)

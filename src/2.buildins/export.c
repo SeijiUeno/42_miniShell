@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   buildin_export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:44:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:09:06 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:41:32 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void swap_arr(char **wordA, char **wordB)
+void util_swap_array(char **wordA, char **wordB)
 {
     if (!wordA || !wordB || !(*wordA) || !(*wordB))
         return;
@@ -99,7 +99,7 @@ static void sort_env_vars(char **envp)
         while (envp[j])
         {
             if (ft_strcmp(envp[i], envp[j]) > 0)
-                swap_arr(&envp[i], &envp[j]);
+                util_swap_array(&envp[i], &envp[j]);
             j++;
         }
         i++;
@@ -129,10 +129,10 @@ static void print_sorted_env_vars(char **envp)
         }
         i++;
     }
-    free_arr(sorted_env);
+    util_free_array(sorted_env);
 }
 
-int export(char **args, t_minishell *minishell)
+int buildin_export(char **args, t_minishell *minishell)
 {
     int i = 1;
     int error_status = 0;
@@ -148,7 +148,7 @@ int export(char **args, t_minishell *minishell)
         invalid_var = validate_env_var_name(args[i]);
         if (invalid_var)
         {
-            ft_putstr_fd("export: `", STDERR_FILENO);
+            ft_putstr_fd("buildin_export: `", STDERR_FILENO);
             ft_putstr_fd(args[i], STDERR_FILENO);
             ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
             error_status = 1;
@@ -159,7 +159,7 @@ int export(char **args, t_minishell *minishell)
         }
         i++;
     }
-    free_arr(minishell->path);
+    util_free_array(minishell->path);
     minishell->path = get_paths(minishell->envp);
     return (error_status);
 }

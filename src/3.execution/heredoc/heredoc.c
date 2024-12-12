@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:26:58 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:27:10 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:42:40 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	heredoc(char **str, int index)
 	int		fd;
 	int		status;
 
-	filename = generate_heredoc_name(index);
+	filename = heredoc_generate_name(index);
 	if (!filename)
 		return (EXIT_FAILURE);
 
@@ -32,7 +32,7 @@ int	heredoc(char **str, int index)
 		free(filename);
 		return (EXIT_FAILURE);
 	}
-	status = read_heredoc(*str, fd);
+	status = heredoc_read(*str, fd);
 	close(fd);
 
 	if (status)

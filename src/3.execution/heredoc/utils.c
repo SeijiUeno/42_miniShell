@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:22:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:42:40 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-char	*generate_heredoc_name(int index)
+char	*heredoc_generate_name(int index)
 {
 	char	*index_text;
 	char	*full_name;

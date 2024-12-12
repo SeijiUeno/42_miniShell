@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:40:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void child_single(char *full_path, char **argv, t_minishell *minishell)
     _exit(EXIT_FAILURE);
 }
 
-int exec_command(char **arrstr, int id, t_minishell *minishell)
+int exec_run_command(char **arrstr, int id, t_minishell *minishell)
 {
     char *full_path;
     int exec_status;
@@ -77,7 +77,7 @@ int exec_command(char **arrstr, int id, t_minishell *minishell)
     return exec_status;
 }
 
-void execute_tree_commands(t_minishell *m) {
+void execute(t_minishell *m) {
     t_command **commands = ast_to_command_list(m->tree_cmd);
     if (!commands) {
         signal_setup();
@@ -86,7 +86,7 @@ void execute_tree_commands(t_minishell *m) {
     debug_print_commands_array(commands);
     int cmd_count = count_commands_in_array(commands);
     if (cmd_count > 0)
-        run_pipeline(m, commands, cmd_count);
+        pipe_run_pipeline(m, commands, cmd_count);
     free(commands);
     signal_setup();
 }

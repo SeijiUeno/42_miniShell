@@ -6,23 +6,23 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:18:11 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:12:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:40:11 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void close_all_pipes(int *pipes, int total_fds) {
+void pipe_close_all(int *pipes, int total_fds) {
     for (int i = 0; i < total_fds; i++)
         close(pipes[i]);
 }
 
-int create_pipes(int *pipes, int command_count) {
+int pipe_create(int *pipes, int command_count) {
     int total_fds = (command_count - 1) * 2;
     for (int i = 0; i < total_fds; i += 2) {
         if (pipe(&pipes[i]) < 0) {
             perror("pipe");
-            close_all_pipes(pipes, i);
+            pipe_close_all(pipes, i);
             return (EXIT_FAILURE);
         }
     }
