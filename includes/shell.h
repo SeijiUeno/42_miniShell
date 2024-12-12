@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:16:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:32:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ void skip_quoted_token(char *input, int *index);
 int	validate_all_quotes(char *input);
 int	is_only_spaces(char *input);
 int assign_redirection_type(char op_char, char *content);
+void process_symbol(char *input, int *index, t_token **tokens, t_token **current);
+void process_word(char *input, int *index, t_token **tokens, t_token **current);
+void	add_token(t_token **tokens, t_token **current, char *input, int start, int end);
 
 // Token Validation Functions
 int validate_tokens(t_token *tokens);
