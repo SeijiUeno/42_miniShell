@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:10 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Sets up the signal handler for the heredoc process
 static void	setup_heredoc_signals(void)
 {
-	signal(SIGINT, &handle_sig_heredoc);
+	signal(SIGINT, &signal_handle_heredoc);
 }
 
 // Resets the signal handler back to default

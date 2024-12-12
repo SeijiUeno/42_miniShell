@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:06:50 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:00:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:52 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char *extract_value_from_entry(char *full_variable_entry)
     return (ft_strdup(value_start + 1));
 }
 
-char *get_env_value(char *variable_name, char **environment)
+char *env_get_value(char *variable_name, char **environment)
 {
     char *full_variable_entry;
     char *value;
