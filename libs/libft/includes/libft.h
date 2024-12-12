@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 20:24:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 18:11:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:15:49 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ char	        **ft_split(char const *s, char c);
 size_t			ft_putstr_len(const char *s, int fd);
 int				ft_printf(const char *format, ...);
 size_t			ft_putptr_len(void *ptr, int fd);
-size_t		ft_putnbr_len(long long number, char *base, int fd);
+size_t			ft_putnbr_len(long long number, char *base, int fd);
 
 #endif
