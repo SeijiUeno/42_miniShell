@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:39:03 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:16:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	restore_terminal_settings(const struct termios *original)
 }
 
 //free 
-void	free_prompt(t_minishell *minishell)
+void	prompt_clear(t_minishell *minishell)
 {
 	if (minishell->input)
 		free(minishell->input);

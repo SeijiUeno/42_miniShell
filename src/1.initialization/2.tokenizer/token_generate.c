@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:21:48 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:36:50 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,27 @@ void	generate_tokens(char *input, t_token **tokens)
 
 int	validate_input(char *input)
 {
+	char	*error_msg;
+
 	if (!input || !input[0])
-		return (error("minishell: ", "Empty input", EXIT_FAILURE));
+	{
+		error_msg = "Empty input";
+		return (error("minishell: ", error_msg, EXIT_FAILURE));
+	}
 	if (validate_all_quotes(input) != EXIT_SUCCESS)
-		return (error("minishell: ", "Unmatched quotes in input", EXIT_FAILURE));
+	{
+		error_msg = "Unmatched quotes in input";
+		return (error("minishell: ", error_msg, EXIT_FAILURE));
+	}
 	if (is_only_spaces(input))
-		return (error("minishell: ", "Input contains only whitespace", EXIT_FAILURE));
+	{
+		error_msg = "Input contains only whitespace";
+		return (error("minishell: ", error_msg, EXIT_FAILURE));
+	}
 	return (EXIT_SUCCESS);
 }
 
-void add_token(t_token_data *data, int start, int end)
+void	add_token(t_token_data *data, int start, int end)
 {
 	t_token	*new_token;
 
@@ -50,12 +61,10 @@ void add_token(t_token_data *data, int start, int end)
 		exit(EXIT_FAILURE);
 	}
 	new_token->content = ft_substr(data->input, start, end - start);
-
 	if (ft_strchr(SYMBOLS, data->input[start]))
 		new_token->type = OPERATOR;
 	else
 		new_token->type = WORD;
-
 	new_token->next = NULL;
 	new_token->prev = NULL;
 	if (*data->current)
@@ -67,7 +76,6 @@ void add_token(t_token_data *data, int start, int end)
 		*data->tokens = new_token;
 	*data->current = new_token;
 }
-
 
 void	assign_operator_token_types(t_token **tokens)
 {
@@ -83,7 +91,7 @@ void	assign_operator_token_types(t_token **tokens)
 			if (op_char == '|')
 				current->type = PIPE;
 			else
-				current->type = assign_redirection_type(op_char, current->content);
+				current->type = assign_redir_type(op_char, current->content);
 		}
 		current = current->next;
 	}

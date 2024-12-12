@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:05:50 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 15:53:02 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:59:26 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,31 @@ static char *get_variable_value(const char *input_str, int *index, t_minishell *
     if (!var_name)
         return NULL;
 
-    expanded_value = expand_env(var_name, minishell->envp);
+    expanded_value = expand_env(var_name, minishell->envp); // Fetch environment variable
     free(var_name);
     return expanded_value;
 }
 
+
 char *expand_parameter(const char *input_str, int *index, t_minishell *minishell)
 {
+    // Check if the '$' is escaped
+    if (*index > 0 && input_str[*index - 1] == '\\')
+    {
+        (*index)++; // Skip the escaped '$'
+        return strdup("$"); // Treat as literal '$'
+    }
     (*index)++; // Skip the '$'
-
+    // Handle invalid variable names
     if (!input_str[*index] ||
         (!isalnum((unsigned char)input_str[*index]) &&
          input_str[*index] != '_' && input_str[*index] != '?'))
     {
         return strdup("$");
     }
-
+    // Handle special parameters like '$?' or numeric variables
     if (input_str[*index] == '?' || isdigit((unsigned char)input_str[*index]))
         return expand_special_parameter(input_str, index, minishell);
-
+    // Expand a regular variable
     return get_variable_value(input_str, index, minishell);
 }

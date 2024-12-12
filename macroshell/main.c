@@ -6,14 +6,14 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/01 18:20:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:16:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // free
-void	free_prompt(t_myShell *minishell)
+void	prompt_clear(t_myShell *minishell)
 {
 	if (minishell->input)
 		free(minishell->input);
@@ -22,7 +22,7 @@ void	free_prompt(t_myShell *minishell)
 
 static void cleanup_minishell(t_minishell *minishell)
 {
-    free_prompt(minishell);
+    prompt_clear(minishell);
     free_resources_prompt(minishell);
     free_all(minishell);
     close(minishell->stdin_backup);
