@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:24:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:25:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int exec_command(char **arrstr, int id, t_minishell *minishell)
 
 	(void)id;
     /* Validate command and retrieve full path if needed */
-    exec_status = is_valid_command(&full_path, arrstr[0], minishell);
+    exec_status = is_valid_command(&full_path, arrstr[0], minishell->path);
     if (exec_status != EXIT_SUCCESS)
     {
         /* Command not found or not valid */

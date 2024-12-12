@@ -84,7 +84,9 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/fds_health.c \
 	3.execution/child_process.c \
 	3.execution/execution.c \
-	3.execution/path_handler.c \
+	3.execution/path_handler/path_command.c \
+	3.execution/path_handler/path_utils.c \
+	3.execution/path_handler/path_verification.c \
 	3.execution/pipeline.c \
 	3.execution/pipes.c \
 	aux/debug.c \

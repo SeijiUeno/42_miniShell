@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:58:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:35:17 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	reset_fds(t_minishell *minishell)
 {
 	if (!minishell)
 	{
-		fprintf(stderr, "minishell: invalid minishell structure\n");
+		ft_putendl_fd("ERROR: invalid minishell structure\n", STDIN_FILENO);
 		return;
 	}
 
