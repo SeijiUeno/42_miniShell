@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 17:36:43 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:21:07 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,23 @@ int	is_only_spaces(char *input)
 		i++;
 	return (input[i] == '\0');
 }
-int assign_redir_type(char op_char, char *content)
+int	assign_redir_type(char op_char, char *content)
 {
-    if (op_char == '<')
-    {
-        if (content[1] == '<') // Handle '<<'
-            return HEREDOC;
-        else
-            return REDIR_IN;
-    }
-    else if (op_char == '>')
-    {
-        if (content[1] == '>') // Handle '>>'
-            return APPEND;
-        else
-            return REDIR_OUT;
-    }
-    return OPERATOR; // Default case for unexpected input
+	if (op_char == '<')
+	{
+		if (content[1] == '<') // Handle '<<'
+			return (HEREDOC);
+		else
+			return REDIR_IN;
+	}
+	else if (op_char == '>')
+	{
+		if (content[1] == '>') // Handle '>>'
+			return (APPEND);
+		else
+			return (REDIR_OUT);
+	}
+	return (OPERATOR); // Default case for unexpected input
 }
 void process_symbol(char *input, int *index, t_token **tokens, t_token **current)
 {
