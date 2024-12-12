@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:08:27 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:22:27 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,11 @@ void	assign_operator_token_types(t_token **tokens)
 	}
 }
 
-
 t_token	*tokenize_input(char *input)
 {
 	t_token	*tokens;
 	t_token	*current;
 	int		index;
-	int		start;
 
 	tokens = NULL;
 	current = NULL;
@@ -98,32 +96,9 @@ t_token	*tokenize_input(char *input)
 	{
 		skip_whitespace(input, &index); // Skip leading whitespace
 		if (input[index] && ft_strchr(SYMBOLS, input[index]))
-		{
-			if ((input[index] == '<' && input[index + 1] == '<')
-				|| (input[index] == '>' && input[index + 1] == '>'))
-			{
-				add_token(&tokens, &current, input, index, index + 2);
-				index += 2;
-			}
-			else
-			{
-				add_token(&tokens, &current, input, index, index + 1);
-				index++;
-			}
-		}
+			process_symbol(input, &index, &tokens, &current);
 		else if (input[index])
-		{
-			// Process words (handles quotes)
-			start = index;
-			while (input[index] && !ft_strchr(WHITESPACE, input[index]) && !ft_strchr(SYMBOLS, input[index]))
-			{
-				if (ft_strchr(QUOTES, input[index]))
-					skip_quoted_token(input, &index); // Skip quoted segments
-				else
-					index++;
-			}
-			add_token(&tokens, &current, input, start, index);
-		}
+			process_word(input, &index, &tokens, &current);
 	}
 	return (tokens);
 }
