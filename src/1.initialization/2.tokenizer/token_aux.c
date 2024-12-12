@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_aux.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:42:47 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,22 @@ void free_all_tokens(t_token **token_list) {
     }
 
     *token_list = NULL; // Set the list pointer to NULL after freeing
+}
+
+void	skip_quoted_token(char *input, int *index)
+{
+	char	quote;
+
+	quote = input[*index];
+	(*index)++; // Skip opening quote
+	while (input[*index] && input[*index] != quote)
+		(*index)++;
+	if (input[*index] == quote)
+		(*index)++; // Skip closing quote
+}
+
+void	skip_whitespace(char *input, int *index)
+{
+	while (input[*index] && ft_strchr(WHITESPACE, input[*index]))
+		(*index)++;
 }
