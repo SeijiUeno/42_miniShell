@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void process_commands(t_minishell *minishell)
 static void cleanup_iteration(t_minishell *minishell)
 {
     prompt_clear(minishell);
-    reset_fds(minishell); // Restore stdin and stdout
+    fds_reset(minishell); // Restore stdin and stdout
 }
 
 void shell_loop(t_minishell *minishell)

@@ -80,7 +80,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/redir/redirect.c \
 	3.execution/redir/redirect_input.c \
 	3.execution/redir/redirect_output.c \
-	3.execution/redir/setup_redirs.c \
+	3.execution/redir/redir_setup.c \
 	3.execution/redir/utils.c \
 	3.execution/signal/signals.c \
 	3.execution/fds_health.c \

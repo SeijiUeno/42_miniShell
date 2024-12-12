@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int exec_command(char **arrstr, int id, t_minishell *minishell)
         free(full_path);
 
     /* Restore file descriptors to their original state */
-    reset_fds(minishell);
+    fds_reset(minishell);
 
     return exec_status;
 }

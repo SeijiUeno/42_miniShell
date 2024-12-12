@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:14:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:34:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void set_exit_code(char **args, t_minishell *minishell)
     exit(exit_code);
 }
 
-int exit_builtin(char **args, t_minishell *minishell)
+int builtin_exit(char **args, t_minishell *minishell)
 {
     int arg_count;
 

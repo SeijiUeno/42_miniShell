@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 18:50:40 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shell.h"
 
-void	reset_fds(t_minishell *minishell)
+void	fds_reset(t_minishell *minishell)
 {
 	if (!minishell)
 	{

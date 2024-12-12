@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:16:32 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:03:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static int	handle_builtin(char **command, t_minishell *minishell, size_t index)
 	if (index == 5)
 		return (pwd());
 	if (index == 6)
-		return (exit_builtin(command, minishell));
+		return (builtin_exit(command, minishell));
 	return (-1);
 }
 
-int	is_builtin(char **command, t_minishell *minishell)
+int	builtin_check(char **command, t_minishell *minishell)
 {
 	static const char	*builtins[] = {
 		"cd",

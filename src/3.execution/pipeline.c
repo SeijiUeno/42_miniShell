@@ -6,18 +6,18 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:25:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:33:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
 int run_single_command(t_minishell *m, t_command *c) {
-    if (c->redir && setup_redirs(c->redir) != 0)
+    if (c->redir && redir_setup(c->redir) != 0)
         return (EXIT_FAILURE);
     if (!c->argv)
         return (0);
-    if (is_builtin(c->argv, m) >= 0)
+    if (builtin_check(c->argv, m) >= 0)
         return (m->status);
     return (exec_command(c->argv, 0, m));
 }

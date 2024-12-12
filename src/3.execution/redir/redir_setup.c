@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_redirs.c                                     :+:      :+:    :+:   */
+/*   redir_setup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:43:09 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:28:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:33:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-int process_redirection(t_token *redir)
+int redir_process(t_token *redir)
 {
 	if (redir->type == REDIR_IN || redir->type == HEREDOC)
 		return (redirect_input(redir->content));
@@ -23,7 +23,7 @@ int process_redirection(t_token *redir)
 	return (EXIT_SUCCESS);
 }
 
-int setup_redirs(t_token *redir)
+int redir_setup(t_token *redir)
 {
 	while (redir)
 	{
@@ -32,7 +32,7 @@ int setup_redirs(t_token *redir)
 			ft_putstr_fd("Error: missing filename for redirection\n", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
-		if (process_redirection(redir) == EXIT_FAILURE)
+		if (redir_process(redir) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		redir = redir->next;
 	}

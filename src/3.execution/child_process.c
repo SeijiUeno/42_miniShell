@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:24:44 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:40:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:33:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void setup_child_fds(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
     if (child_index < cmd_count - 1 && dup2(pipes[child_index * 2 + 1], STDOUT_FILENO) < 0)
         free_child(m);
     close_all_pipes(pipes, (cmd_count - 1) * 2);
-    if (cmd->redir && setup_redirs(cmd->redir) != 0)
+    if (cmd->redir && redir_setup(cmd->redir) != 0)
         free_child(m);
 }
 
@@ -42,7 +42,7 @@ void run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
     setup_child_fds(m, cmd, pipes, ctx);
     if (!cmd->argv || !cmd->argv[0])
         free_child(m);
-    if (is_builtin(cmd->argv, m) >= 0)
+    if (builtin_check(cmd->argv, m) >= 0)
         free_child(m);
     cmd_path = define_full_path(cmd->argv[0], m->path);
     if (!cmd_path) {
