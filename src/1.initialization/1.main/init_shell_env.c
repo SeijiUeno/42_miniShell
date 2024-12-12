@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:35:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:24:34 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void initialize_signals(void)
 {
-    prepare_signals();
+    signal_setup();
 }
 
 static char **initialize_env(void)
@@ -41,7 +41,7 @@ static int backup_standard_fds(int *stdin_backup, int *stdout_backup)
     return (EXIT_SUCCESS);
 }
 
-void init_minishell(t_minishell *minishell)
+void shell_initialize(t_minishell *minishell)
 {
     ft_bzero(minishell, sizeof(t_minishell));
     minishell->envp = initialize_env();

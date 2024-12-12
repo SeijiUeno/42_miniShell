@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:43:27 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,17 @@ struct s_command
 
 
 void shell_loop(t_minishell *minishell);
-void init_minishell(t_minishell *minishell);
+void shell_initialize(t_minishell *minishell);
 
 // signals
-void		prepare_signals(void);
-void		handle_signal(int signum);
-void		handle_signal_exec(int signum);
+void		signal_setup(void);
+void		signal_handle(int signum);
+void		signal_handle_execution(int signum);
 // status
-int			control_status(int status);
-int			filter_status(int status);
-void		save_terminal_settings(struct termios *original);
-void	restore_terminal_settings(const struct termios *original);
+int			status_control(int status);
+int			status_filter(int status);
+void		terminal_save_settings(struct termios *original);
+void	terminal_restore_settings(const struct termios *original);
 void	handle_sig_heredoc(int signal);
 char	*get_env_value(char *env_name, char **envp);
 

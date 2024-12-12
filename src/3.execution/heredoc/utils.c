@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:22:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:09:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:25:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	handle_sig_heredoc(int signal)
 	{
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		close(STDIN_FILENO);
-		control_status(STATUS_SIGINT);
+		status_control(STATUS_SIGINT);
 	}
 }
