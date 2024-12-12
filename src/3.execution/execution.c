@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:25:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:25:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int exec_command(char **arrstr, int id, t_minishell *minishell)
 
     /* Parent process: wait for the child */
     waitpid(child_pid, &exec_status, 0);
-    exec_status = filter_status(exec_status);
+    exec_status = status_filter(exec_status);
 
     /* If full_path differs from arrstr[0], it was newly allocated and must be freed */
     if (full_path && full_path != arrstr[0])
@@ -80,7 +80,7 @@ int exec_command(char **arrstr, int id, t_minishell *minishell)
 void execute_tree_commands(t_minishell *m) {
     t_command **commands = ast_to_command_list(m->tree_cmd);
     if (!commands) {
-        prepare_signals();
+        signal_setup();
         return;
     }
     debug_print_commands_array(commands);
@@ -88,6 +88,6 @@ void execute_tree_commands(t_minishell *m) {
     if (cmd_count > 0)
         run_pipeline(m, commands, cmd_count);
     free(commands);
-    prepare_signals();
+    signal_setup();
 }
 

@@ -6,22 +6,22 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:03:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:25:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-int	filter_status(int status)
+int	status_filter(int status)
 {
-	if (control_status(STATUS_GET) && (status == STATUS_CTRL_C || status == STATUS_QUIT))
-		status = control_status(STATUS_GET);
+	if (status_control(STATUS_GET) && (status == STATUS_CTRL_C || status == STATUS_QUIT))
+		status = status_control(STATUS_GET);
 	else if (status > STATUS_MAX)
 		status = (status >> 8) & 0xff; // Extract signal code
 	return (status);
 }
 
-int	control_status(int status)
+int	status_control(int status)
 {
 	static int	status_backup;
 
@@ -32,18 +32,18 @@ int	control_status(int status)
 }
 
 
-void	handle_signal_exec(int signum)
+void	signal_handle_execution(int signum)
 {
 	if (signum == SIGINT || signum == SIGQUIT)
 	{
 		if (signum == SIGQUIT)
 			ft_putstr_fd("Quit: 3", STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		control_status(signum + 128);
+		status_control(signum + 128);
 	}
 }
 
-void	handle_signal(int signum)
+void	signal_handle(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -51,14 +51,14 @@ void	handle_signal(int signum)
 		rl_on_new_line();
 		rl_replace_line("", STDIN_FILENO);
 		rl_redisplay();
-		control_status(signum + 128);
+		status_control(signum + 128);
 	}
 }
 
-void	prepare_signals(void)
+void	signal_setup(void)
 {
 	// Handle Ctrl+C with custom handler
-	if (signal(SIGINT, &handle_signal) == SIG_ERR)
+	if (signal(SIGINT, &signal_handle) == SIG_ERR)
     	perror("Error setting SIGINT handler");
 
 	// Ignore Ctrl+\ (SIGQUIT) to prevent core dumps

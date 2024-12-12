@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:16:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 18:48:26 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:24:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(void)
 {
     t_minishell minishell;
     
-    init_minishell(&minishell);
+    shell_initialize(&minishell);
     shell_loop(&minishell);
     cleanup_minishell(&minishell);
 

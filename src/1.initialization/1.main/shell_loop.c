@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:02:25 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static int get_and_reset_status(void)
 {
     int current_status;
 
-    current_status = control_status(STATUS_GET);
-    control_status(0);
+    current_status = status_control(STATUS_GET);
+    status_control(0);
     return (current_status);
 }
 
@@ -45,7 +45,7 @@ void shell_loop(t_minishell *minishell)
 {
     static struct termios original_term;
     
-    save_terminal_settings(&original_term);
+    terminal_save_settings(&original_term);
     while (1)
     {
         minishell->input = handle_input();
@@ -58,5 +58,5 @@ void shell_loop(t_minishell *minishell)
         process_commands(minishell);
         cleanup_iteration(minishell);
     }
-    restore_terminal_settings(&original_term); // Final cleanup
+    terminal_restore_settings(&original_term); // Final cleanup
 }

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:30:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:25:10 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	setup_heredoc_signals(void)
 // Resets the signal handler back to default
 static void	reset_signals(void)
 {
-	signal(SIGINT, &handle_signal);
+	signal(SIGINT, &signal_handle);
 }
 
 // Processes a single line of heredoc input

@@ -6,14 +6,14 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:02:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
 /* Saves terminal settings */
-void	save_terminal_settings(struct termios *original)
+void	terminal_save_settings(struct termios *original)
 {
 	if (tcgetattr(STDIN_FILENO, original) == -1)
 	{
@@ -23,7 +23,7 @@ void	save_terminal_settings(struct termios *original)
 }
 
 /* Restores terminal settings */
-void	restore_terminal_settings(const struct termios *original)
+void	terminal_restore_settings(const struct termios *original)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
 	{
