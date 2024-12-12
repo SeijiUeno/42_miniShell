@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:43:12 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:46:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:29:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int open_file(char *filename, int flags, int mode)
 	fd = open(filename, flags, mode);
 	if (fd < 0)
 	{
-		fprintf(stderr, "minishell: error opening file '%s': %s\n",
-			filename, strerror(errno));
+        ft_putstr_fd("Error: error opening file \n", STDERR_FILENO);
 	}
 	return (fd);
 }

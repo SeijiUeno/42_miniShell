@@ -67,6 +67,8 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	2.buildins/unset.c \
 	2.buildins/exit.c \
 	3.execution/heredoc/heredoc.c \
+	3.execution/heredoc/read_heredoc.c \
+	3.execution/heredoc/utils.c \
 	3.execution/redir/redirect.c \
 	3.execution/redir/redirect_input.c \
 	3.execution/redir/redirect_output.c \
@@ -81,7 +83,6 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/pipes.c \
 	aux/debug.c \
 	aux/error.c \
-	aux/free_sec.c \
 	aux/free.c \
 	aux/terminal_health.c)
 

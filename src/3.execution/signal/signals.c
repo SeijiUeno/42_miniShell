@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:34:04 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,14 @@ void	prepare_signals(void)
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
    		perror("Error setting SIGINT handler");
 
+}
+
+void	handle_sig_heredoc(int signal)
+{
+	if (signal == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		close(STDIN_FILENO);
+		control_status(STATUS_SIGINT);
+	}
 }
