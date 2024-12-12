@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_generate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:22:27 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:36:18 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	generate_tokens(char *input, t_token **tokens)
 int	validate_input(char *input)
 {
 	if (!input || !input[0])
-		return (error("minishell: ", "Empty input", EXIT_FAILURE));
+		return (error("ERROR: ", "Empty input", EXIT_FAILURE));
 	if (validate_all_quotes(input) != EXIT_SUCCESS)
-		return (error("minishell: ", "Unmatched quotes in input", EXIT_FAILURE));
+		return (error("ERROR: ", "Unmatched quotes in input", EXIT_FAILURE));
 	if (is_only_spaces(input))
-		return (error("minishell: ", "Input contains only whitespace", EXIT_FAILURE));
+		return (error("ERROR: ", "Input contains only whitespace", EXIT_FAILURE));
 	return (EXIT_SUCCESS);
 }
 

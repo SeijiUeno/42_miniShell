@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:14:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:17:37 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:34:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void set_exit_code(char **args, t_minishell *minishell)
         exit_code = calculate_exit_code(args[1]);
     else
     {
-        ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+        ft_putstr_fd("ERROR: exit: ", STDERR_FILENO);
         ft_putstr_fd(args[1], STDERR_FILENO);
         ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
         exit_code = 2;
@@ -75,7 +75,7 @@ int exit_builtin(char **args, t_minishell *minishell)
 
     if (arg_count > 2 && ft_is_number(args[1]))
     {
-        ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+        ft_putstr_fd("ERROR: exit: too many arguments\n", STDERR_FILENO);
         return (EXIT_FAILURE);
     }
 

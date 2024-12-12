@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:41:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:36:47 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int parse_input(t_minishell *minishell)
 {
     generate_tokens(minishell->input, &(minishell->tokens));
     if (!(minishell->tokens) || !(minishell->tokens->content))
-        return error("minishell: ", "Empty or invalid input", 1);
+        return (-1);
     if (validate_tokens(minishell->tokens) != EXIT_SUCCESS)
-        return error("minishell: ", "Invalid syntax in input", 1);
+        return (-1);
     return EXIT_SUCCESS;
 }
 
