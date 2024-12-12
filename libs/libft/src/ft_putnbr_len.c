@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 18:10:17 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 18:11:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:17:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	ft_putnbr_len(long long number, char *base, int fd)
 	printed_chars = 0;
 	if (number < 0)
 	{
-		ft_putchar('-');
+		ft_putchar_fd('-', fd);
 		printed_chars++;
 		absolute_number = -number;
 	}

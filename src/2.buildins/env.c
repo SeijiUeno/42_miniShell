@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:16:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:03:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:11:18 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	print_env(char **envp)
 	while (*temp != NULL)
 	{
 		if (ft_strchr(*temp, '='))
-			//**************** ft_printf("%s\n", *temp);
+				ft_printf("%s\n", *temp);
 		temp++;
 	}
 	return (0);

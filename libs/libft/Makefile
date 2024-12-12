@@ -23,7 +23,8 @@ SRC_FILES = ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
             ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
             ft_error.c ft_strndup.c ft_putstr_len.c ft_printf.c \
 			ft_isalpha.c ft_strchr.c ft_isalnum.c ft_strjoin.c \
-			ft_split.c ft_itoa.c ft_tochr.c ft_putptr_len.c
+			ft_split.c ft_itoa.c ft_tochr.c ft_putptr_len.c \
+			ft_putnbr_len.c
 
 OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
