@@ -47,7 +47,9 @@ TEST_DIR := tests/
 #! ******************************************************************************#
 
 SRCS := $(addprefix $(SRCS_PATH), \
-	1.initialization/0.env/env.c \
+	1.initialization/0.env/get_env_path.c \
+	1.initialization/0.env/get_env.c \
+	1.initialization/0.env/utils.c \
 	1.initialization/1.main/main.c \
 	1.initialization/1.main/init_shell_env.c \
 	1.initialization/1.main/shell_loop.c \

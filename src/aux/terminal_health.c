@@ -6,20 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:16:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:02:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-int	get_and_reset_status(void)
-{
-	int current_status;
-
-	current_status = control_status(STATUS_GET);
-	control_status(0);
-	return (current_status);
-}
 
 /* Saves terminal settings */
 void	save_terminal_settings(struct termios *original)
