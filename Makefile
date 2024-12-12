@@ -56,6 +56,8 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	1.initialization/2.tokenizer/token_validate.c \
 	1.initialization/3.expansor/expansor.c \
 	1.initialization/4.ast/ast.c \
+	1.initialization/4.ast/ast_commands.c \
+	1.initialization/4.ast/ast_tokens.c \
 	1.initialization/5.parser/parser.c \
 	1.initialization/5.parser/command_array.c \
 	2.buildins/buildin_handler.c \

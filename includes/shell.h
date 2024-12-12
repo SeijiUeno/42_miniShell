@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:35:16 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:55:20 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,15 +129,19 @@ int is_redirection(int token_type);
 void append_redirection(t_token **redirections, t_token *redir, t_token *redir_target, t_minishell *minishell);
 
 // AST Functions
-void generate_ast(t_minishell *minishell);
-t_command *parse_pipeline(t_token **tokens, t_minishell *minishell);
-t_command *parse_command(t_token **tokens, t_minishell *minishell);
-t_token *parse_redirections(t_token **tokens, t_minishell *minishell);
-void free_tree(t_command **tree);
+t_command *create_command_node(t_token *tokens, t_minishell *minishell);
+
 
 // parsing
+void generate_ast(t_minishell *minishell);
 t_command **ast_to_command_list(t_command *root);
+t_command *create_pipe_node(t_command *left_cmd, t_command *right_cmd);
 int count_commands_in_array(t_command **commands);
+char **build_argument_vector(t_token *tokens, t_minishell *minishell);
+void advance_to_next_pipe(t_token **tokens);
+t_command *build_pipeline_ast(t_minishell *minishell, t_command *root_cmd);
+t_command *create_command_node(t_token *tokens, t_minishell *minishell);
+char **allocate_argument_array(t_token *tokens, t_minishell *minishell, int count);
 
 // Argument Parsing for Commands
 char **generate_argv(t_token *tokens, t_minishell *minishell);
