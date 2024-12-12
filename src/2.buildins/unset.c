@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:10:01 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:48 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int unset(const char **keys, t_minishell *minishell)
     key_iter = (char **)(keys + 1);
     while (*key_iter)
     {
-        if (validate_var_name(*key_iter))
+        if (var_validate_name(*key_iter))
         {
             status_error = error(*key_iter, ": not a valid identifier", 1);
         }

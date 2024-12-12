@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:55:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 18:51:06 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:48 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-char *validate_var_name(char *variable)
+char *var_validate_name(char *variable)
 {
     int index;
 

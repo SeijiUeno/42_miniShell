@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:52 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,11 +177,11 @@ int			pwd(void);
 int			change_dir(char **path, t_minishell *minishell);
 int			unset(const char **key, t_minishell *minishell);
 int			export(char **args, t_minishell *minishell);
-char		*validate_var_name(char *var);
-int			print_order_env(char **env);
+char		*var_validate_name(char *var);
+int			env_print_ordered(char **env);
 int			echo(char **args);
-int			exit_builtin(char **args, t_minishell *minishell);
-int			is_builtin(char **command, t_minishell *minishell);
+int			builtin_exit(char **args, t_minishell *minishell);
+int			builtin_check(char **command, t_minishell *minishell);
 // builds
 int			build_commands(t_minishell *minishell);
 void		process_input(t_minishell *minishell);
@@ -214,14 +214,14 @@ int redirect_output(char *filename);
 int append_output(char *filename);
 
 /* Setup */
-int process_redirection(t_token *redir);
-int setup_redirs(t_token *redir);
-void append_redirection_node(t_token **redirs, int type, char *filename);
+int redir_process(t_token *redir);
+int redir_setup(t_token *redir);
+void redir_append_node(t_token **redirs, int type, char *filename);
 t_token		*ft_generate_redirs(t_token **token, t_minishell *minishell);
 void		add_redir(t_token **rds, t_token *new_rd, t_minishell *minishell);
 int			heredoc(char **str, int index);
 int			verify_heredoc(t_minishell *minishell);
-void		reset_fds(t_minishell *minishell);
+void		fds_reset(t_minishell *minishell);
 
 // execute commands
 int			exec_command(char **arrstr, int id, t_minishell *minishell);
