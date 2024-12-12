@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:22:27 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:21:48 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	validate_input(char *input)
 	return (EXIT_SUCCESS);
 }
 
-void	add_token(t_token **tokens, t_token **current, char *input, int start, int end)
+void add_token(t_token_data *data, int start, int end)
 {
 	t_token	*new_token;
 
@@ -49,19 +49,25 @@ void	add_token(t_token **tokens, t_token **current, char *input, int start, int 
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	new_token->content = ft_substr(input, start, end - start);
-	new_token->type = ft_strchr(SYMBOLS, input[start]) ? OPERATOR : WORD;
+	new_token->content = ft_substr(data->input, start, end - start);
+
+	if (ft_strchr(SYMBOLS, data->input[start]))
+		new_token->type = OPERATOR;
+	else
+		new_token->type = WORD;
+
 	new_token->next = NULL;
 	new_token->prev = NULL;
-	if (*current)
+	if (*data->current)
 	{
-		(*current)->next = new_token;
-		new_token->prev = *current;
+		(*data->current)->next = new_token;
+		new_token->prev = *data->current;
 	}
 	else
-		*tokens = new_token;
-	*current = new_token;
+		*data->tokens = new_token;
+	*data->current = new_token;
 }
+
 
 void	assign_operator_token_types(t_token **tokens)
 {

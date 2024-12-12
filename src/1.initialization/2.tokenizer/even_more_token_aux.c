@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 16:24:14 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:22:17 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,31 @@ int assign_redirection_type(char op_char, char *content)
 }
 void process_symbol(char *input, int *index, t_token **tokens, t_token **current)
 {
-	if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
-	{
-		add_token(tokens, current, input, *index, *index + 2);
-		*index += 2;
-	}
-	else
-	{
-		add_token(tokens, current, input, *index, *index + 1);
-		(*index)++;
-	}
+    t_token_data data = { tokens, current, input };
+
+    if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
+    {
+        add_token(&data, *index, *index + 2);
+        *index += 2;
+    }
+    else
+    {
+        add_token(&data, *index, *index + 1);
+        (*index)++;
+    }
 }
 
 void process_word(char *input, int *index, t_token **tokens, t_token **current)
 {
-	int start = *index;
+    int start = *index;
+    t_token_data data = { tokens, current, input };
 
-	while (input[*index] && !ft_strchr(WHITESPACE, input[*index]) && !ft_strchr(SYMBOLS, input[*index]))
-	{
-		if (ft_strchr(QUOTES, input[*index]))
-			skip_quoted_token(input, index); // Skip quoted segments
-		else
-			(*index)++;
-	}
-	add_token(tokens, current, input, start, *index);
+    while (input[*index] && !ft_strchr(WHITESPACE, input[*index]) && !ft_strchr(SYMBOLS, input[*index]))
+    {
+        if (ft_strchr(QUOTES, input[*index]))
+            skip_quoted_token(input, index); // Skip quoted segments
+        else
+            (*index)++;
+    }
+    add_token(&data, start, *index);
 }
