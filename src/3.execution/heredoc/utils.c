@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:22:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*generate_heredoc_name(int index)
 	return (full_name);
 }
 
-void	handle_sig_heredoc(int signal)
+void	signal_handle_heredoc(int signal)
 {
 	if (signal == SIGINT)
 	{

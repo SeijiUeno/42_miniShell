@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:13:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 15:55:40 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:52 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char *expand_word(const char *input_str, int *index)
 }
 
 // Static function to get the environment variable value
-static char *get_env_value_from_envp(const char *env_entry, int var_len)
+static char *env_get_value_from_envp(const char *env_entry, int var_len)
 {
     int start_index = var_len;
     if (env_entry[start_index] == '=')
@@ -62,7 +62,7 @@ char *expand_env(const char *var_name, char **envp)
         if (strncmp(var_name, envp[i], var_len) == 0 &&
             (envp[i][var_len] == '=' || envp[i][var_len] == '\0'))
         {
-            return get_env_value_from_envp(envp[i], var_len);
+            return env_get_value_from_envp(envp[i], var_len);
         }
         i++;
     }

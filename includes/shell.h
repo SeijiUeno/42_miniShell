@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:28:52 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ int			status_control(int status);
 int			status_filter(int status);
 void		terminal_save_settings(struct termios *original);
 void	terminal_restore_settings(const struct termios *original);
-void	handle_sig_heredoc(int signal);
-char	*get_env_value(char *env_name, char **envp);
+void	signal_handle_heredoc(int signal);
+char	*env_get_value(char *env_name, char **envp);
 
 // Tokenizer Functions
 void generate_tokens(char *input, t_token **tokens);
