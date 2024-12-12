@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:25:35 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:25:58 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_token		t_token;
+typedef struct s_token_data	t_token_data;
 typedef struct s_command	t_command;
 typedef struct s_pid		t_pid;
 typedef enum e_token_type	t_token_type;
@@ -73,6 +74,13 @@ struct s_pid
 {
 	int				pid;
 	struct s_pid	*next;
+};
+
+struct s_token_data 
+{
+	t_token	**tokens;
+	t_token	**current;
+	char	*input;
 };
 
 enum e_operator_type
@@ -127,7 +135,7 @@ int	is_only_spaces(char *input);
 int assign_redirection_type(char op_char, char *content);
 void process_symbol(char *input, int *index, t_token **tokens, t_token **current);
 void process_word(char *input, int *index, t_token **tokens, t_token **current);
-void	add_token(t_token **tokens, t_token **current, char *input, int start, int end);
+void add_token(t_token_data *data, int start, int end);
 
 // Token Validation Functions
 int validate_tokens(t_token *tokens);
