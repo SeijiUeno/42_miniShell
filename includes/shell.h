@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/12/12 15:52:21 by sueno-te         ###   ########.fr       */
-=======
-/*   Updated: 2024/12/12 16:08:07 by emorales         ###   ########.fr       */
->>>>>>> ac017f4ff51eb6a3e6a344cf1ffebb274269a2b4
+/*   Updated: 2024/12/12 16:16:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +30,12 @@
 # include <sys/types.h>
 # include <dirent.h>
 
-#define STATUS_QUIT 3
-#define STATUS_CTRL_C 2
-#define STATUS_MAX 255
-
+# define STATUS_QUIT 3
+# define STATUS_CTRL_C 2
+# define STATUS_MAX 255
 # define STATUS_GET -1
 # define STATUS_SIGINT 130
 # define STATUS_SIGQUIT 131
-
 # define WHITESPACE " \t\n\r\v\f"
 # define SYMBOLS "|<>"
 # define QUOTES "'\""
@@ -140,7 +134,6 @@ void append_redirection(t_token **redirections, t_token *redir, t_token *redir_t
 
 // AST Functions
 t_command *create_command_node(t_token *tokens, t_minishell *minishell);
-
 
 // parsing
 void generate_ast(t_minishell *minishell);
@@ -252,12 +245,11 @@ int			error(char *content, char *error, int num_error);
 void		free_child(t_minishell *minishell);
 
 // free functions
-void		free_prompt(t_minishell *minishell);
+void		prompt_clear(t_minishell *minishell);
 void		free_all_tokens(t_token **tokens);
 void		free_all(t_minishell *minishell);
 void		free_tree(t_command **tree);
 void		free_list(t_list **list);
-
 
 //debug
 void debug_print_commands_array(t_command **commands);
