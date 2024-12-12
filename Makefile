@@ -53,6 +53,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	1.initialization/1.main/shell_loop.c \
 	1.initialization/2.tokenizer/token_generate.c \
 	1.initialization/2.tokenizer/token_aux.c \
+	1.initialization/2.tokenizer/even_more_token_aux.c \
 	1.initialization/2.tokenizer/token_validate.c \
 	1.initialization/3.expansor/expansor.c \
 	1.initialization/4.ast/ast.c \
