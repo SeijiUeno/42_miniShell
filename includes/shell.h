@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/12/12 15:52:21 by sueno-te         ###   ########.fr       */
+=======
+/*   Updated: 2024/12/12 16:08:07 by emorales         ###   ########.fr       */
+>>>>>>> ac017f4ff51eb6a3e6a344cf1ffebb274269a2b4
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +124,11 @@ void assign_operator_token_types(t_token **tokens);
 void initialize_token_list(t_token **tokens);
 void append_token(t_token **token_list, t_token *new_token);
 void free_all_tokens(t_token **tokens);
+void skip_whitespace(char *input, int *index);
+void skip_quoted_token(char *input, int *index);
+int	validate_all_quotes(char *input);
+int	is_only_spaces(char *input);
+int assign_redirection_type(char op_char, char *content);
 
 // Token Validation Functions
 int validate_tokens(t_token *tokens);
