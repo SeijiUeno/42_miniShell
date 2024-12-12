@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:45:08 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:55:10 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:36:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char **allocate_argument_array(t_token *tokens, t_minishell *minishell, int coun
     {
         if (tokens->type == WORD)
         {
-            argv[index] = expand_vars_and_quotes(tokens->content, minishell);
+            argv[index] = expansor(tokens->content, minishell);
             if (!argv[index])
             {
                 free_argument_array_partially(argv, index);

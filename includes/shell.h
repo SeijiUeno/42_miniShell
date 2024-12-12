@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:34:06 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:47:45 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,10 +158,6 @@ t_command *create_command_node(t_token *tokens, t_minishell *minishell);
 char **allocate_argument_array(t_token *tokens, t_minishell *minishell, int count);
 char *extract_var_name(const char *input_str, int *index);
 
-// Argument Parsing for Commands
-char **generate_argv(t_token *tokens, t_minishell *minishell);
-int count_args(t_token *tokens);
-
 // Debugging Functions
 void debug_print_tree(t_command *node, int level);
 
@@ -170,38 +166,36 @@ char		**get_env(char **envp);
 char		**get_paths(char **env);
 char		*get_single_env(char *env_name, char **envp);
 int			verify_abs_path(const char *path);
-char		*verify_path(char *bin, char **path);
 
 // bultins
 int			pwd(void);
 int			change_dir(char **path, t_minishell *minishell);
 int			unset(const char **key, t_minishell *minishell);
-int			export(char **args, t_minishell *minishell);
+int			buildin_export(char **args, t_minishell *minishell);
 char		*var_validate_name(char *var);
-int			env_print_ordered(char **env);
 int			echo(char **args);
 int			builtin_exit(char **args, t_minishell *minishell);
 int			builtin_check(char **command, t_minishell *minishell);
 // builds
 int			build_commands(t_minishell *minishell);
-void		process_input(t_minishell *minishell);
 // expansor
 
 
 char *expand_single_quotes(const char *input_str, int *index);;
-char *expand_vars_and_quotes(const char *input_str, t_minishell *minishell);
+char *expansor(const char *input_str, t_minishell *minishell);
 char *expand_double_quotes(const char *input_str, int *index, t_minishell *minishell);
 char *expand_word(const char *input_str, int *index);
 char *expand_env(const char *var_name, char **envp);
 char *expand_parameter(const char *input_str, int *index, t_minishell *minishell);
 char *join_word(char *word, char *new_word);
-char *expand_num_or_status(const char *input_str, int *index, t_minishell *minishell);
 char *expand_until_char(const char *input_str, int *index, char stop_char);
 
 // heredoc
-int	read_heredoc(const char *delim, int fd);
+int	heredoc_read(const char *delim, int fd);
 int	heredoc(char **str, int index);
-char	*generate_heredoc_name(int index);
+char	*heredoc_generate_name(int index);
+int			verify_heredoc(t_minishell *minishell);
+void		fds_reset(t_minishell *minishell);
 
 /* Utils */
 int open_file(char *filename, int flags, int mode);
@@ -218,32 +212,19 @@ int redir_process(t_token *redir);
 int redir_setup(t_token *redir);
 void redir_append_node(t_token **redirs, int type, char *filename);
 t_token		*ft_generate_redirs(t_token **token, t_minishell *minishell);
-void		add_redir(t_token **rds, t_token *new_rd, t_minishell *minishell);
-int			heredoc(char **str, int index);
-int			verify_heredoc(t_minishell *minishell);
-void		fds_reset(t_minishell *minishell);
 
 // execute commands
-int			exec_command(char **arrstr, int id, t_minishell *minishell);
-char		*verify_path(char *bin, char **path);
+int			exec_run_command(char **arrstr, int id, t_minishell *minishell);
 int			print_env(char **envp);
-void		execute_tree_commands(t_minishell *minishell);
-void		execute_single_command(t_minishell *minishell);
-void		close_upcoming_fds(t_command *root);
-void		close_all_fds(t_minishell *minishell);
-void		execute_pipe_command(t_minishell *minishell, t_command *temp_tree);
-void		child_process(t_minishell *minishell, t_command *temp_tree,
+void		execute(t_minishell *minishell);
+void		exec_child_process(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
-void		execute_command(t_minishell *minishell, t_command *temp_tree,
-				int is_left);
-int			handle_fds(t_minishell *minishell, t_command *temp_tree,
-				int is_left);
-void run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]);
-void wait_for_children(t_minishell *minishell, pid_t *pids, int count);
+void exec_run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]);
+void exec_wait_for_children(t_minishell *minishell, pid_t *pids, int count);
 //pipes
-void 		close_all_pipes(int *pipes, int total_fds);
-int			create_pipes(int *pipes, int command_count);
-void 		run_pipeline(t_minishell *m, t_command **cmds, int cmd_count);
+void 		pipe_close_all(int *pipes, int total_fds);
+int			pipe_create(int *pipes, int command_count);
+void 		pipe_run_pipeline(t_minishell *m, t_command **cmds, int cmd_count);
 //paths
 char 		*define_full_path(char *cmd, char **path);
 char *ft_strjoin_three(const char *s1, const char *s2, const char *s3);
@@ -253,11 +234,10 @@ char *build_full_path(const char *dir, const char *bin);
 char *search_path(const char *bin, char **path);
 
 // utils
-void		free_arr(char **arr);
-void		sort_arr(char **arr);
-void		swap_arr(char **wordA, char **wordB);
+void		util_free_array(char **arr);
+void		util_swap_array(char **wordA, char **wordB);
 int			error(const char *content, char *error, int num_error);
-void		free_child(t_minishell *minishell);
+void		util_free_child(t_minishell *minishell);
 
 // free functions
 void		prompt_clear(t_minishell *minishell);

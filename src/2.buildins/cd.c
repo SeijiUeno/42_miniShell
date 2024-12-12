@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:02:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:45:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void update_pwd(t_minishell *minishell)
         char *old_pwd_var = ft_strjoin("OLD", old_pwd);
         free(envp[i]);
         envp[i] = ft_strjoin("PWD=", current_path);
-        export((char *[]){ "export", old_pwd_var, NULL }, minishell);
+        buildin_export((char *[]){ "buildin_export", old_pwd_var, NULL }, minishell);
         free(old_pwd_var);
         free(old_pwd);
     }

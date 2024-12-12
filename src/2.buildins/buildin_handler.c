@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:16:32 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:32:25 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:45:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	handle_builtin(char **command, t_minishell *minishell, size_t index)
 	if (index == 2)
 		return (print_env(minishell->envp));
 	if (index == 3)
-		return (export(command, minishell));
+		return (buildin_export(command, minishell));
 	if (index == 4)
 		return (unset((const char **)command, minishell));
 	if (index == 5)
@@ -37,7 +37,7 @@ int	builtin_check(char **command, t_minishell *minishell)
 		"cd",
 		"echo",
 		"env",
-		"export",
+		"buildin_export",
 		"unset",
 		"pwd",
 		"exit",

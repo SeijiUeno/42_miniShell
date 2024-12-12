@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:33:49 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:36:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int process_single_redirection(
     redir_target = redir_op->next;
     if (validate_redirection(redir_op, redir_target) < 0)
         return (-1);
-    expanded_filename = expand_vars_and_quotes(redir_target->content, minishell);
+    expanded_filename = expansor(redir_target->content, minishell);
     if (!expanded_filename)
         return (-1);
     redir_append_node(redirs, redir_op->type, expanded_filename);

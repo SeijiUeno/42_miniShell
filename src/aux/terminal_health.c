@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:40:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void free_all(t_minishell *minishell)
     if (!minishell)
         return;
 
-    free_arr(minishell->path);
-    free_arr(minishell->envp);
+    util_free_array(minishell->path);
+    util_free_array(minishell->envp);
     if (minishell->pid_list)
         free_list(&minishell->pid_list);
     if (minishell->input)

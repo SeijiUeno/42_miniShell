@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:41:27 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 17:10:42 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:42:01 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 // Frees a null-terminated array of strings.
-void free_arr(char **arr)
+void util_free_array(char **arr)
 {
     int i;
 
@@ -60,7 +60,7 @@ void free_tree(t_command **tree)
     if (node->right)
         free_tree(&node->right);
     if (node->argv)
-        free_arr(node->argv);
+        util_free_array(node->argv);
     if (node->redir)
         free_all_tokens(&(node->redir));
 
@@ -69,7 +69,7 @@ void free_tree(t_command **tree)
 }
 
 // Frees all resources associated with the minishell and exits.
-void free_child(t_minishell *minishell)
+void util_free_child(t_minishell *minishell)
 {
     if (!minishell)
         return;

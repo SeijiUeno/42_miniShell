@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:45:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:53:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:36:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char *handle_expansion(const char *input_str, int *index, t_minishell *mi
     return expand_word(input_str, index);
 }
 
-char *expand_vars_and_quotes(const char *input_str, t_minishell *minishell)
+char *expansor(const char *input_str, t_minishell *minishell)
 {
     char *result = NULL;
     char *temp_str;

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:28:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:42:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	process_line(char *line, const char *delim, int fd)
 }
 
 // Reads heredoc input until the delimiter is reached or an error occurs
-int	read_heredoc(const char *delim, int fd)
+int	heredoc_read(const char *delim, int fd)
 {
 	char	*line;
 	int		stop = 0;
