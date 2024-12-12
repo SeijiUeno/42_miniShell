@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 17:22:17 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:36:43 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_only_spaces(char *input)
 		i++;
 	return (input[i] == '\0');
 }
-int assign_redirection_type(char op_char, char *content)
+int assign_redir_type(char op_char, char *content)
 {
     if (op_char == '<')
     {

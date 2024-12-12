@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:25:58 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:36:37 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,12 @@
 # include <sys/types.h>
 # include <dirent.h>
 
-#define STATUS_QUIT 3
-#define STATUS_CTRL_C 2
-#define STATUS_MAX 255
-
+# define STATUS_QUIT 3
+# define STATUS_CTRL_C 2
+# define STATUS_MAX 255
 # define STATUS_GET -1
 # define STATUS_SIGINT 130
 # define STATUS_SIGQUIT 131
-
 # define WHITESPACE " \t\n\r\v\f"
 # define SYMBOLS "|<>"
 # define QUOTES "'\""
@@ -132,7 +130,7 @@ void skip_whitespace(char *input, int *index);
 void skip_quoted_token(char *input, int *index);
 int	validate_all_quotes(char *input);
 int	is_only_spaces(char *input);
-int assign_redirection_type(char op_char, char *content);
+int assign_redir_type(char op_char, char *content);
 void process_symbol(char *input, int *index, t_token **tokens, t_token **current);
 void process_word(char *input, int *index, t_token **tokens, t_token **current);
 void add_token(t_token_data *data, int start, int end);
@@ -147,7 +145,6 @@ void append_redirection(t_token **redirections, t_token *redir, t_token *redir_t
 
 // AST Functions
 t_command *create_command_node(t_token *tokens, t_minishell *minishell);
-
 
 // parsing
 void generate_ast(t_minishell *minishell);
@@ -259,12 +256,11 @@ int			error(char *content, char *error, int num_error);
 void		free_child(t_minishell *minishell);
 
 // free functions
-void		free_prompt(t_minishell *minishell);
+void		prompt_clear(t_minishell *minishell);
 void		free_all_tokens(t_token **tokens);
 void		free_all(t_minishell *minishell);
 void		free_tree(t_command **tree);
 void		free_list(t_list **list);
-
 
 //debug
 void debug_print_commands_array(t_command **commands);
