@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 17:36:37 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:43:27 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void debug_print_tree(t_command *node, int level);
 char		**get_env(char **envp);
 char		**get_paths(char **env);
 char		*get_single_env(char *env_name, char **envp);
-int			verify_abs_path(char *path);
+int			verify_abs_path(const char *path);
 char		*verify_path(char *bin, char **path);
 
 // bultins
@@ -238,7 +238,6 @@ void		execute_command(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
 int			handle_fds(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
-int			is_valid_command(char **full_path, char *path, t_minishell *minishell);
 void run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]);
 void wait_for_children(t_minishell *minishell, pid_t *pids, int count);
 //pipes
@@ -247,12 +246,17 @@ int			create_pipes(int *pipes, int command_count);
 void 		run_pipeline(t_minishell *m, t_command **cmds, int cmd_count);
 //paths
 char 		*define_full_path(char *cmd, char **path);
+char *ft_strjoin_three(const char *s1, const char *s2, const char *s3);
+int is_valid_command(char **full_path, const char *cmd, char **env_path);
+int has_access(const char *path, int mode);
+char *build_full_path(const char *dir, const char *bin);
+char *search_path(const char *bin, char **path);
 
 // utils
 void		free_arr(char **arr);
 void		sort_arr(char **arr);
 void		swap_arr(char **wordA, char **wordB);
-int			error(char *content, char *error, int num_error);
+int			error(const char *content, char *error, int num_error);
 void		free_child(t_minishell *minishell);
 
 // free functions
