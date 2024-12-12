@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:43:09 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:43:45 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:28:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int setup_redirs(t_token *redir)
 	{
 		if (!redir->content)
 		{
-			fprintf(stderr, "minishell: missing filename for redirection\n");
+			ft_putstr_fd("Error: missing filename for redirection\n", STDERR_FILENO);
 			return (EXIT_FAILURE);
 		}
 		if (process_redirection(redir) == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:58:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:35:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int			control_status(int status);
 int			filter_status(int status);
 void		save_terminal_settings(struct termios *original);
 void	restore_terminal_settings(const struct termios *original);
+void	handle_sig_heredoc(int signal);
 
 // Tokenizer Functions
 void generate_tokens(char *input, t_token **tokens);
@@ -177,7 +178,10 @@ char *join_word(char *word, char *new_word);
 char *expand_num_or_status(const char *input_str, int *index, t_minishell *minishell);
 char *expand_until_char(const char *input_str, int *index, char stop_char);
 
-// redirections
+// heredoc
+int	read_heredoc(const char *delim, int fd);
+int	heredoc(char **str, int index);
+char	*generate_heredoc_name(int index);
 
 /* Utils */
 int open_file(char *filename, int flags, int mode);
