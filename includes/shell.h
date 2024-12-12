@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 14:55:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:52:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ int			filter_status(int status);
 void		save_terminal_settings(struct termios *original);
 void	restore_terminal_settings(const struct termios *original);
 void	handle_sig_heredoc(int signal);
+char	*get_env_value(char *env_name, char **envp);
 
 // Tokenizer Functions
 void generate_tokens(char *input, t_token **tokens);
@@ -142,6 +143,7 @@ void advance_to_next_pipe(t_token **tokens);
 t_command *build_pipeline_ast(t_minishell *minishell, t_command *root_cmd);
 t_command *create_command_node(t_token *tokens, t_minishell *minishell);
 char **allocate_argument_array(t_token *tokens, t_minishell *minishell, int count);
+char *extract_var_name(const char *input_str, int *index);
 
 // Argument Parsing for Commands
 char **generate_argv(t_token *tokens, t_minishell *minishell);
@@ -172,7 +174,8 @@ int			build_commands(t_minishell *minishell);
 void		process_input(t_minishell *minishell);
 // expansor
 
-// Function declarations
+
+char *expand_single_quotes(const char *input_str, int *index);;
 char *expand_vars_and_quotes(const char *input_str, t_minishell *minishell);
 char *expand_double_quotes(const char *input_str, int *index, t_minishell *minishell);
 char *expand_word(const char *input_str, int *index);
