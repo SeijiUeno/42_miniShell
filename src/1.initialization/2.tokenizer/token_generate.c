@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_generate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:07:53 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:30:27 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,13 @@ void	add_token(t_token_data *data, int start, int end)
 	*data->current = new_token;
 }
 
-void	assign_operator_token_types(t_token **tokens)
+void assign_operator_token_types(t_token **tokens)
 {
-	t_token	*current;
-	char	op_char;
+	t_token		*current;
+	char		op_char;
+
+	if (!tokens || !*tokens)
+	return; // Safeguard against NULL pointers
 
 	current = *tokens;
 	while (current)
@@ -90,12 +93,15 @@ void	assign_operator_token_types(t_token **tokens)
 			op_char = current->content[0];
 			if (op_char == '|')
 				current->type = PIPE;
-			else
+			else if (op_char == '<' || op_char == '>')
 				current->type = assign_redir_type(op_char, current->content);
+			else if (current->content[1] != '\0')
+			error("minishell", "syntax error near unexpected token", -1);
 		}
 		current = current->next;
 	}
 }
+
 
 t_token	*tokenize_input(char *input)
 {
