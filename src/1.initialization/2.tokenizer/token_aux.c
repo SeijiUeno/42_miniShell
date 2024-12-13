@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:52 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 21:07:04 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 21:11:38 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,15 @@ void	free_all_tokens(t_token **token_list)
 
 	current = *token_list;
 	// Iterate through the list and free each token
-	while (current) {
+	while (current)
+	{
 		next_token = current->next; // Save the next token
-		if (current->content) {
+		if (current->content)
+		{
 			free(current->content); // Free the token's content
 		}
-		free(current);             // Free the token itself
-		current = next_token;      // Move to the next token
+		free(current); // Free the token itself
+		current = next_token; // Move to the next token
 	}
 	*token_list = NULL; // Set the list pointer to NULL after freeing
 }

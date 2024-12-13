@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 21:03:24 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 21:10:18 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ void	process_symbol(char *input, int *index, t_token **tokens, t_token **current
 	data.tokens = tokens;
 	data.current = current;
 	data.input = input;
-	if ((input[*index] == '<' && input[*index + 1] == '<')
-	|| (input[*index] == '>' && input[*index + 1] == '>'))
+	if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
 	{
 		add_token(&data, *index, *index + 2);
 		*index += 2;
