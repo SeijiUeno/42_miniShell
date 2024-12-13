@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/13 13:12:25 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:14:28 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	process_symbol(char *input, int *index, t_token **tokens, t_token **current
 		error("minishell", "syntax error near unexpected token", -1);
 		return ;
 	}
-	if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
+	if ((input[*index] == '<' && input[*index + 1] == '<')
+		|| (input[*index] == '>' && input[*index + 1] == '>'))
 	{
 		add_token(&data, *index, *index + 2);
 		*index += 2;
@@ -97,11 +98,13 @@ void	process_word(char *input, int *index, t_token **tokens, t_token **current)
 	data.tokens = tokens;
 	data.current = current;
 	data.input = input;
-	while (input[*index] && !ft_strchr(WHITESPACE, input[*index]) && !ft_strchr(SYMBOLS, input[*index]))
+	while (input[*index] && !ft_strchr(WHITESPACE, input[*index])
+		&& !ft_strchr(SYMBOLS, input[*index]))
 	{
 		if (ft_strchr(QUOTES, input[*index]))
 			skip_quoted_token(input, index); // Skip quoted segments
-		else if (ft_strchr(SYMBOLS, input[*index]) && !ft_strchr(QUOTES, input[start]))
+		else if (ft_strchr(SYMBOLS, input[*index])
+			&& !ft_strchr(QUOTES, input[start]))
 			break ;
 		else
 			(*index)++;

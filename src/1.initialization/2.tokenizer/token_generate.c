@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:10:17 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:17:05 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	assign_operator_token_types(t_token **tokens)
 	char		op_char;
 
 	if (!tokens || !*tokens)
-		return ; // Safeguard against NULL pointers
+		return ; //Safeguard against null pointers
 	current = *tokens;
 	while (current)
 	{
