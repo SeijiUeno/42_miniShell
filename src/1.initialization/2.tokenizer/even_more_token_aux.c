@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   even_more_token_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 21:10:18 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:12:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,12 @@ void	process_symbol(char *input, int *index, t_token **tokens, t_token **current
 	data.tokens = tokens;
 	data.current = current;
 	data.input = input;
+	if ((input[*index] == '|' && input[*index + 1] == '|') 
+		|| (input[*index] == '<' && input[*index + 1] == '>')) 
+	{
+		error("minishell", "syntax error near unexpected token", -1);
+    	return;
+	}
 	if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
 	{
 		add_token(&data, *index, *index + 2);
@@ -95,6 +101,8 @@ void	process_word(char *input, int *index, t_token **tokens, t_token **current)
 	{
 		if (ft_strchr(QUOTES, input[*index]))
 			skip_quoted_token(input, index); // Skip quoted segments
+		else if (ft_strchr(SYMBOLS, input[*index]) && !ft_strchr(QUOTES, input[start]))
+			break ;
 		else
 			(*index)++;
 	}
