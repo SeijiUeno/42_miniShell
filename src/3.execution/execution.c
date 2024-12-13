@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:40:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:11:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void child_single(char *full_path, char **argv, t_minishell *minishell)
         close(fd);
         fd++;
     }
-
+    signal(SIGINT, SIG_DFL);  // Restore default Ctrl-C behavior
+    signal(SIGQUIT, SIG_DFL); // Restore default Ctrl-\ behavior
     execve(full_path, argv, minishell->envp);
     perror("execve");
     free(full_path);

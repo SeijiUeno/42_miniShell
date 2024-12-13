@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:25:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:40:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:28:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ void fork_children(t_minishell *m, t_command **cmds, int cmd_count, int *pipes) 
 
 void pipe_run_pipeline(t_minishell *m, t_command **cmds, int cmd_count) {
     if (cmd_count == 1) {
+        g_in_subprocess = 1;
         m->status = run_single_command(m, cmds[0]);
+        g_in_subprocess = 0;
         return;
     }
     int *pipes = ft_calloc(sizeof(int), (cmd_count - 1) * 2);
@@ -48,6 +50,8 @@ void pipe_run_pipeline(t_minishell *m, t_command **cmds, int cmd_count) {
         free(pipes);
         return;
     }
+    g_in_subprocess = 1; // Signal handling suppressed during pipeline
     fork_children(m, cmds, cmd_count, pipes);
+    g_in_subprocess = 0; // Restore signal handling
     free(pipes);
 }
