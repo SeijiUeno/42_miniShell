@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 18:53:41 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 14:14:22 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:56:22 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ char	**get_env(char **environment)
 	new_environment = allocate_environment_array(environment, &environment_count);
 	if (!new_environment)
 		return (NULL);
-	for (index = 0; index < environment_count; index++)
+	index = 0;
+	while (index < environment_count)
 	{
 		new_environment[index] = ft_strdup(environment[index]);
 		if (!new_environment[index])
 			return (free_environment_array(new_environment, index));
+		index++;
 	}
 	new_environment[environment_count] = (NULL);
 	return (new_environment);
