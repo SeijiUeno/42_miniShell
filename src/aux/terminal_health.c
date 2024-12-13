@@ -6,20 +6,25 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:40:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 15:34:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-/* Saves terminal settings */
-void	terminal_save_settings(struct termios *original)
-{
-	if (tcgetattr(STDIN_FILENO, original) == -1)
-	{
-		perror("tcgetattr");
-		exit(EXIT_FAILURE);
-	}
+void terminal_save_settings(struct termios *original_term) {
+	struct termios term ;
+	
+    if (tcgetattr(STDIN_FILENO, original_term) == -1) { // Save original settings
+        perror("tcgetattr");
+        return;
+    }
+
+    term = *original_term;
+    term.c_lflag &= ~ECHOCTL; // Disable signal character echo
+    if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
+        perror("tcsetattr");
+    }
 }
 
 /* Restores terminal settings */
