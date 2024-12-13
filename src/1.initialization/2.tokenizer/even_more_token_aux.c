@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   even_more_token_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/13 11:12:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:12:25 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ void	process_symbol(char *input, int *index, t_token **tokens, t_token **current
 	data.tokens = tokens;
 	data.current = current;
 	data.input = input;
-	if ((input[*index] == '|' && input[*index + 1] == '|') 
-		|| (input[*index] == '<' && input[*index + 1] == '>')) 
+	if ((input[*index] == '|' && input[*index + 1] == '|')
+		|| (input[*index] == '<' && input[*index + 1] == '>'))
 	{
 		error("minishell", "syntax error near unexpected token", -1);
-    	return;
+		return ;
 	}
 	if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
 	{

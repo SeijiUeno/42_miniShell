@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 11:37:57 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:11:03 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static int	check_leading_pipe(t_token *token)
 	return (0);
 }
 
-static int check_consecutive_operators(t_token *current)
+static int	check_consecutive_operators(t_token *current)
 {
 	char	*error_msg;
-	
+
 	if (!current)
 		return (0);
 	if (current->type == PIPE)
@@ -69,7 +69,7 @@ int	validate_tokens(t_token *tokens)
 	current = tokens;
 	while (current->next)
 		current = current->next;
-	if (is_redirection(current->type) || current->type == PIPE) 
+	if (is_redirection(current->type) || current->type == PIPE)
 	{
 		error_msg = "syntax error near unexpected end of input";
 		return (error("ERROR:", error_msg, -1));
@@ -79,8 +79,8 @@ int	validate_tokens(t_token *tokens)
 
 int	is_redirection(int token_type)
 {
-	return (token_type == REDIR_IN || 
-			token_type == REDIR_OUT || 
-			token_type == APPEND || 
-			token_type == HEREDOC);
+	return (token_type == REDIR_IN
+		|| token_type == REDIR_OUT
+		|| token_type == APPEND
+		|| token_type == HEREDOC);
 }
