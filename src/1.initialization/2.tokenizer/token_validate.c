@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 20:17:13 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 20:55:46 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ static int	check_consecutive_operators(t_token *current)
 {
 	char	*error_msg;
 
-	error_msg = "leading pipe error near token ";
 	if (current->type == PIPE)
 	{
 		if (!current->next)
 		{
-			error_msg = "trailing operator";
+			error_msg = "trailing operator ";
 			// Trailing operator (e.g., "echo hello |")
-			return (error(error_msg, "`newline'", -1));
+			return (error(error_msg, current->content, -1));
 		}
 		else if (current->next->type == PIPE)
 		{
-			error_msg = "consecutive operators";
+			error_msg = "consecutive operators ";
 			// Consecutive operators (e.g., "echo hello ||")
 			return (error(error_msg, current->next->content, -1));
 		}
@@ -63,5 +62,6 @@ int	validate_tokens(t_token *tokens)
 			return (1);
 		current = current->next;
 	}
+	assign_operator_token_types(&tokens);
 	return (EXIT_SUCCESS); // No syntax errors found
 }
