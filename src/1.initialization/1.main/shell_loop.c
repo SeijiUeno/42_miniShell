@@ -6,20 +6,11 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 14:09:33 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:23:16 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
-
-static int	get_and_reset_status(void)
-{
-	int	current_status;
-
-	current_status = status_control(STATUS_GET);
-	status_control(0);
-	return (current_status);
-}
 
 static char	*handle_input(void)
 {
@@ -51,7 +42,6 @@ void	shell_loop(t_minishell *minishell)
 	while (1)
 	{
 		minishell->input = handle_input();
-		minishell->status = get_and_reset_status();
 		if (!minishell->input) // Handle EOF (Ctrl+D)
 		{
 			//**************** ft_printf("BY SHELL!\n");

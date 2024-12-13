@@ -6,13 +6,13 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:06:50 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 14:12:54 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:48:51 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-char *find_environment_variable(char *name, char **environment)
+char	*find_environment_variable(char *name, char **environment)
 {
 	int	index;
 	int	name_length;
@@ -20,18 +20,21 @@ char *find_environment_variable(char *name, char **environment)
 	if (!name || !environment)
 		return (NULL);
 	name_length = ft_strlen(name);
-	for (index = 0; environment[index]; index++)
+	index = 0;
+	while (environment[index])
 	{
-		if (!ft_strncmp(name, environment[index], name_length) &&
-			(environment[index][name_length] == '=' || environment[index][name_length] == '\0'))
+		if (!ft_strncmp(name, environment[index], name_length)
+			&& (environment[index][name_length] == '='
+			|| environment[index][name_length] == '\0'))
 		{
-			return ft_strdup(environment[index]);
+			return (ft_strdup(environment[index]));
 		}
+		index++;
 	}
 	return (NULL);
 }
 
-static char *extract_value_from_entry(char *full_variable_entry)
+static char	*extract_value_from_entry(char *full_variable_entry)
 {
 	char	*value_start;
 
@@ -41,7 +44,7 @@ static char *extract_value_from_entry(char *full_variable_entry)
 	return (ft_strdup(value_start + 1));
 }
 
-char *env_get_value(char *variable_name, char **environment)
+char	*env_get_value(char *variable_name, char **environment)
 {
 	char	*full_variable_entry;
 	char	*value;
