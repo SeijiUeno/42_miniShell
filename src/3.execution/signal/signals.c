@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:24:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 16:08:22 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ int	status_control(int status)
 }
 
 
-void	signal_handle_execution(int signum)
+void signal_handle_execution(int signum)
 {
-	if (signum == SIGINT || signum == SIGQUIT)
+	if (signum == SIGQUIT)
 	{
-		if (signum == SIGQUIT)
-			ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
-		else
-			ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO); // Notify the user about SIGQUIT
+		status_control(signum + 128);
+	}
+	else if (signum == SIGINT)
+	{
+		ft_putstr_fd("\n", STDOUT_FILENO); // Notify the user about SIGINT
 		status_control(signum + 128);
 	}
 }
@@ -64,7 +66,7 @@ void	signal_setup(void)
 	if (signal(SIGINT, &signal_handle) == SIG_ERR)
     	perror("Error setting SIGINT handler");
 
-	// Ignore Ctrl+\ (SIGQUIT) to prevent core dumps
 	if (signal(SIGQUIT, &signal_handle) == SIG_ERR)
     	perror("Error setting SIGQUIT handler");
+
 }
