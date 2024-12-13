@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/12 20:21:07 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/12 21:03:24 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	is_only_spaces(char *input)
 		i++;
 	return (input[i] == '\0');
 }
+
 int	assign_redir_type(char op_char, char *content)
 {
 	if (op_char == '<')
@@ -50,7 +51,7 @@ int	assign_redir_type(char op_char, char *content)
 		if (content[1] == '<') // Handle '<<'
 			return (HEREDOC);
 		else
-			return REDIR_IN;
+			return (REDIR_IN);
 	}
 	else if (op_char == '>')
 	{
@@ -61,33 +62,42 @@ int	assign_redir_type(char op_char, char *content)
 	}
 	return (OPERATOR); // Default case for unexpected input
 }
-void process_symbol(char *input, int *index, t_token **tokens, t_token **current)
-{
-    t_token_data data = { tokens, current, input };
 
-    if ((input[*index] == '<' && input[*index + 1] == '<') || (input[*index] == '>' && input[*index + 1] == '>'))
-    {
-        add_token(&data, *index, *index + 2);
-        *index += 2;
-    }
-    else
-    {
-        add_token(&data, *index, *index + 1);
-        (*index)++;
-    }
+void	process_symbol(char *input, int *index, t_token **tokens, t_token **current)
+{
+	t_token_data	data;
+
+	data.tokens = tokens;
+	data.current = current;
+	data.input = input;
+	if ((input[*index] == '<' && input[*index + 1] == '<')
+	|| (input[*index] == '>' && input[*index + 1] == '>'))
+	{
+		add_token(&data, *index, *index + 2);
+		*index += 2;
+	}
+	else
+	{
+		add_token(&data, *index, *index + 1);
+		(*index)++;
+	}
 }
 
-void process_word(char *input, int *index, t_token **tokens, t_token **current)
+void	process_word(char *input, int *index, t_token **tokens, t_token **current)
 {
-    int start = *index;
-    t_token_data data = { tokens, current, input };
+	int				start;
+	t_token_data	data;
 
-    while (input[*index] && !ft_strchr(WHITESPACE, input[*index]) && !ft_strchr(SYMBOLS, input[*index]))
-    {
-        if (ft_strchr(QUOTES, input[*index]))
-            skip_quoted_token(input, index); // Skip quoted segments
-        else
-            (*index)++;
-    }
-    add_token(&data, start, *index);
+	start = *index;
+	data.tokens = tokens;
+	data.current = current;
+	data.input = input;
+	while (input[*index] && !ft_strchr(WHITESPACE, input[*index]) && !ft_strchr(SYMBOLS, input[*index]))
+	{
+		if (ft_strchr(QUOTES, input[*index]))
+			skip_quoted_token(input, index); // Skip quoted segments
+		else
+			(*index)++;
+	}
+	add_token(&data, start, *index);
 }
