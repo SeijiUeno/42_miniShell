@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:17:34 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:53:03 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:52:58 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,9 @@ t_command	**ast_to_command_list(t_command *root)
 	start_index = 0;
 	fill_commands_array(root, array, &start_index);
 	array[cmd_count] = NULL;
+	/*debug_print_commands_array(array);
+	printf("\n");
+	debug_print_tree(*array, 2);*/
 	return (array);
 }
 

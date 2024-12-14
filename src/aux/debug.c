@@ -65,3 +65,17 @@ void debug_print_commands_array(t_command **commands) {
     }
     printf("End of command array.\n");
 }
+
+void debug_print_tokens(t_token *tokens)
+{
+    t_token *current = tokens;
+
+    printf("Tokens:\n");
+    while (current)
+    {
+        printf("Type: %d, Content: '%s'\n", current->type, current->content);
+        current = current->next;
+    }
+    printf("End of tokens\n");
+}
+
