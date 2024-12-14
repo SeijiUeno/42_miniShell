@@ -12,47 +12,6 @@
 
 #include "../includes/shell.h"
 
-static int is_env_var_existing(char *var, t_minishell *minishell) {
-    char **envp;
-    int name_len;
-    int i;
-
-    envp = minishell->envp;
-    name_len = calculate_name_size(var, '=');
-    i = 0;
-    while (envp[i]) {
-        if (!ft_strncmp(envp[i], var, name_len) && envp[i][name_len] == '=') {
-            free(envp[i]);
-            envp[i] = ft_strdup(var);
-            return (1);
-        }
-        i++;
-    }
-    return (0);
-}
-
-static void insert_env_var(char *var, t_minishell *minishell) {
-    char **new_envp;
-    int env_size;
-    int i;
-
-    if (is_env_var_existing(var, minishell))
-        return;
-    env_size = 0;
-    while (minishell->envp[env_size])
-        env_size++;
-    new_envp = calloc(env_size + 2, sizeof(char *));
-    i = 0;
-    while (i < env_size) {
-        new_envp[i] = minishell->envp[i];
-        i++;
-    }
-    new_envp[i] = ft_strdup(var);
-    new_envp[i + 1] = NULL;
-    free(minishell->envp);
-    minishell->envp = new_envp;
-}
-
 static void sort_env_vars(char **envp) {
     int i;
     int j;
@@ -72,19 +31,13 @@ static void sort_env_vars(char **envp) {
 static void print_sorted_env_vars(char **envp) {
     char **sorted_env;
     int i;
-    char *equal_sign;
 
     sorted_env = get_env(envp);
     sort_env_vars(sorted_env);
     i = 0;
     while (sorted_env[i]) {
         ft_putstr_fd("declare -x ", STDOUT_FILENO);
-        equal_sign = ft_strchr(sorted_env[i], '=');
-        if (equal_sign) {
-            ft_putstr_fd(sorted_env[i], STDOUT_FILENO);
-        } else {
-            ft_putstr_fd(sorted_env[i], STDOUT_FILENO);
-        }
+        ft_putstr_fd(sorted_env[i], STDOUT_FILENO);
         ft_putstr_fd("\n", STDOUT_FILENO);
         i++;
     }
