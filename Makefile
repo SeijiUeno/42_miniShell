@@ -68,9 +68,11 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	1.initialization/5.parser/command_array.c \
 	2.buildins/buildin_handler.c \
 	2.buildins/cd.c \
+	2.buildins/cd_utils.c \
 	2.buildins/echo.c \
 	2.buildins/env.c \
 	2.buildins/export.c \
+	2.buildins/export_utils.c \
 	2.buildins/pwd.c \
 	2.buildins/unset.c \
 	2.buildins/exit.c \

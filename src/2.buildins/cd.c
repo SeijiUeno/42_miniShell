@@ -6,96 +6,55 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:45:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:54:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static int is_current_directory(const char *path)
-{
-    return (*path == '\0' || !ft_strncmp(path, ".", ft_strlen(".") + 1));
-}
-
-static int print_cd_error(const char *path, const char *error_msg)
-{
-    if (error_msg)
-    {
-        ft_putstr_fd("cd: ", STDERR_FILENO);
-        ft_putstr_fd(error_msg, STDERR_FILENO);
-        ft_putstr_fd("\n", STDERR_FILENO);
+static char *resolve_home_dir(const char *path, const char *home) {
+    if (!path || ft_strncmp(path, "~", 2) == 0) {
+        if (home)
+            return (ft_strdup(home));
+        return (NULL);
     }
-    else if (path) // Ensure `path` is not NULL
-    {
-        ft_putstr_fd("cd: ", STDERR_FILENO);
-        ft_putstr_fd(path, STDERR_FILENO);
-        ft_putstr_fd(": ", STDERR_FILENO);
-        ft_putstr_fd(strerror(errno), STDERR_FILENO);
-        ft_putstr_fd("\n", STDERR_FILENO);
+    if (ft_strncmp(path, "~/", 2) == 0) {
+        if (home)
+            return (ft_strjoin(home, path + 1));
+        return (NULL);
     }
-    return (EXIT_FAILURE);
-}
-
-void update_pwd(t_minishell *minishell)
-{
-    char *current_path = getcwd(NULL, 0);
-    char *old_pwd = NULL;
-    char **envp = minishell->envp;
-    int i = 0;
-
-    while (envp[i])
-    {
-        if (!ft_strncmp(envp[i], "PWD=", 4))
-        {
-            old_pwd = ft_strdup(envp[i]);
-            break;
-        }
-        i++;
-    }
-
-    if (old_pwd)
-    {
-        char *old_pwd_var = ft_strjoin("OLD", old_pwd);
-        free(envp[i]);
-        envp[i] = ft_strjoin("PWD=", current_path);
-        buildin_export((char *[]){ "buildin_export", old_pwd_var, NULL }, minishell);
-        free(old_pwd_var);
-        free(old_pwd);
-    }
-    free(current_path);
-}
-
-static char *resolve_home_directory(const char *path, const char *home)
-{
-    if (!path || !ft_strncmp(path, "~", ft_strlen("~") + 1))
-        return (ft_strdup(home));
-    if (!ft_strncmp(path, "~/", 2))
-        return (ft_strjoin(home, path + 1));
     return (ft_strdup(path));
 }
 
-int verify_and_change_dir(const char *path, t_minishell *minishell)
-{
-    char *resolved_path;
-    const char *home = getenv("HOME");
-
-    resolved_path = resolve_home_directory(path, home);
-    if (chdir(resolved_path) == -1)
-    {
-        free(resolved_path);
-        return (print_cd_error(path, NULL));
-    }
-
-    update_pwd(minishell);
-    free(resolved_path);
-    return (EXIT_SUCCESS);
+static int handle_cd_error(const char *path, const char *error_msg, int error_code, t_minishell *m) {
+    m->status = error_code;
+    return (error(path, (char *)error_msg, error_code));
 }
 
-int change_dir(char **args, t_minishell *minishell)
-{
+static char *get_resolved_path(char **args, const char *home) {
+    if (!args[1])
+        return (resolve_home_dir(NULL, home));
+    if (*args[1] == '\0' || ft_strncmp(args[1], ".", 2) == 0)
+        return (ft_strdup(""));
+    return (resolve_home_dir(args[1], home));
+}
+
+int change_dir(char **args, t_minishell *m) {
+    char *resolved_path;
+    const char *home;
+
+    home = getenv("HOME");
     if (args[1] && args[2])
-        return (print_cd_error(NULL, "too many arguments"));
-    if (args[1] && is_current_directory(args[1]))
-        return (EXIT_SUCCESS);
-    return (verify_and_change_dir(args[1], minishell));
+        return (handle_cd_error(NULL, "too many arguments", 1, m));
+    if (!args[1] && !home)
+        return (handle_cd_error(NULL, "HOME not set", 1, m));
+    resolved_path = get_resolved_path(args, home);
+    if (!resolved_path || chdir(resolved_path) == -1) {
+        free(resolved_path);
+        return (handle_cd_error(args[1], strerror(errno), 1, m));
+    }
+    update_pwd(m);
+    free(resolved_path);
+    m->status = 0; // Set exit status to success
+    return (0);
 }
