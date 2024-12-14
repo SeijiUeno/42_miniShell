@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   redirect_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:42:45 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:43:03 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:16:55 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-int redirect_input(char *filename)
+int	redirect_input(char *filename)
 {
-	int fd;
+	int	fd;
 
 	fd = open_file(filename, O_RDONLY, 0);
 	if (fd < 0)

@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 16:13:45 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:14:49 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,21 @@ static int	print_cd_error(const char *path, const char *error_msg)
 	return (EXIT_FAILURE);
 }
 
-void	update_pwd(t_minishell *minishell)
+static char	*get_and_replace_pwd(char **envp, const char *current_path)
 {
-	char	*current_path;
 	char	*old_pwd;
-	char	**envp;
-	int		i;
 	char	*old_pwd_var;
+	int		i;
 
-	current_path = getcwd(NULL, 0);
-	old_pwd = NULL;
-	envp = minishell->envp;
 	i = 0;
+	old_pwd = NULL;
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PWD=", 4))
 		{
 			old_pwd = ft_strdup(envp[i]);
+			free(envp[i]);
+			envp[i] = ft_strjoin("PWD=", current_path);
 			break ;
 		}
 		i++;
@@ -60,12 +58,26 @@ void	update_pwd(t_minishell *minishell)
 	if (old_pwd)
 	{
 		old_pwd_var = ft_strjoin("OLD", old_pwd);
-		free(envp[i]);
-		envp[i] = ft_strjoin("PWD=", current_path);
+		free(old_pwd);
+		return (old_pwd_var);
+	}
+	return (NULL);
+}
+
+void	update_pwd(t_minishell *minishell)
+{
+	char	*current_path;
+	char	*old_pwd_var;
+
+	current_path = getcwd(NULL, 0);
+	if (!current_path)
+		return ;
+	old_pwd_var = get_and_replace_pwd(minishell->envp, current_path);
+	if (old_pwd_var)
+	{
 		buildin_export((char *[]){"buildin_export", old_pwd_var, NULL},
 			minishell);
 		free(old_pwd_var);
-		free(old_pwd);
 	}
 	free(current_path);
 }

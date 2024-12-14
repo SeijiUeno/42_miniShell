@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:42:28 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:15:44 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	process_line(char *line, const char *delim, int fd)
 	}
 	if (ft_strcmp(line, delim) == 0)
 		return (1);
-
 	ft_putendl_fd(line, fd);
 	return (0);
 }
@@ -45,8 +44,9 @@ static int	process_line(char *line, const char *delim, int fd)
 int	heredoc_read(const char *delim, int fd)
 {
 	char	*line;
-	int		stop = 0;
+	int		stop;
 
+	stop = 0;
 	setup_heredoc_signals();
 	while (!stop)
 	{
@@ -64,8 +64,9 @@ int	heredoc_read(const char *delim, int fd)
 int	verify_heredoc(t_minishell *minishell)
 {
 	t_token	*current;
-	int		status = 0;
+	int		status;
 
+	status = 0;
 	current = minishell->tokens;
 	while (current && !status)
 	{

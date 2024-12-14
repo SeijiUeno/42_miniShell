@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:44:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 18:46:21 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:23:53 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,11 +142,29 @@ static void	print_sorted_env_vars(char **envp)
 	util_free_array(sorted_env);
 }
 
+static int	handle_invalid_var(char *var)
+{
+	ft_putstr_fd("buildin_export: `", STDERR_FILENO);
+	ft_putstr_fd(var, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	return (1);
+}
+
+static int	process_env_var(char *var, t_minishell *minishell)
+{
+	char	*invalid_var;
+
+	invalid_var = validate_env_var_name(var);
+	if (invalid_var)
+		return (handle_invalid_var(var));
+	insert_env_var(var, minishell);
+	return (0);
+}
+
 int	buildin_export(char **args, t_minishell *minishell)
 {
-	int		i;
-	int		error_status;
-	char	*invalid_var;
+	int	i;
+	int	error_status;
 
 	i = 1;
 	error_status = 0;
@@ -157,18 +175,7 @@ int	buildin_export(char **args, t_minishell *minishell)
 	}
 	while (args[i])
 	{
-		invalid_var = validate_env_var_name(args[i]);
-		if (invalid_var)
-		{
-			ft_putstr_fd("buildin_export: `", STDERR_FILENO);
-			ft_putstr_fd(args[i], STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-			error_status = 1;
-		}
-		else
-		{
-			insert_env_var(args[i], minishell);
-		}
+		error_status |= process_env_var(args[i], minishell);
 		i++;
 	}
 	util_free_array(minishell->path);
