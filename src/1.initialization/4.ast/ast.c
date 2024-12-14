@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:44:34 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:38:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	generate_ast(t_minishell *minishell)
 		return ;
 	}
 	minishell->tree_cmd = build_pipeline_ast(minishell, first_cmd);
-	debug_print_tree(minishell->tree_cmd, 3);
 }
 
 /**
