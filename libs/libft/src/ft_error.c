@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 13:24:05 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/11/25 13:26:57 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:47:23 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/libft.h"
+#include "../includes/libft.h"
 
-void ft_error(const char *prefix, const char *arg, const char *suffix) {
-    ft_putstr_fd((char *)prefix, 2); // Write prefix to stderr
-    ft_putstr_fd((char *)arg, 2);    // Write argument to stderr
-    ft_putendl_fd((char *)suffix, 2); // Write suffix to stderr with newline
+void	ft_error(const char *prefix, const char *arg, const char *suffix)
+{
+	ft_putstr_fd((char *)prefix, 2);  // Write prefix to stderr
+	ft_putstr_fd((char *)arg, 2);     // Write argument to stderr
+	ft_putendl_fd((char *)suffix, 2); // Write suffix to stderr with newline
 }
