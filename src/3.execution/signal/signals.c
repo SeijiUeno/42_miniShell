@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/13 19:13:59 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	status_filter(int status)
 {
-	if (status_control(STATUS_GET) && (status == STATUS_CTRL_C || status == STATUS_QUIT))
+	if (status_control(STATUS_GET) && (status == STATUS_CTRL_C
+			|| status == STATUS_QUIT))
 		status = status_control(STATUS_GET);
 	else if (status > STATUS_MAX)
 		status = (status >> 8) & 0xff; // Extract signal code
@@ -30,7 +31,6 @@ int	status_control(int status)
 	status_backup = status;
 	return (status_backup);
 }
-
 
 void	signal_handle_execution(int signum)
 {
@@ -59,10 +59,8 @@ void	signal_setup(void)
 {
 	// Handle Ctrl+C with custom handler
 	if (signal(SIGINT, &signal_handle) == SIG_ERR)
-    	perror("Error setting SIGINT handler");
-
+		perror("Error setting SIGINT handler");
 	// Ignore Ctrl+\ (SIGQUIT) to prevent core dumps
 	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-   		perror("Error setting SIGINT handler");
-
+		perror("Error setting SIGINT handler");
 }

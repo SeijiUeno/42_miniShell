@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 18:35:22 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:11:44 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,40 @@ static int	get_filtered_envp_len(char **envp, const char *key)
 	return (count);
 }
 
-static int	unset_env(const char *key, t_minishell *minishell)
+static void	copy_filtered_env(char **new_env, char **envp, const char *key)
 {
-	int		i;
-	int		j;
-	int		new_len;
-	char	**new_env;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], key, ft_strlen(key)) != 0
+			|| envp[i][ft_strlen(key)] != '=')
+		{
+			new_env[j] = envp[i];
+			j++;
+		}
+		else
+			free(envp[i]);
+		i++;
+	}
+	new_env[j] = NULL;
+}
+
+static int	unset_env(const char *key, t_minishell *minishell)
+{
+	int		new_len;
+	char	**new_env;
+
 	if (!key || !minishell || !minishell->envp)
 		return (EXIT_FAILURE);
 	new_len = get_filtered_envp_len(minishell->envp, key);
 	new_env = (char **)malloc(sizeof(char *) * (new_len + 1));
 	if (!new_env)
 		return (EXIT_FAILURE);
-	while (minishell->envp[i])
-	{
-		if (ft_strncmp(minishell->envp[i], key, ft_strlen(key)) != 0
-			|| minishell->envp[i][ft_strlen(key)] != '=')
-		{
-			new_env[j] = minishell->envp[i];
-			j++;
-		}
-		else
-			free(minishell->envp[i]);
-		i++;
-	}
-	new_env[j] = NULL;
+	copy_filtered_env(new_env, minishell->envp, key);
 	free(minishell->envp);
 	minishell->envp = new_env;
 	return (EXIT_SUCCESS);

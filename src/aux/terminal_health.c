@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal_health.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:40:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 13:47:59 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	terminal_restore_settings(const struct termios *original)
 	}
 }
 
-//free 
+// free
 void	prompt_clear(t_minishell *minishell)
 {
 	if (minishell->input)
@@ -49,26 +49,23 @@ void	prompt_clear(t_minishell *minishell)
 	minishell->pid_list = NULL;
 }
 
-void free_all(t_minishell *minishell)
+void	free_all(t_minishell *minishell)
 {
-    if (!minishell)
-        return;
-
-    util_free_array(minishell->path);
-    util_free_array(minishell->envp);
-    if (minishell->pid_list)
-        free_list(&minishell->pid_list);
-    if (minishell->input)
-        free(minishell->input);
-    if (minishell->tokens)
-        free_all_tokens(&minishell->tokens);
-    if (minishell->tree_cmd)
-        free_tree(&minishell->tree_cmd);
-
-    if (minishell->stdin_backup >= 0)
-        close(minishell->stdin_backup);
-    if (minishell->stdout_backup >= 0)
-        close(minishell->stdout_backup);
-
-    rl_clear_history();
+	if (!minishell)
+		return ;
+	util_free_array(minishell->path);
+	util_free_array(minishell->envp);
+	if (minishell->pid_list)
+		free_list(&minishell->pid_list);
+	if (minishell->input)
+		free(minishell->input);
+	if (minishell->tokens)
+		free_all_tokens(&minishell->tokens);
+	if (minishell->tree_cmd)
+		free_tree(&minishell->tree_cmd);
+	if (minishell->stdin_backup >= 0)
+		close(minishell->stdin_backup);
+	if (minishell->stdout_backup >= 0)
+		close(minishell->stdout_backup);
+	rl_clear_history();
 }
