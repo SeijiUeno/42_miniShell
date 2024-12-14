@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 15:27:50 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:38:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void execute(t_minishell *m) {
         signal_setup();
         return;
     }
-    debug_print_commands_array(commands);
     int cmd_count = count_commands_in_array(commands);
     if (cmd_count > 0)
         pipe_run_pipeline(m, commands, cmd_count);
