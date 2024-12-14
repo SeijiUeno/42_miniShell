@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:52:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:51:41 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ char *extract_var_name(const char *input_str, int *index);
 
 // Debugging Functions
 void debug_print_tree(t_command *node, int level);
+void debug_print_tokens(t_token *tokens);
 
 // get envs
 char		**get_env(char **envp);

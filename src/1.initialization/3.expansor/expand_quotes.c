@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:29:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:22:53 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ char *expand_double_quotes(const char *input_str, int *index, t_minishell *minis
 
     if (input_str[*index] == '"')
         (*index)++;
-
+    if (input_str[*index] == '"')
+        (*index)++;
     while (input_str[*index] && input_str[*index] != '"')
     {
         temp_str = process_inside_quotes(input_str, index, minishell);
