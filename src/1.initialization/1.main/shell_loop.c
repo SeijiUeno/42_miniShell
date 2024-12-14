@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_loop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:15:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:55:16 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	shell_loop(t_minishell *minishell)
 	while (1)
 	{
 		minishell->input = handle_input();
-        if (!minishell->input) // Handle EOF (Ctrl+D)
-        {
-            ft_putstr_fd("\nexit\n", STDOUT_FILENO);
-            break ;
-        }
+		if (!minishell->input) // Handle EOF (Ctrl+D)
+		{
+			ft_putstr_fd("\nexit\n", STDOUT_FILENO);
+			break ;
+		}
 		process_commands(minishell);
 		cleanup_iteration(minishell);
 	}
