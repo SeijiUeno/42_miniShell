@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 19:04:36 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:33:43 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,21 @@ static void	child_single(char *full_path, char **argv, t_minishell *minishell)
 	_exit(EXIT_FAILURE);
 }
 
-int	exec_run_command(char **arrstr, int id, t_minishell *minishell)
+static int	validate_and_get_path(char **full_path, char *cmd, t_minishell *minishell)
 {
-	char	*full_path;
-	int		exec_status;
-	pid_t	child_pid;
+	int	exec_status;
 
-	(void)id;
-	/* Validate command and retrieve full path if needed */
-	exec_status = is_valid_command(&full_path, arrstr[0], minishell->path);
-	if (exec_status != EXIT_SUCCESS)
-	{
-		/* Command not found or not valid */
-		if (full_path && full_path != arrstr[0])
-			free(full_path);
-		return (exec_status);
-	}
-	/* Fork and execute the command in a child process */
+	exec_status = is_valid_command(full_path, cmd, minishell->path);
+	if (exec_status != EXIT_SUCCESS && *full_path && *full_path != cmd)
+		free(*full_path);
+	return (exec_status);
+}
+
+static int	handle_child_process(char *full_path, char **arrstr, t_minishell *minishell)
+{
+	pid_t	child_pid;
+	int		exec_status;
+
 	child_pid = fork();
 	if (child_pid < 0)
 	{
@@ -55,18 +53,23 @@ int	exec_run_command(char **arrstr, int id, t_minishell *minishell)
 		return (EXIT_FAILURE);
 	}
 	if (child_pid == 0)
-	{
-		/* Child process */
-		child_single(full_path, arrstr, minishell);
-		/* child_single doesn't return on success */
-	}
-	/* Parent process: wait for the child */
+		child_single(full_path, arrstr, minishell); /* Never returns on success */
 	waitpid(child_pid, &exec_status, 0);
-	exec_status = status_filter(exec_status);
-	/* If full_path differs from arrstr[0], it was newly allocated and must be freed */
+	return (status_filter(exec_status));
+}
+
+int	exec_run_command(char **arrstr, int id, t_minishell *minishell)
+{
+	char	*full_path;
+	int		exec_status;
+
+	(void)id;
+	exec_status = validate_and_get_path(&full_path, arrstr[0], minishell);
+	if (exec_status != EXIT_SUCCESS)
+		return (exec_status);
+	exec_status = handle_child_process(full_path, arrstr, minishell);
 	if (full_path && full_path != arrstr[0])
 		free(full_path);
-	/* Restore file descriptors to their original state */
 	fds_reset(minishell);
 	return (exec_status);
 }

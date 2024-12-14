@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 19:26:37 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:52:17 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_token	*ft_generate_redirs(t_token **token_list, t_minishell *minishell)
 		{
 			if (process_single_redirection(token_list, &redirs,
 					current, minishell) < 0)
-				break;
+				break ;
 			current = *token_list;
 		}
 		else
