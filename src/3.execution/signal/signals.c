@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 16:08:22 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 16:02:35 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ volatile sig_atomic_t g_in_subprocess = 0;
 
 int	status_filter(int status)
 {
-	if (status_control(STATUS_GET) && (status == STATUS_CTRL_C || status == STATUS_QUIT))
+	if (status_control(STATUS_GET) && (status == STATUS_CTRL_C
+			|| status == STATUS_QUIT))
 		status = status_control(STATUS_GET);
 	else if (status > STATUS_MAX)
 		status = (status >> 8) & 0xff; // Extract signal code
@@ -33,8 +34,7 @@ int	status_control(int status)
 	return (status_backup);
 }
 
-
-void signal_handle_execution(int signum)
+void	signal_handle_execution(int signum)
 {
 	if (signum == SIGQUIT)
 	{
@@ -64,9 +64,8 @@ void	signal_setup(void)
 {
 	// Handle Ctrl+C with custom handler
 	if (signal(SIGINT, &signal_handle) == SIG_ERR)
-    	perror("Error setting SIGINT handler");
-
+		perror("Error setting SIGINT handler");
+	// Ignore Ctrl+\ (SIGQUIT) to prevent core dumps
 	if (signal(SIGQUIT, &signal_handle) == SIG_ERR)
-    	perror("Error setting SIGQUIT handler");
-
+		perror("Error setting SIGINT handler");
 }

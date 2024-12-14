@@ -6,89 +6,91 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:11:24 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 15:59:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static void child_single(char *full_path, char **argv, t_minishell *minishell)
+static void	child_single(char *full_path, char **argv, t_minishell *minishell)
 {
-    int fd;
+	int	fd;
 
-    fd = 3;
-    while (fd < 1024)
-    {
-        close(fd);
-        fd++;
-    }
-    signal(SIGINT, SIG_DFL);  // Restore default Ctrl-C behavior
-    signal(SIGQUIT, SIG_DFL); // Restore default Ctrl-\ behavior
-    execve(full_path, argv, minishell->envp);
-    perror("execve");
-    free(full_path);
-    free_all(minishell);
-    _exit(EXIT_FAILURE);
+	fd = 3;
+	while (fd < 1024)
+	{
+		close(fd);
+		fd++;
+	}
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);
+	execve(full_path, argv, minishell->envp);
+	perror("execve");
+	free(full_path);
+	free_all(minishell);
+	_exit(EXIT_FAILURE);
 }
 
-int exec_run_command(char **arrstr, int id, t_minishell *minishell)
+static int	validate_and_get_path(char **full_path, char *cmd, t_minishell *minishell)
 {
-    char *full_path;
-    int exec_status;
-    pid_t child_pid;
+	int	exec_status;
+
+	exec_status = is_valid_command(full_path, cmd, minishell->path);
+	if (exec_status != EXIT_SUCCESS && *full_path && *full_path != cmd)
+		free(*full_path);
+	return (exec_status);
+}
+
+static int	handle_child_process(char *full_path, char **arrstr, t_minishell *minishell)
+{
+	pid_t	child_pid;
+	int		exec_status;
+
+	child_pid = fork();
+	if (child_pid < 0)
+	{
+		perror("fork");
+		if (full_path && full_path != arrstr[0])
+			free(full_path);
+		return (EXIT_FAILURE);
+	}
+	if (child_pid == 0)
+		child_single(full_path, arrstr, minishell); /* Never returns on success */
+	waitpid(child_pid, &exec_status, 0);
+	return (status_filter(exec_status));
+}
+
+int	exec_run_command(char **arrstr, int id, t_minishell *minishell)
+{
+	char	*full_path;
+	int		exec_status;
 
 	(void)id;
-    /* Validate command and retrieve full path if needed */
-    exec_status = is_valid_command(&full_path, arrstr[0], minishell->path);
-    if (exec_status != EXIT_SUCCESS)
-    {
-        /* Command not found or not valid */
-        if (full_path && full_path != arrstr[0])
-            free(full_path);
-        return exec_status;
-    }
-
-    /* Fork and execute the command in a child process */
-    child_pid = fork();
-    if (child_pid < 0)
-    {
-        perror("fork");
-        if (full_path && full_path != arrstr[0])
-            free(full_path);
-        return EXIT_FAILURE;
-    }
-    if (child_pid == 0)
-    {
-        /* Child process */
-        child_single(full_path, arrstr, minishell);
-        /* child_single doesn't return on success */
-    }
-
-    /* Parent process: wait for the child */
-    waitpid(child_pid, &exec_status, 0);
-    exec_status = status_filter(exec_status);
-
-    /* If full_path differs from arrstr[0], it was newly allocated and must be freed */
-    if (full_path && full_path != arrstr[0])
-        free(full_path);
-
-    /* Restore file descriptors to their original state */
-    fds_reset(minishell);
-
-    return exec_status;
+	exec_status = validate_and_get_path(&full_path, arrstr[0], minishell);
+	if (exec_status != EXIT_SUCCESS)
+		return (exec_status);
+	exec_status = handle_child_process(full_path, arrstr, minishell);
+	if (full_path && full_path != arrstr[0])
+		free(full_path);
+	fds_reset(minishell);
+	return (exec_status);
 }
 
-void execute(t_minishell *m) {
-    t_command **commands = ast_to_command_list(m->tree_cmd);
-    if (!commands) {
-        signal_setup();
-        return;
-    }
-    debug_print_commands_array(commands);
-    int cmd_count = count_commands_in_array(commands);
-    if (cmd_count > 0)
-        pipe_run_pipeline(m, commands, cmd_count);
-    free(commands);
-    signal_setup();
-}
+void	execute(t_minishell *m)
+{
+	t_command	**commands;
+	int			cmd_count;
 
+	commands = ast_to_command_list(m->tree_cmd);
+	if (!commands)
+	{
+		signal_setup();
+		return ;
+	}
+	debug_print_commands_array(commands);
+	cmd_count = count_commands_in_array(commands);
+	if (cmd_count > 0)
+		pipe_run_pipeline(m, commands, cmd_count);
+	free(commands);
+	signal_setup();
+}
