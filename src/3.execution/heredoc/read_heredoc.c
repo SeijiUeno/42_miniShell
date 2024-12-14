@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_heredoc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:42:28 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:35:01 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	process_line(char *line, const char *delim, int fd)
 	}
 	if (ft_strcmp(line, delim) == 0)
 		return (1);
-
 	ft_putendl_fd(line, fd);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:26:58 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:42:40 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:34:32 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	heredoc(char **str, int index)
 	filename = heredoc_generate_name(index);
 	if (!filename)
 		return (EXIT_FAILURE);
-
 	fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
@@ -34,7 +33,6 @@ int	heredoc(char **str, int index)
 	}
 	status = heredoc_read(*str, fd);
 	close(fd);
-
 	if (status)
 	{
 		free(filename);
