@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 16:51:41 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:50:28 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ char		*get_single_env(char *env_name, char **envp);
 int			verify_abs_path(const char *path);
 
 // bultins
-int			pwd(void);
+int			pwd(char **args, t_minishell *m);
 int			change_dir(char **path, t_minishell *minishell);
 int			unset(const char **key, t_minishell *minishell);
 int			buildin_export(char **args, t_minishell *minishell);
@@ -179,6 +179,10 @@ int			builtin_exit(char **args, t_minishell *minishell);
 int			builtin_check(char **command, t_minishell *minishell);
 // builds
 int			build_commands(t_minishell *minishell);
+int calculate_name_size(const char *text, char delimiter);
+char *validate_env_var_name(const char *var);
+void util_swap_array(char **wordA, char **wordB);
+
 // expansor
 
 extern volatile sig_atomic_t g_in_subprocess;
@@ -203,6 +207,8 @@ void		fds_reset(t_minishell *minishell);
 int open_file(char *filename, int flags, int mode);
 int redirect_fd(int fd, int std_fd);
 void remove_token_from_list(t_token **head, t_token *node);
+void update_pwd_env(char **envp, const char *key, const char *value);
+void update_pwd(t_minishell *minishell);
 
 /* Redirections */
 int redirect_input(char *filename);
@@ -217,7 +223,7 @@ t_token		*ft_generate_redirs(t_token **token, t_minishell *minishell);
 
 // execute commands
 int			exec_run_command(char **arrstr, int id, t_minishell *minishell);
-int			print_env(char **envp);
+int			print_env(char **args, char **envp, t_minishell *m);
 void		execute(t_minishell *minishell);
 void		exec_child_process(t_minishell *minishell, t_command *temp_tree,
 				int is_left);
