@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:14:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:32:25 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:47:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,24 @@ static int calculate_exit_code(const char *arg)
     return (number);
 }
 
-static void set_exit_code(char **args, t_minishell *minishell)
+static void display_exit_error(const char *arg, const char *message, int exit_code, t_minishell *minishell)
 {
-    int exit_code;
-
-    if (!args[1])
-        exit_code = minishell->status;
-    else if (ft_is_number(args[1]))
-        exit_code = calculate_exit_code(args[1]);
-    else
-    {
-        ft_putstr_fd("ERROR: exit: ", STDERR_FILENO);
-        ft_putstr_fd(args[1], STDERR_FILENO);
-        ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-        exit_code = 2;
-    }
-
+    ft_putstr_fd("ERROR: exit: ", STDERR_FILENO);
+    ft_putstr_fd(arg, STDERR_FILENO);
+    ft_putstr_fd(message, STDERR_FILENO);
+    minishell->status = exit_code;
     free_all(minishell);
     exit(exit_code);
+}
+
+static void handle_exit_arguments(char **args, t_minishell *minishell)
+{
+    if (!args[1])
+        minishell->status = 0;
+    else if (ft_is_number(args[1]))
+        minishell->status = calculate_exit_code(args[1]);
+    else
+        display_exit_error(args[1], ": numeric argument required\n", 2, minishell);
 }
 
 int builtin_exit(char **args, t_minishell *minishell)
@@ -67,18 +67,17 @@ int builtin_exit(char **args, t_minishell *minishell)
     int arg_count;
 
     ft_putstr_fd("exit\n", STDERR_FILENO);
-
-    // Count the number of arguments
     arg_count = 0;
     while (args[arg_count])
         arg_count++;
-
     if (arg_count > 2 && ft_is_number(args[1]))
     {
+        minishell->status = 1;
         ft_putstr_fd("ERROR: exit: too many arguments\n", STDERR_FILENO);
         return (EXIT_FAILURE);
     }
-
-    set_exit_code(args, minishell);
-    return (EXIT_SUCCESS); // This won't be reached due to exit()
+    handle_exit_arguments(args, minishell);
+    free_all(minishell);
+    exit(minishell->status);
+    return (EXIT_SUCCESS);
 }

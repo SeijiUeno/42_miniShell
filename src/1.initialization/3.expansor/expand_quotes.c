@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 16:29:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:28:36 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char *expand_single_quotes(const char *input_str, int *index)
 {
     int start_index;
     int len = 0;
-
+    
     if (input_str[*index] == '\'')
         (*index)++;
 
@@ -61,6 +61,8 @@ char *expand_double_quotes(const char *input_str, int *index, t_minishell *minis
 {
     char *result = NULL, *temp_str;
 
+    if (input_str[*index] == '"')
+        (*index)++;
     if (input_str[*index] == '"')
         (*index)++;
 
