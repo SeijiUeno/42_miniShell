@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 19:25:40 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 14:54:56 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**insert_paths(char *paths)
 	if (!split)
 		return (NULL);
 	i = 0;
-	while (split[i])
+	while (split[i++])
 	{
 		temp = split[i];
 		split[i] = ft_strjoin(temp, "/");
@@ -65,7 +65,6 @@ char	**insert_paths(char *paths)
 			return (NULL);
 		}
 		free(temp);
-		i++;
 	}
 	return (split);
 }
