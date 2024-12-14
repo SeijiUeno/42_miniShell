@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:39:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:14:58 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	check_args_minus_n(const char *arg)
 		i++;
 	}
 	return (0);
-	
 }
 
 int	echo(char **args)
