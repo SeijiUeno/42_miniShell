@@ -51,11 +51,12 @@ void exec_run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[
     setup_child_fds(m, cmd, pipes, ctx);
     if (!cmd->argv || !cmd->argv[0])
         util_free_child(m);
-    if (builtin_check(cmd->argv, m) >= 0)
+    m->status = builtin_check(cmd->argv, m);
+    if (m->status >= 0)
         util_free_child(m);
     char *cmd_path = define_full_path(cmd->argv[0], m->path);
     if (!cmd_path) {
-        error(cmd->argv[0], ": Command not found", 127);
+        error(cmd->argv[0], " Command not found", 127);
         util_free_child(m);
     }
     signal(SIGINT, SIG_DFL);  // Restore default Ctrl-C behavior

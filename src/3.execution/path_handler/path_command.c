@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:21:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 15:43:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:20:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int is_valid_command(char **full_path, const char *cmd, char **env_path) {
     // Search in PATH
     *full_path = search_path(cmd, env_path);
     if (!*full_path)
-        return error(cmd, ": Command not found", 127); // Command not found in PATH
+        return error(cmd, " Command not found", 127); // Command not found in PATH
 
     return EXIT_SUCCESS;
 }
