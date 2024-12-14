@@ -73,6 +73,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	2.buildins/env.c \
 	2.buildins/export.c \
 	2.buildins/export_utils.c \
+	2.buildins/export_more_utils.c \
 	2.buildins/pwd.c \
 	2.buildins/unset.c \
 	2.buildins/exit.c \

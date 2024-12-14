@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:18:38 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:22:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ char		**get_env(char **envp);
 char		**get_paths(char **env);
 char		*get_single_env(char *env_name, char **envp);
 int			verify_abs_path(const char *path);
-
+void 		insert_env_var(char *var, t_minishell *minishell);
 // bultins
 int			pwd(char **args, t_minishell *m);
 int			change_dir(char **path, t_minishell *minishell);
