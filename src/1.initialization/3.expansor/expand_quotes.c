@@ -6,7 +6,7 @@
 /*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:22:53 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/14 17:52:13 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char *expand_single_quotes(const char *input_str, int *index)
 {
     int start_index;
     int len = 0;
-
+    
     if (input_str[*index] == '\'')
         (*index)++;
 

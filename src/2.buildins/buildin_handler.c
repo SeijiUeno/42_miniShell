@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buildin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:16:32 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:19:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:16:30 by emorales         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	builtin_check(char **command, t_minishell *minishell)
 	i = 0;
 	while (i < sizeof(builtins) / sizeof(builtins[0]))
 	{
-		if (ft_strncmp(command[0], builtins[i], ft_strlen(builtins[i]) + 1) == 0)
+		if (ft_strncmp(command[0], builtins[i],
+				ft_strlen(builtins[i]) + 1) == 0)
 			return (handle_builtin(command, minishell, i));
 		i++;
 	}
