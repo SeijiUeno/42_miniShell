@@ -44,7 +44,7 @@ static void print_sorted_env_vars(char **envp) {
     util_free_array(sorted_env);
 }
 
-int buildin_export(char **args, t_minishell *minishell) {
+int buildin_export(char **args, t_ms *minishell) {
     int i;
     char *invalid_var;
 
@@ -55,7 +55,7 @@ int buildin_export(char **args, t_minishell *minishell) {
     i = 1;
     minishell->status = 0;
     while (args[i]) {
-        invalid_var = validate_env_var_name(args[i]);
+        invalid_var = val_e_v(args[i]);
         if (invalid_var) {
             ft_putstr_fd("export: `", STDERR_FILENO);
             ft_putstr_fd(args[i], STDERR_FILENO);

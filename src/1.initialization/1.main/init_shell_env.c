@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:35:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 14:05:07 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:24:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static int	backup_standard_fds(int *stdin_backup, int *stdout_backup)
 	return (EXIT_SUCCESS);
 }
 
-void	shell_initialize(t_minishell *minishell)
+void	shell_initialize(t_ms *minishell)
 {
-	ft_bzero(minishell, sizeof(t_minishell));
+	ft_bzero(minishell, sizeof(t_ms));
 	minishell->envp = initialize_env();
 	minishell->path = get_paths(minishell->envp);
-	if (backup_standard_fds(&minishell->stdin_backup, &minishell->stdout_backup)
-		!= EXIT_SUCCESS)
+	if (backup_standard_fds(&minishell->stdin_backup,
+			&minishell->stdout_backup) != EXIT_SUCCESS)
 	{
-		free_all(minishell);
+		clear_al(minishell);
 		exit(EXIT_FAILURE);
 	}
 	initialize_signals();

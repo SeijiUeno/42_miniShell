@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:40:53 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static int is_key_in_envp(const char *key, t_minishell *minishell)
+static int is_key_in_envp(const char *key, t_ms *minishell)
 {
     int i;
 
@@ -46,7 +46,7 @@ static int get_filtered_envp_len(char **envp, const char *key)
     return (count);
 }
 
-static int unset_env(const char *key, t_minishell *minishell)
+static int unset_env(const char *key, t_ms *minishell)
 {
     int i = 0;
     int j = 0;
@@ -77,7 +77,7 @@ static int unset_env(const char *key, t_minishell *minishell)
     return (EXIT_SUCCESS);
 }
 
-int unset(const char **keys, t_minishell *minishell)
+int unset(const char **keys, t_ms *minishell)
 {
     int status_error = 0;
     char **key_iter;

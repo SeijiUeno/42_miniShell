@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:20:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 18:23:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static int is_env_var_existing(char *var, t_minishell *minishell) {
+static int is_env_var_existing(char *var, t_ms *minishell) {
     char **envp;
     int name_len;
     int i;
@@ -52,7 +52,7 @@ static char **resize_envp(char **envp, int new_size) {
     return (new_envp);
 }
 
-void insert_env_var(char *var, t_minishell *minishell) {
+void insert_env_var(char *var, t_ms *minishell) {
     char **new_envp;
     char *prepared_var;
     int env_size;

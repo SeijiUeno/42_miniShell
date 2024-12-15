@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_tokens.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:45:08 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:34:28 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	count_command_arguments(t_token *tokens)
  * @param minishell - The shell context.
  * @return The argument vector or NULL on failure.
  */
-char	**build_argument_vector(t_token *tokens, t_minishell *minishell)
+char	**build_argument_vector(t_token *tokens, t_ms *minishell)
 {
 	int	count;
 
@@ -67,7 +67,7 @@ static void	free_argument_array_partially(char **argv, int used)
  * @return The populated argument array or NULL on failure.
  */
 char	**allocate_argument_array(t_token *tokens,
-	t_minishell *minishell, int count)
+	t_ms *minishell, int count)
 {
 	char	**argv;
 	int		index;

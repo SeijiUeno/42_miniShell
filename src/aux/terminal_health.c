@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:34:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:25:39 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void terminal_save_settings(struct termios *original_term) {
+void termios_save(struct termios *original_term) {
 	struct termios term ;
 	
     if (tcgetattr(STDIN_FILENO, original_term) == -1) { // Save original settings
@@ -28,7 +28,7 @@ void terminal_save_settings(struct termios *original_term) {
 }
 
 /* Restores terminal settings */
-void	terminal_restore_settings(const struct termios *original)
+void	termios_restore(const struct termios *original)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
 	{
@@ -38,23 +38,23 @@ void	terminal_restore_settings(const struct termios *original)
 }
 
 //free 
-void	prompt_clear(t_minishell *minishell)
+void	prompt_clear(t_ms *minishell)
 {
 	if (minishell->input)
 		free(minishell->input);
 	if (minishell->tokens)
-		free_all_tokens(&(minishell->tokens));
+		clear_tok(&(minishell->tokens));
 	if (minishell->tree_cmd)
-		free_tree(&(minishell->tree_cmd));
+		clear_tr(&(minishell->tree_cmd));
 	if (minishell->pid_list)
-		free_list(&(minishell->pid_list));
+		clear_li(&(minishell->pid_list));
 	minishell->input = NULL;
 	minishell->tokens = NULL;
 	minishell->tree_cmd = NULL;
 	minishell->pid_list = NULL;
 }
 
-void free_all(t_minishell *minishell)
+void clear_al(t_ms *minishell)
 {
     if (!minishell)
         return;
@@ -62,13 +62,13 @@ void free_all(t_minishell *minishell)
     util_free_array(minishell->path);
     util_free_array(minishell->envp);
     if (minishell->pid_list)
-        free_list(&minishell->pid_list);
+        clear_li(&minishell->pid_list);
     if (minishell->input)
         free(minishell->input);
     if (minishell->tokens)
-        free_all_tokens(&minishell->tokens);
+        clear_tok(&minishell->tokens);
     if (minishell->tree_cmd)
-        free_tree(&minishell->tree_cmd);
+        clear_tr(&minishell->tree_cmd);
 
     if (minishell->stdin_backup >= 0)
         close(minishell->stdin_backup);

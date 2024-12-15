@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:16:00 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:26:44 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-int pwd(char **args, t_minishell *m) {
+int pwd(char **args, t_ms *m) {
     char *cwd;
 	
 	(void)args;
