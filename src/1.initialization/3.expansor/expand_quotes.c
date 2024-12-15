@@ -6,11 +6,49 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:28:36 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 03:36:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
+
+/**
+ * Removes tokens containing "$EMPTY" from the token list.
+ * If a "$EMPTY" token is found, the function removes it
+ * and returns NULL.
+ * @param tokens - Pointer to the root of the token list.
+ * @return Updated root of the token list, or NULL if "$EMPTY" was found and removed.
+ */
+/**
+ * Removes tokens containing "$EMPTY" from the token list.
+ * If a "$EMPTY" token is found, it is removed, and the list is updated.
+ * @param tokens - Pointer to the root of the token list.
+ * @return Updated root of the token list.
+ */
+t_token *remove_empty_tokens(t_token **tokens)
+{
+	t_token *current;
+	t_token *temp;
+
+	if (!tokens || !*tokens)
+		return (*tokens); // Return the same list if empty or NULL
+
+	current = *tokens;
+	while (current)
+	{
+		// Check if the token content matches "$EMPTY"
+		if (current->content && strcmp(current->content, "$EMPTY") == 0)
+		{
+			temp = current->next; // Save the next token
+			remove_token_from_list(tokens, current); // Remove the current token
+			current = temp; // Move to the next token
+			continue; // Skip further processing of the removed node
+		}
+		current = current->next;
+	}
+	return (*tokens); // Return the updated root of the token list
+}
+
 
 // Function to expand single-quoted strings
 char *expand_single_quotes(const char *input_str, int *index)

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 18:22:16 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 03:33:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define WHITESPACE " \t\n\r\v\f"
 # define SYMBOLS "|<>"
 # define QUOTES "'\""
+# define STATUS_EOF 1
 
 typedef struct s_minishell	t_minishell;
 typedef struct s_token		t_token;
@@ -216,7 +217,7 @@ int append_output(char *filename);
 
 /* Setup */
 int redir_process(t_token *redir);
-int redir_setup(t_token *redir);
+int redir_setup(t_token *redir, t_minishell *m);
 void redir_append_node(t_token **redirs, int type, char *filename);
 t_token		*ft_generate_redirs(t_token **token, t_minishell *minishell);
 
@@ -255,5 +256,6 @@ void		free_list(t_list **list);
 
 //debug
 void debug_print_commands_array(t_command **commands);
+t_token *remove_empty_tokens(t_token **tokens);
 
 #endif
