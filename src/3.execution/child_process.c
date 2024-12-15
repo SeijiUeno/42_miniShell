@@ -43,7 +43,7 @@ void setup_child_fds(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
     if (child_index < cmd_count - 1 && dup2(pipes[child_index * 2 + 1], STDOUT_FILENO) < 0)
         util_free_child(m);
     pipe_close_all(pipes, (cmd_count - 1) * 2);
-    if (cmd->redir && redir_setup(cmd->redir) != 0)
+    if (cmd->redir && redir_setup(cmd->redir, m) != 0)
         util_free_child(m);
 }
 
@@ -63,6 +63,13 @@ void exec_run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[
     signal(SIGQUIT, SIG_DFL); // Restore default Ctrl-\ behavior
     execve(cmd_path, cmd->argv, m->envp);
     perror("execve");
+    if (errno == EACCES) {
+    error(cmd->argv[0], "Permission denied", 126);
+    } else if (errno == ENOENT) {
+    error(cmd->argv[0], "Command not found", 127);
+    } else {
+    perror("execve");
+    }
     util_free_child(m);
 }
 

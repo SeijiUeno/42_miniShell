@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:58:05 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 03:34:54 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int	build_commands(t_minishell *minishell)
 {
 	if (parse_input(minishell) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	minishell->tokens = remove_empty_tokens(&minishell->tokens);
+	if (minishell->tokens == NULL)
+		return (0);
 	if (handle_heredocs(minishell) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	generate_ast(minishell);

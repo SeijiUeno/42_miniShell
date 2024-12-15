@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:42:45 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/11 19:43:03 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 02:05:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int redirect_input(char *filename)
 {
-	int fd;
+    int fd;
 
-	fd = open_file(filename, O_RDONLY, 0);
-	if (fd < 0)
-		return (EXIT_FAILURE);
-	return (redirect_fd(fd, STDIN_FILENO));
+    fd = open_file(filename, O_RDONLY, 0);
+    if (fd < 0)
+    {
+        return (EXIT_FAILURE);
+    }
+    return (redirect_fd(fd, STDIN_FILENO));
 }
