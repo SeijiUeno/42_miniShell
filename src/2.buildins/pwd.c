@@ -12,16 +12,17 @@
 
 #include "../includes/shell.h"
 
-int pwd(char **args, t_ms *m) {
-    char *cwd;
-	
+int	pwd(char **args, t_ms *m)
+{
+	char	*cwd;
+
 	(void)args;
 	(void)m;
 	cwd = getcwd(NULL, 0);
-    if (!cwd)
-        return error("pwd", "failed to get current directory", 1);
-    ft_putstr_fd(cwd, STDOUT_FILENO);
-    ft_putchar_fd('\n', STDOUT_FILENO);
-    free(cwd);
-    return (0);
+	if (!cwd)
+		return (error("pwd", "failed to get current directory", 1));
+	ft_putstr_fd(cwd, STDOUT_FILENO);
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	free(cwd);
+	return (0);
 }
