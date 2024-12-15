@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 17:21:11 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:16:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:32:06 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	len = ft_strlen(s1) + ft_strlen(s2);
-	joined = (char*)malloc(len + 1);
+	joined = (char *)malloc(len + 1);
 	if (joined == NULL)
 		return (NULL);
 	origin = joined;
