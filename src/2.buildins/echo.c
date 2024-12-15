@@ -26,7 +26,6 @@ int	check_args_minus_n(const char *arg)
 		i++;
 	}
 	return (0);
-	
 }
 
 int	echo(char **args)

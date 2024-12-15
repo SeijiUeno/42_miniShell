@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:16:32 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 06:17:49 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	builtin_check(char **command, t_ms *minishell)
 	i = 0;
 	while (i < sizeof(builtins) / sizeof(builtins[0]))
 	{
-		if (ft_strncmp(command[0], builtins[i], ft_strlen(builtins[i]) + 1) == 0)
+		if (ft_strncmp(command[0], builtins[i], ft_strlen(builtins[i])
+				+ 1) == 0)
 			return (handle_builtin(command, minishell, i));
 		i++;
 	}
