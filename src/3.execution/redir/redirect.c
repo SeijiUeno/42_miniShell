@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 19:36:12 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int process_single_redirection(
     t_token **token_list,
     t_token **redirs,
     t_token *redir_op,
-    t_minishell *minishell)
+    t_ms *minishell)
 {
     t_token *redir_target;
     char *expanded_filename;
@@ -57,7 +57,7 @@ static int process_single_redirection(
  * - Processes all redirections in the token list until a PIPE is found.
  * - Builds a redirection list and removes processed tokens.
  */
-t_token *ft_generate_redirs(t_token **token_list, t_minishell *minishell)
+t_token *ft_generate_redirs(t_token **token_list, t_ms *minishell)
 {
     t_token *redirs;
     t_token *current;

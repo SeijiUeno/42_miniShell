@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:44:38 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:27:06 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_command	*create_command_node_data(char **argv,
  * @param minishell - The shell context.
  * @return A pointer to the command node or NULL on failure.
  */
-t_command	*create_command_node(t_token *tokens, t_minishell *minishell)
+t_command	*create_command_node(t_token *tokens, t_ms *minishell)
 {
 	t_token	*redirections;
 	char	**argv;

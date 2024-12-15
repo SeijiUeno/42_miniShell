@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 00:51:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int heredoc_read(const char *delim, int fd) {
 }
 
 // Verifies if any heredoc tokens exist and processes them
-int	verify_heredoc(t_minishell *minishell)
+int	verify_heredoc(t_ms *minishell)
 {
 	t_token	*current;
 	int		status = 0;

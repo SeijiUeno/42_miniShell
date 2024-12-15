@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_generate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:17:05 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:44:53 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	generate_tokens(char *input, t_token **tokens)
 {
 	if (validate_input(input))
 	{
-		*tokens = NULL; // Set tokens to NULL if input is invalid
+		*tokens = NULL;
 		return ;
 	}
 	*tokens = tokenize_input(input);
@@ -79,11 +79,11 @@ void	add_token(t_token_data *data, int start, int end)
 
 void	assign_operator_token_types(t_token **tokens)
 {
-	t_token		*current;
-	char		op_char;
+	t_token	*current;
+	char	op_char;
 
 	if (!tokens || !*tokens)
-		return ; //Safeguard against null pointers
+		return ;
 	current = *tokens;
 	while (current)
 	{
@@ -112,7 +112,7 @@ t_token	*tokenize_input(char *input)
 	index = 0;
 	while (input[index])
 	{
-		skip_whitespace(input, &index); // Skip leading whitespace
+		skip_whitespace(input, &index);
 		if (input[index] && ft_strchr(SYMBOLS, input[index]))
 			process_symbol(input, &index, &tokens, &current);
 		else if (input[index])

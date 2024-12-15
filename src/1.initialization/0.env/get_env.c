@@ -37,7 +37,8 @@ char	**get_env(char **environment)
 	int		environment_count;
 	int		index;
 
-	new_environment = allocate_environment_array(environment, &environment_count);
+	new_environment = allocate_environment_array(environment,
+			&environment_count);
 	if (!new_environment)
 		return (NULL);
 	index = 0;

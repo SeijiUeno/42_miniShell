@@ -6,14 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 05:25:39 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:35:42 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
 
-# include "../libs/garbage_collector/includes/garbage_collector.h"
 # include "../libs/libft/includes/libft.h"
 # include <dirent.h>
 # include <errno.h>

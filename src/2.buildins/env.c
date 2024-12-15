@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:16:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:20:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-int print_env(char **args, char **envp, t_minishell *m) {
+int print_env(char **args, char **envp, t_ms *m) {
     char **temp;
 
     if (args[1] != NULL) {

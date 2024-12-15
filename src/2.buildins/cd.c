@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 16:54:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char *resolve_home_dir(const char *path, const char *home) {
     return (ft_strdup(path));
 }
 
-static int handle_cd_error(const char *path, const char *error_msg, int error_code, t_minishell *m) {
+static int handle_cd_error(const char *path, const char *error_msg, int error_code, t_ms *m) {
     m->status = error_code;
     return (error(path, (char *)error_msg, error_code));
 }
@@ -39,7 +39,7 @@ static char *get_resolved_path(char **args, const char *home) {
     return (resolve_home_dir(args[1], home));
 }
 
-int change_dir(char **args, t_minishell *m) {
+int change_dir(char **args, t_ms *m) {
     char *resolved_path;
     const char *home;
 

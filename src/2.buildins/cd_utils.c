@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:56 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 16:53:04 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:21:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void update_pwd_env(char **envp, const char *key, const char *value) {
     }
 }
 
-void update_pwd(t_minishell *m) {
+void update_pwd(t_ms *m) {
     char *current_path;
     char *old_pwd;
     int i;

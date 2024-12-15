@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:01:25 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:02:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:22:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void util_swap_array(char **wordA, char **wordB) {
     *wordB = temp;
 }
 
-char *validate_env_var_name(const char *var) {
+char *val_e_v(const char *var) {
     int i;
 
     if (!var || (!ft_isalpha(var[0]) && var[0] != '_'))

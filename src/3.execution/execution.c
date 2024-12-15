@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 18:20:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:21:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:24:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-static void child_single(char *full_path, char **argv, t_minishell *minishell)
+static void child_single(char *full_path, char **argv, t_ms *minishell)
 {
     int fd;
 
@@ -27,11 +27,11 @@ static void child_single(char *full_path, char **argv, t_minishell *minishell)
     execve(full_path, argv, minishell->envp);
     perror("execve");
     free(full_path);
-    free_all(minishell);
+    clear_al(minishell);
     _exit(EXIT_FAILURE);
 }
 
-int fork_and_execute(char *full_path, char **arrstr, t_minishell *minishell) {
+int fork_and_execute(char *full_path, char **arrstr, t_ms *minishell) {
     pid_t child_pid = fork();
 
     if (child_pid < 0) {
@@ -45,7 +45,7 @@ int fork_and_execute(char *full_path, char **arrstr, t_minishell *minishell) {
     return child_pid;
 }
 
-int exec_run_command(char **arrstr, int id, t_minishell *minishell) {
+int exec_run_command(char **arrstr, int id, t_ms *minishell) {
     char *full_path;
     int exec_status;
     pid_t child_pid;
@@ -73,7 +73,7 @@ int exec_run_command(char **arrstr, int id, t_minishell *minishell) {
 }
 
 
-void execute(t_minishell *m) {
+void execute(t_ms *m) {
     t_command **commands = ast_to_command_list(m->tree_cmd);
     if (!commands) {
         signal_setup();

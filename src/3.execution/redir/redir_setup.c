@@ -23,7 +23,7 @@ int redir_process(t_token *redir)
 	return (EXIT_SUCCESS);
 }
 
-int redir_setup(t_token *redir, t_minishell *m)
+int redir_setup(t_token *redir, t_ms *m)
 {
 	while (redir)
 	{

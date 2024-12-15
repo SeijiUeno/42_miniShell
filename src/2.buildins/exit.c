@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 17:14:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:47:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 05:24:24 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,17 @@ static int calculate_exit_code(const char *arg)
     return (number);
 }
 
-static void display_exit_error(const char *arg, const char *message, int exit_code, t_minishell *minishell)
+static void display_exit_error(const char *arg, const char *message, int exit_code, t_ms *minishell)
 {
     ft_putstr_fd("ERROR: exit: ", STDERR_FILENO);
     ft_putstr_fd(arg, STDERR_FILENO);
     ft_putstr_fd(message, STDERR_FILENO);
     minishell->status = exit_code;
-    free_all(minishell);
+    clear_al(minishell);
     exit(exit_code);
 }
 
-static void handle_exit_arguments(char **args, t_minishell *minishell)
+static void handle_exit_arguments(char **args, t_ms *minishell)
 {
     if (!args[1])
         minishell->status = 0;
@@ -62,7 +62,7 @@ static void handle_exit_arguments(char **args, t_minishell *minishell)
         display_exit_error(args[1], ": numeric argument required\n", 2, minishell);
 }
 
-int builtin_exit(char **args, t_minishell *minishell)
+int builtin_exit(char **args, t_ms *minishell)
 {
     int arg_count;
 
@@ -77,7 +77,7 @@ int builtin_exit(char **args, t_minishell *minishell)
         return (EXIT_FAILURE);
     }
     handle_exit_arguments(args, minishell);
-    free_all(minishell);
+    clear_al(minishell);
     exit(minishell->status);
     return (EXIT_SUCCESS);
 }

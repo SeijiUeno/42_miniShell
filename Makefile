@@ -39,7 +39,6 @@ SRCS_PATH := src/
 INCS_PATH := includes/ libs/libft/include/
 BUILD_DIR := build/
 LIBFT_DIR := libs/libft/
-GARB_DIR := libs/garbage_collector/
 TEST_DIR := tests/
 
 #! ******************************************************************************#
@@ -100,7 +99,6 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	aux/terminal_health.c)
 
 LIBFT := $(LIBFT_DIR)libft.a
-GARB := $(GARB_DIR)garbage_collector.a
 LIBS := $(LIBFT) $(GARB)
 OBJS := $(SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS := $(OBJS:.o=.d)

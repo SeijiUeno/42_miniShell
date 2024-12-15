@@ -12,7 +12,7 @@
 
 #include "../includes/shell.h"
 
-void exec_wait_for_children(t_minishell *minishell, pid_t *pids, int count) {
+void exec_wait(t_ms *minishell, pid_t *pids, int count) {
     struct sigaction sa_ignore, sa_restore;
     sa_ignore.sa_handler = SIG_IGN;
     sa_ignore.sa_flags = 0;
@@ -36,7 +36,7 @@ void exec_wait_for_children(t_minishell *minishell, pid_t *pids, int count) {
     sigaction(SIGQUIT, &sa_restore, NULL);
 }
 
-void setup_child_fds(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
+void setup_child_fds(t_ms *m, t_command *cmd, int *pipes, int ctx[2]) {
     int child_index = ctx[0], cmd_count = ctx[1];
     if (child_index > 0 && dup2(pipes[(child_index - 1) * 2], STDIN_FILENO) < 0)
         util_free_child(m);
@@ -47,7 +47,7 @@ void setup_child_fds(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
         util_free_child(m);
 }
 
-void exec_run_child_command(t_minishell *m, t_command *cmd, int *pipes, int ctx[2]) {
+void run_childs(t_ms *m, t_command *cmd, int *pipes, int ctx[2]) {
     setup_child_fds(m, cmd, pipes, ctx);
     if (!cmd->argv || !cmd->argv[0])
         util_free_child(m);
