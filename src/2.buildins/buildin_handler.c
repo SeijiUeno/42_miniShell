@@ -33,7 +33,9 @@ static int	handle_builtin(char **command, t_ms *minishell, size_t index)
 
 int	builtin_check(char **command, t_ms *minishell)
 {
-	static const char	*builtins[] = {
+	size_t	i;
+
+	static const char *builtins[] = {
 		"cd",
 		"echo",
 		"env",
@@ -42,8 +44,6 @@ int	builtin_check(char **command, t_ms *minishell)
 		"pwd",
 		"exit",
 	};
-	size_t				i;
-
 	if (!command || !command[0])
 		return (-1);
 	i = 0;
