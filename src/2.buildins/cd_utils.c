@@ -29,7 +29,7 @@ void	update_pwd_env(char **envp, const char *key, const char *value)
 	}
 }
 
-void	update_aux(t_ms *m, char* path)
+void	update_aux(t_ms *m, char *path)
 {
 	if (!path)
 	{
@@ -40,9 +40,9 @@ void	update_aux(t_ms *m, char* path)
 }
 void	update_pwd(t_ms *m)
 {
-	char	*current_path;
-	char	*old_pwd;
-	int		i;
+	char *current_path;
+	char *old_pwd;
+	int i;
 
 	current_path = getcwd(NULL, 0);
 	old_pwd = NULL;
