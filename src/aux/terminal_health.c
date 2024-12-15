@@ -12,19 +12,21 @@
 
 #include "../includes/shell.h"
 
-void termios_save(struct termios *original_term) {
-	struct termios term ;
-	
-    if (tcgetattr(STDIN_FILENO, original_term) == -1) { // Save original settings
-        perror("tcgetattr");
-        return;
-    }
+void	termios_save(struct termios *original_term)
+{
+	struct termios	term;
 
-    term = *original_term;
-    term.c_lflag &= ~ECHOCTL; // Disable signal character echo
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
-        perror("tcsetattr");
-    }
+	if (tcgetattr(STDIN_FILENO, original_term) == -1)
+	{ // Save original settings
+		perror("tcgetattr");
+		return ;
+	}
+	term = *original_term;
+	term.c_lflag &= ~ECHOCTL; // Disable signal character echo
+	if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1)
+	{
+		perror("tcsetattr");
+	}
 }
 
 /* Restores terminal settings */
@@ -37,7 +39,7 @@ void	termios_restore(const struct termios *original)
 	}
 }
 
-//free 
+//free
 void	prompt_clear(t_ms *minishell)
 {
 	if (minishell->input)
@@ -54,26 +56,26 @@ void	prompt_clear(t_ms *minishell)
 	minishell->pid_list = NULL;
 }
 
-void clear_al(t_ms *minishell)
+void	clear_al(t_ms *minishell)
 {
-    if (!minishell)
-        return;
+	if (!minishell)
+		return ;
 
-    util_free_array(minishell->path);
-    util_free_array(minishell->envp);
-    if (minishell->pid_list)
-        clear_li(&minishell->pid_list);
-    if (minishell->input)
-        free(minishell->input);
-    if (minishell->tokens)
-        clear_tok(&minishell->tokens);
-    if (minishell->tree_cmd)
-        clear_tr(&minishell->tree_cmd);
+	util_free_array(minishell->path);
+	util_free_array(minishell->envp);
+	if (minishell->pid_list)
+		clear_li(&minishell->pid_list);
+	if (minishell->input)
+		free(minishell->input);
+	if (minishell->tokens)
+		clear_tok(&minishell->tokens);
+	if (minishell->tree_cmd)
+		clear_tr(&minishell->tree_cmd);
 
-    if (minishell->stdin_backup >= 0)
-        close(minishell->stdin_backup);
-    if (minishell->stdout_backup >= 0)
-        close(minishell->stdout_backup);
+	if (minishell->stdin_backup >= 0)
+		close(minishell->stdin_backup);
+	if (minishell->stdout_backup >= 0)
+		close(minishell->stdout_backup);
 
-    rl_clear_history();
+	rl_clear_history();
 }
