@@ -6,20 +6,25 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:25:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 17:35:55 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 00:15:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
 int run_single_command(t_minishell *m, t_command *c) {
+    int status;
+
+    status = 0;
     if (c->redir && redir_setup(c->redir) != 0)
         return (EXIT_FAILURE);
     if (!c->argv)
         return (0);
-    if (builtin_check(c->argv, m) >= 0)
-        return (m->status);
-    return (exec_run_command(c->argv, 0, m));
+    status = builtin_check(c->argv, m);
+    if (status >= 0)
+        return (status);
+    status = exec_run_command(c->argv, 0, m);
+    return (status);
 }
 
 void fork_children(t_minishell *m, t_command **cmds, int cmd_count, int *pipes) {
