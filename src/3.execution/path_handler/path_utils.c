@@ -6,32 +6,35 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:18:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/12 18:41:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:10:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-// Helper function to join three strings
-char *ft_strjoin_three(const char *s1, const char *s2, const char *s3) {
-    char *temp = ft_strjoin(s1, s2);
-    if (!temp)
-        return NULL;
-    char *result = ft_strjoin(temp, s3);
-    free(temp);
-    return result;
+char	*ft_strjoin_three(const char *s1, const char *s2, const char *s3)
+{
+	char	*temp;
+	char	*result;
+
+	temp = ft_strjoin(s1, s2);
+	if (!temp)
+		return (NULL);
+	result = ft_strjoin(temp, s3);
+	gc_deallocate(temp);
+	return (result);
 }
 
-// Helper function to check file access
-int has_access(const char *path, int mode) {
-    return (access(path, mode) == 0);
+int	has_access(const char *path, int mode)
+{
+	return (access(path, mode) == 0);
 }
 
-// Build the full path for a binary
-char *build_full_path(const char *dir, const char *bin) {
-    if (dir[strlen(dir) - 1] != '/')
-        return ft_strjoin_three(dir, "/", bin);
-    return ft_strjoin(dir, bin);
+char	*build_full_path(const char *dir, const char *bin)
+{
+	if (dir[strlen(dir) - 1] != '/')
+		return (ft_strjoin_three(dir, "/", bin));
+	return (ft_strjoin(dir, bin));
 }
 
 char	**insert_paths(char *paths)
@@ -45,29 +48,24 @@ char	**insert_paths(char *paths)
 	split = ft_split(paths, ':');
 	if (!split)
 		return (NULL);
-	i = 0;
-	while (split[i])
+	i = -1;
+	while (split[++i])
 	{
 		temp = split[i];
 		split[i] = ft_strjoin(temp, "/");
 		if (!split[i])
 		{
-			free(temp);
+			gc_deallocate(temp);
 			while (--i >= 0)
-				free(split[i]);
-			free(split);
+				gc_deallocate(split[i]);
+			gc_deallocate(split);
 			return (NULL);
 		}
-		free(temp);
-		i++;
+		gc_deallocate(temp);
 	}
 	return (split);
 }
 
-/*
-** Searches for the PATH variable in the environment array and uses insert_paths
-** to process it into an array of paths.
-*/
 char	**get_paths(char **env)
 {
 	char	**temp;

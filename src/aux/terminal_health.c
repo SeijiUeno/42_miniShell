@@ -6,29 +6,22 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 15:34:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:32:48 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
 
-void terminal_save_settings(struct termios *original_term) {
-	struct termios term ;
-	
-    if (tcgetattr(STDIN_FILENO, original_term) == -1) { // Save original settings
-        perror("tcgetattr");
-        return;
-    }
-
-    term = *original_term;
-    term.c_lflag &= ~ECHOCTL; // Disable signal character echo
-    if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
-        perror("tcsetattr");
-    }
+void	termios_save(struct termios *original_term)
+{
+	if (tcgetattr(STDIN_FILENO, original_term) == -1)
+	{
+		perror("tcgetattr");
+		return ;
+	}
 }
 
-/* Restores terminal settings */
-void	terminal_restore_settings(const struct termios *original)
+void	termios_restore(const struct termios *original)
 {
 	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
 	{
@@ -37,43 +30,39 @@ void	terminal_restore_settings(const struct termios *original)
 	}
 }
 
-//free 
-void	prompt_clear(t_minishell *minishell)
+void	prompt_clear(t_ms *minishell)
 {
 	if (minishell->input)
-		free(minishell->input);
+		gc_deallocate(minishell->input);
 	if (minishell->tokens)
-		free_all_tokens(&(minishell->tokens));
+		clear_tok(&(minishell->tokens));
 	if (minishell->tree_cmd)
-		free_tree(&(minishell->tree_cmd));
+		clear_tr(&(minishell->tree_cmd));
 	if (minishell->pid_list)
-		free_list(&(minishell->pid_list));
+		clear_li(&(minishell->pid_list));
 	minishell->input = NULL;
 	minishell->tokens = NULL;
 	minishell->tree_cmd = NULL;
 	minishell->pid_list = NULL;
 }
 
-void free_all(t_minishell *minishell)
+void	clear_al(t_ms *minishell)
 {
-    if (!minishell)
-        return;
-
-    util_free_array(minishell->path);
-    util_free_array(minishell->envp);
-    if (minishell->pid_list)
-        free_list(&minishell->pid_list);
-    if (minishell->input)
-        free(minishell->input);
-    if (minishell->tokens)
-        free_all_tokens(&minishell->tokens);
-    if (minishell->tree_cmd)
-        free_tree(&minishell->tree_cmd);
-
-    if (minishell->stdin_backup >= 0)
-        close(minishell->stdin_backup);
-    if (minishell->stdout_backup >= 0)
-        close(minishell->stdout_backup);
-
-    rl_clear_history();
+	if (!minishell)
+		return ;
+	util_free_array(minishell->path);
+	util_free_array(minishell->envp);
+	if (minishell->pid_list)
+		clear_li(&minishell->pid_list);
+	if (minishell->input)
+		gc_deallocate(minishell->input);
+	if (minishell->tokens)
+		clear_tok(&minishell->tokens);
+	if (minishell->tree_cmd)
+		clear_tr(&minishell->tree_cmd);
+	if (minishell->stdin_backup >= 0)
+		close(minishell->stdin_backup);
+	if (minishell->stdout_backup >= 0)
+		close(minishell->stdout_backup);
+	rl_clear_history();
 }

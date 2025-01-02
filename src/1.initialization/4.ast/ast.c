@@ -6,17 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 15:39:59 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/14 15:38:24 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 20:23:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-/**
- * Generates the AST for the minishell.
- * @param minishell - The shell context.
- */
-void	generate_ast(t_minishell *minishell)
+void	generate_ast(t_ms *minishell)
 {
 	t_command	*first_cmd;
 
@@ -34,13 +30,7 @@ void	generate_ast(t_minishell *minishell)
 	minishell->tree_cmd = build_pipeline_ast(minishell, first_cmd);
 }
 
-/**
- * Builds the pipeline AST by connecting commands with pipe nodes.
- * @param minishell - The shell context.
- * @param root_cmd - The initial root command.
- * @return The updated root command or NULL on failure.
- */
-t_command	*build_pipeline_ast(t_minishell *minishell, t_command *root_cmd)
+t_command	*build_pipeline_ast(t_ms *minishell, t_command *root_cmd)
 {
 	t_token		*tokens;
 	t_command	*new_cmd;

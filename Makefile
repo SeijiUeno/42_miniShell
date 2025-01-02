@@ -4,32 +4,8 @@
 
 NAME := minishell
 .DEFAULT_GOAL := all
-.PHONY: all clean fclean re rebonus help
+.PHONY: all clean fclean re
 .SILENT:
-
-#! ******************************************************************************#
-#                                   COLORS                                       #
-#! ******************************************************************************#
-
-DEFAULT=\033[39m
-BLACK=\033[30m
-DARK_RED=\033[31m
-DARK_GREEN=\033[32m
-DARK_YELLOW=\033[33m
-DARK_BLUE=\033[34m
-DARK_MAGENTA=\033[35m
-DARK_CYAN=\033[36m
-LIGHT_GRAY=\033[37m
-DARK_GRAY=\033[90m
-RED=\033[91m
-GREEN=\033[92m
-ORANGE=\033[93m
-BLUE=\033[94m
-MAGENTA=\033[95m
-CYAN=\033[96m
-WHITE=\033[97m
-YELLOW=\033[33m
-RESET=\033[0m
 
 #! ******************************************************************************#
 #                                   PATHS                                        #
@@ -40,7 +16,6 @@ INCS_PATH := includes/ libs/libft/include/
 BUILD_DIR := build/
 LIBFT_DIR := libs/libft/
 GARB_DIR := libs/garbage_collector/
-TEST_DIR := tests/
 
 #! ******************************************************************************#
 #                                   FILES                                        #
@@ -94,55 +69,27 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/path_handler/path_verification.c \
 	3.execution/pipeline.c \
 	3.execution/pipes.c \
-	aux/debug.c \
 	aux/error.c \
 	aux/free.c \
 	aux/terminal_health.c)
 
-LIBFT := $(LIBFT_DIR)libft.a
-GARB := $(GARB_DIR)garbage_collector.a
-LIBS := $(LIBFT) $(GARB)
 OBJS := $(SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS := $(OBJS:.o=.d)
 
+LIBFT := $(LIBFT_DIR)libft.a
+GARB := $(GARB_DIR)garbage_collector.a
+LIBS := $(LIBFT) $(GARB)
+
 #! ******************************************************************************#
-#                                   COMMANDS                                     #
+#                                   FLAGS                                        #
 #! ******************************************************************************#
 
-MKDIR := mkdir -p
-RM := rm -rf
-CC := $(shell which cc || echo gcc)
+CC := cc
 CFLAGS := -Wall -Wextra -Werror -g3
-DFLAGS := -Wall -Wextra -Werror -g3 -fsanitize=address
 CPPFLAGS := $(addprefix -I, $(INCS_PATH)) -MMD -MP
 LDLIBS := -ldl -pthread -lreadline
-
-#! ******************************************************************************#
-#                                   FUNCTIONS                                    #
-#! ******************************************************************************#
-
-define create_dir
-	$(MKDIR) $(dir $@)
-endef
-
-define comp_objs
-	$(call create_dir)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
-	printf "$(YELLOW)Compiling: $(RESET)$<\n"
-endef
-
-define build_lib
-	printf "$(YELLOW)Building library: $(RESET)$(1)\n"
-	$(MAKE) -C $(1)
-endef
-
-define display_help
-	printf "$(DARK_RED)Available targets:$(RESET)\n"
-	printf "$(DARK_BLUE)all:$(RESET)        Build $(GREEN)$(NAME)$(RESET)\n"
-	printf "$(DARK_BLUE)clean:$(RESET)      Remove object files\n"
-	printf "$(DARK_BLUE)fclean:$(RESET)     Clean all files\n"
-	printf "$(DARK_BLUE)re:$(RESET)         Rebuild everything\n"
-endef
+RM := rm -rf
+MKDIR := mkdir -p
 
 #! ******************************************************************************#
 #                                   TARGETS                                      #
@@ -151,33 +98,32 @@ endef
 all: $(LIBFT) $(GARB) $(NAME)
 
 $(BUILD_DIR)%.o: %.c
-	$(call comp_objs)
+	$(MKDIR) $(dir $@)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+	printf "Compiling: $<\n"
 
 $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(LIBS) $(LDLIBS) -o $@
-	printf "$(GREEN)$(NAME) is ready!$(RESET)\n"
+	printf "$(NAME) is ready!\n"
 
 $(LIBFT):
-	$(call build_lib, $(LIBFT_DIR))
+	$(MAKE) -C $(LIBFT_DIR)
 
 $(GARB):
-	$(call build_lib, $(GARB_DIR))
+	$(MAKE) -C $(GARB_DIR)
 
 clean:
 	$(RM) $(BUILD_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(GARB_DIR) clean
-	printf "$(RED)Cleaned object files.$(RESET)\n"
+	printf "Cleaned object files.\n"
 
 fclean: clean
 	$(RM) $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	$(MAKE) -C $(GARB_DIR) fclean
-	printf "$(RED)Cleaned all files.$(RESET)\n"
+	printf "Cleaned all files.\n"
 
 re: fclean all
-
-help:
-	$(call display_help)
 
 -include $(DEPS)

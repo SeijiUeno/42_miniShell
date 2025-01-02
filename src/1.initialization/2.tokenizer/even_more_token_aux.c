@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   even_more_token_aux.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/13 13:14:28 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:39:18 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,23 @@ int	assign_redir_type(char op_char, char *content)
 {
 	if (op_char == '<')
 	{
-		if (content[1] == '<') // Handle '<<'
+		if (content[1] == '<')
 			return (HEREDOC);
 		else
 			return (REDIR_IN);
 	}
 	else if (op_char == '>')
 	{
-		if (content[1] == '>') // Handle '>>'
+		if (content[1] == '>')
 			return (APPEND);
 		else
 			return (REDIR_OUT);
 	}
-	return (OPERATOR); // Default case for unexpected input
+	return (OPERATOR);
 }
 
-void	process_symbol(char *input, int *index, t_token **tokens, t_token **current)
+void	process_symbol(char *input, int *index,
+		t_token **tokens, t_token **current)
 {
 	t_token_data	data;
 
@@ -89,7 +90,8 @@ void	process_symbol(char *input, int *index, t_token **tokens, t_token **current
 	}
 }
 
-void	process_word(char *input, int *index, t_token **tokens, t_token **current)
+void	process_word(char *input, int *index,
+		t_token **tokens, t_token **current)
 {
 	int				start;
 	t_token_data	data;
@@ -102,7 +104,7 @@ void	process_word(char *input, int *index, t_token **tokens, t_token **current)
 		&& !ft_strchr(SYMBOLS, input[*index]))
 	{
 		if (ft_strchr(QUOTES, input[*index]))
-			skip_quoted_token(input, index); // Skip quoted segments
+			skip_quoted_token(input, index);
 		else if (ft_strchr(SYMBOLS, input[*index])
 			&& !ft_strchr(QUOTES, input[start]))
 			break ;

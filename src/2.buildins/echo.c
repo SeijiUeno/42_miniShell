@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 19:39:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 15:27:46 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	check_args_minus_n(const char *arg)
 		i++;
 	}
 	return (0);
-	
 }
 
 int	echo(char **args)

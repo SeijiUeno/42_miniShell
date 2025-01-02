@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ast_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:44:38 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:27:06 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:02:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-// Create a new command node with the given data
 static t_command	*create_command_node_data(char **argv,
 	t_token *redirections, int type)
 {
 	t_command	*new_node;
 
-	new_node = malloc(sizeof(t_command));
+	new_node = gc_allocate(sizeof(t_command));
 	if (!new_node)
 		return (NULL);
 	new_node->argv = argv;
 	new_node->redir = redirections;
 	new_node->type = type;
-	// Initialize other fields to default values
 	new_node->argc = 0;
 	new_node->left = NULL;
 	new_node->right = NULL;
@@ -34,13 +32,7 @@ static t_command	*create_command_node_data(char **argv,
 	return (new_node);
 }
 
-/**
- * Creates a new command node using tokens.
- * @param tokens - The token list.
- * @param minishell - The shell context.
- * @return A pointer to the command node or NULL on failure.
- */
-t_command	*create_command_node(t_token *tokens, t_minishell *minishell)
+t_command	*create_command_node(t_token *tokens, t_ms *minishell)
 {
 	t_token	*redirections;
 	char	**argv;
@@ -50,12 +42,6 @@ t_command	*create_command_node(t_token *tokens, t_minishell *minishell)
 	return (create_command_node_data(argv, redirections, WORD));
 }
 
-/**
- * Creates a pipe node connecting two commands.
- * @param left_cmd - The left command node.
- * @param right_cmd - The right command node.
- * @return A pointer to the pipe node or NULL on failure.
- */
 t_command	*create_pipe_node(t_command *left_cmd, t_command *right_cmd)
 {
 	t_command	*pipe_node;

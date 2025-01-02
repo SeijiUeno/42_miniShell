@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 01:59:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/10 20:18:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 19:58:45 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_itoa(int n)
 	long	nb;
 
 	size = count_digits(n);
-	str = malloc(size + 1);
+	str = gc_allocate(size + 1);
 	if (!str)
 		return (NULL);
 	str[size--] = '\0';
