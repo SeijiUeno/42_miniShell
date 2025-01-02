@@ -6,13 +6,13 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 03:34:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2024/12/15 09:41:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-static int	parse_input(t_minishell *minishell)
+static int	parse_input(t_ms *minishell)
 {
 	generate_tokens(minishell->input, &(minishell->tokens));
 	if (!(minishell->tokens) || !(minishell->tokens->content))
@@ -22,7 +22,7 @@ static int	parse_input(t_minishell *minishell)
 	return (EXIT_SUCCESS);
 }
 
-static int	handle_heredocs(t_minishell *minishell)
+static int	handle_heredocs(t_ms *minishell)
 {
 	int	status;
 
@@ -35,7 +35,7 @@ static int	handle_heredocs(t_minishell *minishell)
 	return (EXIT_SUCCESS);
 }
 
-int	build_commands(t_minishell *minishell)
+int	build_commands(t_ms *minishell)
 {
 	if (parse_input(minishell) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);

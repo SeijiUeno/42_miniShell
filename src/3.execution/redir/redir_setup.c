@@ -12,7 +12,7 @@
 
 #include "../../../includes/shell.h"
 
-int redir_process(t_token *redir)
+int	redir_process(t_token *redir)
 {
 	if (redir->type == REDIR_IN || redir->type == HEREDOC)
 		return (redirect_input(redir->content));
@@ -23,17 +23,19 @@ int redir_process(t_token *redir)
 	return (EXIT_SUCCESS);
 }
 
-int redir_setup(t_token *redir, t_minishell *m)
+int	redir_setup(t_token *redir, t_ms *m)
 {
 	while (redir)
 	{
 		if (!redir->content)
 		{
-			ft_putstr_fd("Error: missing filename for redirection\n", STDERR_FILENO);
+			ft_putstr_fd("Error: missing filename for redirection\n",
+				STDERR_FILENO);
 			m->status = 1;
 			return (EXIT_FAILURE);
 		}
-		if (redir_process(redir) == EXIT_FAILURE){
+		if (redir_process(redir) == EXIT_FAILURE)
+		{
 			m->status = 1;
 			return (EXIT_FAILURE);
 		}

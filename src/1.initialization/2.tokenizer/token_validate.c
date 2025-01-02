@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_validate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: emorales <emorales@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/13 13:11:03 by emorales         ###   ########.fr       */
+/*   Updated: 2024/12/15 11:15:47 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,25 @@ static int	check_consecutive_operators(t_token *current)
 		if (!current->next)
 		{
 			error_msg = "trailing operator ";
-			// Trailing operator (e.g., "echo hello |")
 			return (error(error_msg, current->content, -1));
 		}
 		else if (current->next->type == PIPE)
 		{
 			error_msg = "consecutive operators ";
-			// Consecutive operators (e.g., "echo hello ||")
 			return (error(error_msg, current->next->content, -1));
 		}
 	}
 	return (0);
 }
 
-// Validate the token list for syntax errors
 int	validate_tokens(t_token *tokens)
 {
 	t_token	*current;
 	char	*error_msg;
 
 	current = tokens;
-	// Step 1: Check for a leading pipe
 	if (check_leading_pipe(current))
 		return (1);
-	// Step 2: Iterate through tokens and check for syntax errors
 	while (current)
 	{
 		if (check_consecutive_operators(current))
@@ -74,7 +69,7 @@ int	validate_tokens(t_token *tokens)
 		error_msg = "syntax error near unexpected end of input";
 		return (error("ERROR:", error_msg, -1));
 	}
-	return (EXIT_SUCCESS); // No syntax errors found
+	return (EXIT_SUCCESS);
 }
 
 int	is_redirection(int token_type)
