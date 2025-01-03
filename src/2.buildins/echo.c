@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 15:27:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:24:56 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,12 @@ int	check_args_minus_n(const char *arg)
 {
 	int	i;
 
-	if (!arg || ft_strncmp(arg, "-n", 2) != 0)
+	if (!arg || arg[0] != '-' || arg[1] != 'n')
 		return (0);
 	i = 2;
 	while (arg[i] == 'n')
-	{
-		if (arg[i + 1] == '\0')
-			return (1);
 		i++;
-	}
-	return (0);
+	return (arg[i] == '\0');
 }
 
 int	echo(char **args)

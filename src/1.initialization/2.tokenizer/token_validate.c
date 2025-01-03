@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 13:13:41 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:04:38 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	check_leading_pipe(t_token *token)
 		return (0);
 	error_msg = "syntax error near unexpected token `|'";
 	if (token && token->content[0] == '|')
-		return (error("ERROR:", error_msg, -1));
+		return (error("ERROR", error_msg, -1));
 	return (0);
 }
 

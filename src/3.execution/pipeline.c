@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:25:42 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:24:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:16:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ void	pipe_run_pipeline(t_ms *m, t_command **cmds, int cmd_count)
 	{
 		g_in_subprocess = 1;
 		if (cmds[0]->redir && redir_setup(cmds[0]->redir, m) != EXIT_SUCCESS)
-			m->status = 1;
+			status_control(1);
 		else
-			m->status = run_single_command(m, cmds[0]);
+			status_control(run_single_command(m, cmds[0]));
 		g_in_subprocess = 0;
 		return ;
 	}
