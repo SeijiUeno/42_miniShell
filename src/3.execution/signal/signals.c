@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 15:44:34 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:37:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	status_control(int status)
 {
 	static int	status_backup;
 
-	if (status == STATUS_GET)
+	if (status == -42)
 		return (status_backup);
 	status_backup = status;
 	return (status_backup);

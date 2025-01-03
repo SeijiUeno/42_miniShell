@@ -6,16 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:35:51 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:30:15 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:13:13 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
-
-static void	initialize_signals(void)
-{
-	signal_setup();
-}
 
 static char	**initialize_env(void)
 {
@@ -54,5 +49,5 @@ void	shell_initialize(t_ms *minishell)
 		clear_al(minishell);
 		exit(EXIT_FAILURE);
 	}
-	initialize_signals();
+	signal_setup();
 }

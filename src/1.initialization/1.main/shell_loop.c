@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 11:12:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:33:22 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ void	shell_loop(t_ms *minishell)
 	while (1)
 	{
 		minishell->input = handle_input();
+		minishell->status = status_control(-42);
 		if (!minishell->input)
 		{
 			ft_putstr_fd("\nexit\n", STDOUT_FILENO);
+			cleanup_iteration(minishell);
 			break ;
 		}
 		process_commands(minishell);

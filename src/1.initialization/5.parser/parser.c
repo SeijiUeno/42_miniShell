@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 09:41:05 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:38:17 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	handle_heredocs(t_ms *minishell)
 	status = verify_heredoc(minishell);
 	if (status != EXIT_SUCCESS)
 	{
-		minishell->status = status;
+		status_control(status);
 		return (status);
 	}
 	return (EXIT_SUCCESS);

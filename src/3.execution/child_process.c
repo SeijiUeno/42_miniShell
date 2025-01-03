@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:24:44 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 15:40:55 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:18:15 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ void	exec_wait_for_children(t_ms *minishell, pid_t *pids, int count)
 	int					i;
 
 	status = 0;
+	(void)minishell;
 	sa_ignore.sa_handler = SIG_IGN;
 	sa_ignore.sa_flags = 0;
 	sigemptyset(&sa_ignore.sa_mask);
 	sigaction(SIGINT, &sa_ignore, &sa_restore);
 	sigaction(SIGQUIT, &sa_ignore, NULL);
 	status = 0;
-	minishell->status = 0;
+	status_control(0);
 	i = 0;
 	while (i < count)
 	{
 		waitpid(pids[i], &status, 0);
-		minishell->status = status_filter(status);
+		status_control(status_filter(status));
 		i++;
 	}
 	sigaction(SIGINT, &sa_restore, NULL);
