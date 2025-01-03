@@ -6,13 +6,12 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 11:15:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 13:13:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-// Check if the first token is an invalid leading pipe
 static int	check_leading_pipe(t_token *token)
 {
 	char	*error_msg;
@@ -29,9 +28,9 @@ static int	check_consecutive_operators(t_token *current)
 {
 	char	*error_msg;
 
-	if (!current)
+	if (!current || !current->next)
 		return (0);
-	if (current->type == PIPE)
+	if (current->type == OPERATOR && current->next->type == OPERATOR)
 	{
 		if (!current->next)
 		{

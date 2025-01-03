@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:09:40 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:39:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ int	unset(const char **keys, t_ms *minishell)
 	{
 		if (var_validate_name(*key_iter))
 		{
-			minishell->status = error(*key_iter, ": not a valid identifier", 1);
+			minishell->status = error(*key_iter, "not a valid identifier", 1);
 		}
 		else if (is_key_in_envp(*key_iter, minishell) == EXIT_SUCCESS)
 		{
 			if (unset_env(*key_iter, minishell) == EXIT_FAILURE)
 				minishell->status = error(*key_iter,
-						": memory allocation failed", 1);
+						"memory allocation failed", 1);
 		}
 		key_iter++;
 	}

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:53:20 by emorales          #+#    #+#             */
-/*   Updated: 2024/12/15 15:39:18 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:09:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	process_symbol(char *input, int *index,
 		|| (input[*index] == '<' && input[*index + 1] == '>'))
 	{
 		error("minishell", "syntax error near unexpected token", -1);
+		(*index)++;
+		*tokens = NULL;
 		return ;
 	}
 	if ((input[*index] == '<' && input[*index + 1] == '<')

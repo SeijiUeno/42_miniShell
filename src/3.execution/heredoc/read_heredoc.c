@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 12:11:18 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:29:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	heredoc_read(const char *delim, int fd)
 	setup_heredoc_signals();
 	while (!stop)
 	{
-		line = readline("> ");
+		line = readline("Heredoc > ");
 		if (!line)
 		{
 			if (errno == EINTR)
