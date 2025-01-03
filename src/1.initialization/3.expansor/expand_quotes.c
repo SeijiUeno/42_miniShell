@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:57:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 20:12:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_token	*remove_empty_tokens(t_token **tokens)
 		if (current->content && strcmp(current->content, "$EMPTY") == 0)
 		{
 			temp = current->next;
-			remove_token_from_list(tokens, current);
+			remove_token_from_list(tokens, &current);
 			current = temp;
 			continue ;
 		}

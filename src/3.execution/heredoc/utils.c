@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:22:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:24:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:13:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*heredoc_generate_name(int index)
 		return (NULL);
 	}
 	full_name = ft_strjoin("/tmp/heredoc-", index_text);
-	gc_deallocate(index_text);
 	if (!full_name)
 	{
 		ft_putstr_fd("Error: Failed to generate heredoc name\n", STDERR_FILENO);

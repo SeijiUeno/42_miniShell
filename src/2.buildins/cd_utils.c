@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:21:56 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 12:09:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:49:19 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ void	update_pwd(t_ms *m)
 	aux(current_path, old_pwd, m);
 	gc_track(current_path);
 	gc_deallocate(old_pwd);
-	m->status = 0;
+	status_control(0);
 }

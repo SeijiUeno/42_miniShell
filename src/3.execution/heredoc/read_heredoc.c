@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 12:29:28 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:13:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	heredoc_read(const char *delim, int fd)
 			break ;
 		}
 		stop = process_line(line, delim, fd);
-		gc_track(line);
 	}
 	reset_signals();
 	if (stop)

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/02 17:38:56 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 18:43:00 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,12 @@
 
 void	termios_save(struct termios *original_term)
 {
-	if (tcgetattr(STDIN_FILENO, original_term) == -1)
-	{
-		perror("tcgetattr");
-		return ;
-	}
+	(void)original_term;
 }
 
 void	termios_restore(const struct termios *original)
 {
-	if (tcsetattr(STDIN_FILENO, TCSANOW, original) == -1)
-	{
-		perror("tcsetattr");
-		exit(EXIT_FAILURE);
-	}
+	(void)original;
 }
 
 void	prompt_clear(t_ms *minishell)
