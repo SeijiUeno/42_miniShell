@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:26:58 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:10:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:10:50 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	heredoc(char **str, int index)
 	{
 		ft_putstr_fd("Error: Failed to open heredoc file", STDERR_FILENO);
 		ft_putstr_fd("\n", STDERR_FILENO);
-		free(filename);
+		gc_track(filename);
 		return (EXIT_FAILURE);
 	}
 	status = heredoc_read(*str, fd);
 	close(fd);
 	if (status != 0)
 	{
-		free(filename);
+		gc_track(filename);
 		return (status);
 	}
 	gc_deallocate(*str);
