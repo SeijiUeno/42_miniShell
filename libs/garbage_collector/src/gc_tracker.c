@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:18:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 20:20:37 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/02 19:40:12 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	gc_cleanup(void)
 	t_garbage_node	*current;
 	t_garbage_node	*temp;
 
+	current = NULL;
+	temp = NULL;
 	garbage_list = get_garbage_list();
 	current = *garbage_list;
 	while (current)

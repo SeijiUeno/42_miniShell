@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:20:48 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:09:24 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:13:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	**resize_envp(char **envp, int new_size)
 	char	**new_envp;
 	int		i;
 
-	new_envp = calloc(new_size + 1, sizeof(char *));
+	new_envp = ft_calloc(new_size + 1, sizeof(char *));
 	if (!new_envp)
 		return (NULL);
 	i = 0;

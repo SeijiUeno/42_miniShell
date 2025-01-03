@@ -73,6 +73,8 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	aux/free.c \
 	aux/terminal_health.c)
 
+VALGRIND_LOG		= valgrind.log
+
 OBJS := $(SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS := $(OBJS:.o=.d)
 
@@ -125,5 +127,15 @@ fclean: clean
 	printf "Cleaned all files.\n"
 
 re: fclean all
+
+valgrind: re
+	@valgrind --leak-check=full \
+	--show-reachable=yes \
+	--show-leak-kinds=all -s \
+	--track-origins=yes \
+	--suppressions=sup.supp \
+	--log-file=$(VALGRIND_LOG) \
+	./$(NAME)
+	@cat $(VALGRIND_LOG)
 
 -include $(DEPS)

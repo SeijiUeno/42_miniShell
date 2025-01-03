@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 17:55:55 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:53:13 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 12:17:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ char	*get_single_env(char *name, char **environment)
 			&& (environment[index][name_length] == '='
 			|| environment[index][name_length] == '\0'))
 		{
-			gc_track(environment[index]);
 			return (ft_strdup(environment[index]));
 		}
 		index++;

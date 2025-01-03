@@ -1,0 +1,23 @@
+==3158823== Memcheck, a memory error detector
+==3158823== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3158823== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==3158823== Command: ./minishell
+==3158823== Parent PID: 3158530
+==3158823== 
+==3158823== 
+==3158823== HEAP SUMMARY:
+==3158823==     in use at exit: 204,626 bytes in 219 blocks
+==3158823==   total heap usage: 749 allocs, 530 frees, 238,937 bytes allocated
+==3158823== 
+==3158823== LEAK SUMMARY:
+==3158823==    definitely lost: 0 bytes in 0 blocks
+==3158823==    indirectly lost: 0 bytes in 0 blocks
+==3158823==      possibly lost: 0 bytes in 0 blocks
+==3158823==    still reachable: 0 bytes in 0 blocks
+==3158823==         suppressed: 204,626 bytes in 219 blocks
+==3158823== 
+==3158823== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--3158823-- 
+--3158823-- used_suppression:     59 ignore_libreadline_memory_errors sup.supp:2 suppressed: 204,626 bytes in 219 blocks
+==3158823== 
+==3158823== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
