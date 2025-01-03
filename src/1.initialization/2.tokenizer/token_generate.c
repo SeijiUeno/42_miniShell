@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:02:35 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:41:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int	validate_input(char *input)
 	}
 	if (is_only_spaces(input))
 	{
-		error_msg = "Input contains only whitespace";
-		return (error("minishell: ", error_msg, EXIT_FAILURE));
+		return (1);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -114,7 +113,11 @@ t_token	*tokenize_input(char *input)
 	{
 		skip_whitespace(input, &index);
 		if (input[index] && ft_strchr(SYMBOLS, input[index]))
+		{
 			process_symbol(input, &index, &tokens, &current);
+			if (!tokens)
+				return (NULL);
+		}
 		else if (input[index])
 			process_word(input, &index, &tokens, &current);
 	}

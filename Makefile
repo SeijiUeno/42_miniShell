@@ -5,7 +5,6 @@
 NAME := minishell
 .DEFAULT_GOAL := all
 .PHONY: all clean fclean re
-.SILENT:
 
 #! ******************************************************************************#
 #                                   PATHS                                        #
