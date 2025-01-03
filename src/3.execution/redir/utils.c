@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:43:12 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:11:19 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 20:15:59 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	open_file(char *filename, int flags, int mode)
 
 int	redirect_fd(int fd, int std_fd)
 {
+	if (fd < 0)
+		return (EXIT_FAILURE);
 	if (dup2(fd, std_fd) < 0)
 	{
 		perror("dup2");
@@ -41,23 +43,21 @@ int	redirect_fd(int fd, int std_fd)
 	return (EXIT_SUCCESS);
 }
 
-void	remove_token_from_list(t_token **head, t_token *node)
+void	remove_token_from_list(t_token **head, t_token **node)
 {
-	if (!head || !*head || !node)
+	if (!head || !*head || !node || !*node)
 		return ;
-	if (node->prev)
-		node->prev->next = node->next;
+	if ((*node)->prev)
+		(*node)->prev->next = (*node)->next;
 	else
-		*head = node->next;
-	if (node->next)
-		node->next->prev = node->prev;
-	if (node->content)
+		*head = (*node)->next;
+	if ((*node)->next)
+		(*node)->next->prev = (*node)->prev;
+	if ((*node)->content)
 	{
-		gc_deallocate(node->content);
-		node->content = NULL;
+		(*node)->content = NULL;
 	}
-	gc_deallocate(node);
-	node = NULL;
+	*node = NULL;
 }
 
 void	redir_append_node(t_token **redirs, int type, char *filename)

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 19:16:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 13:46:01 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:48:54 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ int	print_env(char **args, char **envp, t_ms *m)
 		}
 		temp++;
 	}
-	m->status = 0;
+	status_control(0);
 	return (0);
 }

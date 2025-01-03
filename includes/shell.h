@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/02 17:38:39 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:27:26 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ void							fds_reset(t_ms *minishell);
 int								open_file(char *filename, int flags, int mode);
 int								redirect_fd(int fd, int std_fd);
 void							remove_token_from_list(t_token **head,
-									t_token *node);
+									t_token **node);
 void							update_pwd_env(char **envp, const char *key,
 									const char *value);
 void							update_pwd(t_ms *minishell);

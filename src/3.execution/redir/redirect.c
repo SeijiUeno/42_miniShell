@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 13:28:54 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:28:31 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	process_single_redirection(
 	if (!expanded_filename)
 		return (-1);
 	redir_append_node(redirs, redir_op->type, expanded_filename);
-	remove_token_from_list(token_list, redir_op);
-	remove_token_from_list(token_list, redir_target);
+	remove_token_from_list(token_list, &redir_op);
+	remove_token_from_list(token_list, &redir_target);
 	return (0);
 }
 

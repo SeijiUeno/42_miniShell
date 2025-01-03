@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:24:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 19:53:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int	change_dir(char **args, t_ms *m)
 	}
 	update_pwd(m);
 	gc_deallocate(resolved_path);
-	m->status = 0;
+	status_control(0);
 	return (0);
 }
