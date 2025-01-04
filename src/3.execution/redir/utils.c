@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:43:12 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 20:15:59 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:07:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ int	open_file(char *filename, int flags, int mode)
 {
 	int	fd;
 
+	if (access(filename, F_OK) == 0 && access(filename, W_OK) != 0)
+	{
+		ft_putstr_fd("Error: Permission denied\n", STDERR_FILENO);
+		status_control(1);
+		return (-1);
+	}
 	fd = open(filename, flags, mode);
 	if (fd < 0)
 	{
@@ -25,6 +31,8 @@ int	open_file(char *filename, int flags, int mode)
 			ft_putstr_fd("Error: No such file or directory\n", STDERR_FILENO);
 		else
 			ft_putstr_fd("Error: Unable to open file\n", STDERR_FILENO);
+		status_control(1);
+		return (-1);
 	}
 	return (fd);
 }

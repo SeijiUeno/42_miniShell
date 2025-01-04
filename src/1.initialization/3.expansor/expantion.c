@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:45:18 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 19:24:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 21:06:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*expansor(const char *input_str, t_ms *minishell)
 	char	*temp_str;
 	int		index;
 
+	if (!input_str)
+		return (NULL);
 	index = 0;
 	result = NULL;
 	while (input_str[index])

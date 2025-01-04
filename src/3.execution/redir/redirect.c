@@ -6,20 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:28:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/03 20:58:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
-
-static int	validate_redirection(t_token *redir_op, t_token *redir_target)
-{
-	if (!redir_op)
-		return (-1);
-	if (!redir_target || redir_target->type != WORD)
-		return (-1);
-	return (0);
-}
 
 static int	process_single_redirection(
 	t_token **token_list,
@@ -31,11 +22,15 @@ static int	process_single_redirection(
 	char		*expanded_filename;
 
 	redir_target = redir_op->next;
-	if (validate_redirection(redir_op, redir_target) < 0)
+	if (!redir_target || redir_target->type != WORD)
+	{
 		return (-1);
+	}
 	expanded_filename = expansor(redir_target->content, minishell);
 	if (!expanded_filename)
+	{
 		return (-1);
+	}
 	redir_append_node(redirs, redir_op->type, expanded_filename);
 	remove_token_from_list(token_list, &redir_op);
 	remove_token_from_list(token_list, &redir_target);
