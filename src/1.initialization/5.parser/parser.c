@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 15:38:17 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:09:40 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,15 @@ static int	handle_heredocs(t_ms *minishell)
 	status = verify_heredoc(minishell);
 	if (status != EXIT_SUCCESS)
 	{
+		g_in_subprocess = SUBPROCESS_NONE;
 		status_control(status);
 		return (status);
+	}
+	if (g_in_subprocess == SUBPROCESS_INT_HDOC)
+	{
+		g_in_subprocess = SUBPROCESS_NONE;
+		status_control(STATUS_SIGINT);
+		return (STATUS_SIGINT);
 	}
 	return (EXIT_SUCCESS);
 }

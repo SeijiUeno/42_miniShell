@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:27:26 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 18:44:47 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@
 # define SYMBOLS "|<>"
 # define QUOTES "'\""
 # define STATUS_EOF 1
+
+# define SUBPROCESS_NONE 0
+# define SUBPROCESS_CHILD 1
+# define SUBPROCESS_HEREDOC 2
+# define SUBPROCESS_INT_HDOC 3
 
 typedef struct s_minishell		t_ms;
 typedef struct s_token			t_token;

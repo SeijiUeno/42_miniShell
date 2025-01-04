@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:13:43 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:12:54 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 static void	setup_heredoc_signals(void)
 {
 	signal(SIGINT, &signal_handle_heredoc);
+	g_in_subprocess = SUBPROCESS_HEREDOC;
 }
 
 static void	reset_signals(void)
 {
 	signal(SIGINT, &signal_handle);
+	g_in_subprocess = 0;
 }
 
 static int	process_line(char *line, const char *delim, int fd)
@@ -47,16 +49,14 @@ int	heredoc_read(const char *delim, int fd)
 	setup_heredoc_signals();
 	while (!stop)
 	{
+		if (g_in_subprocess == SUBPROCESS_INT_HDOC || errno == EINTR)
+		{
+			reset_signals();
+			return (STATUS_SIGINT);
+		}
 		line = readline("Heredoc > ");
 		if (!line)
-		{
-			if (errno == EINTR)
-			{
-				reset_signals();
-				return (STATUS_SIGINT);
-			}
 			break ;
-		}
 		stop = process_line(line, delim, fd);
 	}
 	reset_signals();

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:22:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:13:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 19:01:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ char	*heredoc_generate_name(int index)
 	return (full_name);
 }
 
-void	signal_handle_heredoc(int signal)
+void	signal_handle_heredoc(int sig)
 {
-	if (signal == SIGINT)
-	{
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		close(STDIN_FILENO);
-		status_control(STATUS_SIGINT);
-		exit(STATUS_SIGINT);
-	}
+	if (sig != SIGINT)
+		return ;
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	close(STDIN_FILENO);
+	status_control(STATUS_SIGINT);
+	if (g_in_subprocess == SUBPROCESS_HEREDOC)
+		g_in_subprocess = SUBPROCESS_INT_HDOC;
 }
