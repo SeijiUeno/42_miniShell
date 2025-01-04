@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:41:27 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/02 17:37:20 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 16:06:34 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	util_free_array(char **arr)
 {
-	arr = (NULL);
+	*arr = (NULL);
 }
 
 void	clear_li(t_list **list)

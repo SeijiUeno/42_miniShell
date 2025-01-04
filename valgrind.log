@@ -1,23 +1,23 @@
-==3325994== Memcheck, a memory error detector
-==3325994== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3325994== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
-==3325994== Command: ./minishell
-==3325994== Parent PID: 3325719
-==3325994== 
-==3325994== 
-==3325994== HEAP SUMMARY:
-==3325994==     in use at exit: 204,625 bytes in 219 blocks
-==3325994==   total heap usage: 719 allocs, 500 frees, 233,776 bytes allocated
-==3325994== 
-==3325994== LEAK SUMMARY:
-==3325994==    definitely lost: 0 bytes in 0 blocks
-==3325994==    indirectly lost: 0 bytes in 0 blocks
-==3325994==      possibly lost: 0 bytes in 0 blocks
-==3325994==    still reachable: 0 bytes in 0 blocks
-==3325994==         suppressed: 204,625 bytes in 219 blocks
-==3325994== 
-==3325994== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---3325994-- 
---3325994-- used_suppression:     59 ignore_libreadline_memory_errors sup.supp:2 suppressed: 204,625 bytes in 219 blocks
-==3325994== 
-==3325994== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==23186== Memcheck, a memory error detector
+==23186== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==23186== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==23186== Command: ./minishell
+==23186== Parent PID: 22769
+==23186== 
+==23186== 
+==23186== HEAP SUMMARY:
+==23186==     in use at exit: 208,746 bytes in 254 blocks
+==23186==   total heap usage: 1,750 allocs, 1,496 frees, 932,482 bytes allocated
+==23186== 
+==23186== LEAK SUMMARY:
+==23186==    definitely lost: 0 bytes in 0 blocks
+==23186==    indirectly lost: 0 bytes in 0 blocks
+==23186==      possibly lost: 0 bytes in 0 blocks
+==23186==    still reachable: 0 bytes in 0 blocks
+==23186==         suppressed: 208,746 bytes in 254 blocks
+==23186== 
+==23186== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--23186-- 
+--23186-- used_suppression:     68 ignore_libreadline_memory_errors sup.supp:2 suppressed: 208,746 bytes in 254 blocks
+==23186== 
+==23186== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

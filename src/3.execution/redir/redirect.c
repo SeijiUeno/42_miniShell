@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/11 19:48:54 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 20:58:16 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:25:23 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_token	*ft_generate_redirs(t_token **token_list, t_ms *minishell)
 			current = *token_list;
 		}
 		else
-		current = current->next;
+			current = current->next;
 	}
 	return (redirs);
 }

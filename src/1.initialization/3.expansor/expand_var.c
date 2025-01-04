@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:05:50 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 14:21:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/04 17:24:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char	*extract_var_name(const char *input_str, int *index)
 		&& (isalnum((unsigned char)input_str[*index])
 			|| input_str[*index] == '_'))
 	{
-			(*index)++;
-			var_len++;
+		(*index)++;
+		var_len++;
 	}
 	return (ft_substr(input_str, start_index, var_len));
 }
