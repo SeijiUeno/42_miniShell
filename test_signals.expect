@@ -1,0 +1,31 @@
+#!/usr/bin/expect -f
+set timeout 3
+
+spawn [lindex $argv 0]
+
+# wait for prompt
+expect {
+    "minishell$ " {}
+    timeout { exit 1 }
+}
+
+# Ctrl-C
+send "\003"
+expect {
+    "minishell$ " {}
+    timeout { exit 2 }
+}
+
+# Ctrl-\
+send "\034"
+expect {
+    "minishell$ " {}
+    timeout { exit 3 }
+}
+
+# Ctrl-D
+send "\004"
+expect {
+    eof { exit 0 }
+    timeout { exit 4 }
+}

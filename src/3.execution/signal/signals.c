@@ -60,7 +60,13 @@ void	signal_handle(int signum)
 		}
 		status_control(signum + 128);
 	}
+	else if (signum == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
+
 
 void	signal_setup(void)
 {
