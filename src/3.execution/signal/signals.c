@@ -62,10 +62,14 @@ void	signal_handle(int signum)
 	}
 	else if (signum == SIGQUIT)
 	{
-		rl_on_new_line();
-		rl_redisplay();
+		if (!g_in_subprocess)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 }
+
 
 
 void	signal_setup(void)
