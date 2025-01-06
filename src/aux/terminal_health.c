@@ -6,21 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 17:30:07 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 18:43:00 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:11:41 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shell.h"
-
-void	termios_save(struct termios *original_term)
-{
-	(void)original_term;
-}
-
-void	termios_restore(const struct termios *original)
-{
-	(void)original;
-}
 
 void	prompt_clear(t_ms *minishell)
 {

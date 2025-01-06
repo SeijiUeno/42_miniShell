@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 10:38:03 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:53:29 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:48:55 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ int	change_dir(char **args, t_ms *m)
 		return (handle_cd_error(NULL, "too many arguments", 1, m));
 	if (!args[1] && !home)
 		return (handle_cd_error(NULL, "HOME not set", 1, m));
+	if (args[1] && strcmp(args[1], ".") == 0)
+	{
+		status_control(0);
+		return (0);
+	}
 	resolved_path = get_resolved_path(args, home);
 	if (!resolved_path || chdir(resolved_path) == -1)
 	{

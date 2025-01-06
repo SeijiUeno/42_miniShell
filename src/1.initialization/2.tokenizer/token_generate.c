@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 16:41:11 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:42:33 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ int	validate_input(char *input)
 	if (!input || !input[0])
 	{
 		error_msg = "Empty input";
-		return (error("minishell: ", error_msg, EXIT_FAILURE));
+		return (error("minishell", error_msg, EXIT_FAILURE));
 	}
 	if (validate_all_quotes(input) != EXIT_SUCCESS)
 	{
 		error_msg = "Unmatched quotes in input";
-		return (error("minishell: ", error_msg, EXIT_FAILURE));
+		return (error("minishell", error_msg, EXIT_FAILURE));
 	}
 	if (is_only_spaces(input))
 	{

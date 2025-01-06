@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 15:33:22 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:03:29 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ static void	cleanup_iteration(t_ms *minishell)
 
 void	shell_loop(t_ms *minishell)
 {
-	static struct termios	original_term;
-
-	termios_save(&original_term);
 	while (1)
 	{
 		minishell->input = handle_input();
@@ -48,11 +45,9 @@ void	shell_loop(t_ms *minishell)
 		if (!minishell->input)
 		{
 			ft_putstr_fd("\nexit\n", STDOUT_FILENO);
-			cleanup_iteration(minishell);
 			break ;
 		}
 		process_commands(minishell);
 		cleanup_iteration(minishell);
 	}
-	termios_restore(&original_term);
 }

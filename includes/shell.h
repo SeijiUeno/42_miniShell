@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/04 18:44:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:09:27 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,6 @@ void							signal_handle(int signum);
 void							signal_handle_execution(int signum);
 int								status_control(int status);
 int								status_filter(int status);
-void							termios_save(struct termios *original);
-void							termios_restore(const struct termios *original);
 void							signal_handle_heredoc(int signal);
 char							*env_get_value(char *env_name, char **envp);
 void							generate_tokens(char *input, t_token **tokens);
