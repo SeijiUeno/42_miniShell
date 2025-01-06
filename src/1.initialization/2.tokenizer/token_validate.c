@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 16:41:51 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:16:02 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static int	check_leading_pipe(t_token *token)
 	error_msg = "syntax error near unexpected token `|'";
 	if (token && token->content[0] == '|')
 	{
-		return (error("ERROR", error_msg, 2));
 		status_control(2);
+		return (error("ERROR", error_msg, 2));
 	}
 	return (0);
 }
@@ -37,15 +37,15 @@ static int	check_consecutive_operators(t_token *current)
 	{
 		if (!current->next)
 		{
+			status_control(2);
 			error_msg = "trailing operator ";
 			return (error(error_msg, current->content, 2));
-			status_control(2);
 		}
 		else if (current->next->type == PIPE)
 		{
 			error_msg = "consecutive operators ";
-			return (error(error_msg, current->next->content, 2));
 			status_control(2);
+			return (error(error_msg, current->next->content, 2));
 		}
 	}
 	return (0);

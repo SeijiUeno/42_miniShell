@@ -1,63 +1,129 @@
-# Makefile for Libft Library (with Colors)
+NAME = libft.a
+.DEFAULT_GOAL := all
+.PHONY: all clean fclean re help
+.SILENT:
 
-# Compiler and Flags
-CC      = gcc
-CFLAGS  = -Wall -Wextra -Werror
+# **************************************************************************** #
+#                                   COLORS                                      #
+# **************************************************************************** #
 
-# Colors
-GREEN   = \033[32m
-YELLOW  = \033[33m
-BLUE    = \033[34m
-RED     = \033[31m
-RESET   = \033[0m
+DEFAULT=\033[39m
+BLACK=\033[30m
+DARK_RED=\033[31m
+DARK_GREEN=\033[32m
+DARK_YELLOW=\033[33m
+DARK_BLUE=\033[34m
+DARK_MAGENTA=\033[35m
+DARK_CYAN=\033[36m
+LIGHT_GRAY=\033[37m
+DARK_GRAY=\033[90m
+RED=\033[91m
+GREEN=\033[92m
+ORANGE=\033[93m
+BLUE=\033[94m
+MAGENTA=\033[95m
+CYAN=\033[96m
+WHITE=\033[97m
+YELLOW = \033[33m
+RESET = \033[0m
 
-# Target and Directories
-NAME    = libft.a
-SRC_DIR = src
-OBJ_DIR = obj
+# **************************************************************************** #
+#                                   PATHS                                       #
+# **************************************************************************** #
 
-# Source and Object Files
-SRC_FILES = ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
-            ft_strcmp.c ft_substr.c ft_memcpy.c ft_strdup.c \
-            ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putchar_fd.c \
-            ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
-            ft_error.c ft_strndup.c ft_putstr_len.c ft_printf.c \
-			ft_isalpha.c ft_strchr.c ft_isalnum.c ft_strjoin.c \
-			ft_split.c ft_itoa.c ft_tochr.c ft_putptr_len.c \
-			ft_putnbr_len.c
+SRCS_PATH = src/
+INCS_PATH = include/
+BUILD_DIR := obj/
 
-OBJ_FILES = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
+# **************************************************************************** #
+#                                   FILES                                       #
+# **************************************************************************** #
 
-# Rules
-.PHONY: all clean fclean re
+SRCS =	$(addprefix $(SRCS_PATH),\
+		ft_isdigit.c ft_strlen.c ft_atoi.c ft_putnbr.c \
+		ft_strcmp.c ft_substr.c ft_memcpy.c ft_strdup.c \
+		ft_strlcpy.c ft_calloc.c ft_bzero.c ft_putchar_fd.c \
+		ft_putstr_fd.c ft_putendl_fd.c ft_strncmp.c \
+		ft_error.c ft_strndup.c ft_putstr_len.c ft_printf.c \
+		ft_isalpha.c ft_strchr.c ft_isalnum.c ft_strjoin.c \
+		ft_split.c ft_itoa.c ft_tochr.c ft_putptr_len.c \
+		ft_putnbr_len.c)
+
+OBJS = $(SRCS:%.c=$(BUILD_DIR)%.o)
+DEPS = $(OBJS:.o=.d)
+
+# **************************************************************************** #
+#                                   TOOLS                                       #
+# **************************************************************************** #
+
+MKDIR := mkdir -p
+RM := rm -rf
+SLEEP = sleep 0.01
+CC = cc
+AR = ar -rcs
+SHELL := /bin/bash
+
+# **************************************************************************** #
+#                                   FLAGS                                       #
+# **************************************************************************** #
+
+CFLAGS = -Wall -Wextra -Werror -g3
+CPPFLAGS = $(addprefix -I,$(INCS_PATH)) -MMD -MP
+COMP_OBJ = $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
+COMP_STATIC_LIB = $(AR) $(NAME) $(OBJS)
+
+# **************************************************************************** #
+#                                   FUNCTIONS                                   #
+# **************************************************************************** #
+
+define create_dir
+	$(MKDIR) $(dir $@)
+endef
+
+define comp_objs
+	$(eval COUNT=$(shell expr $(COUNT) + 1))
+	$(COMP_OBJ)
+	$(SLEEP)
+	printf "Compiling $(YELLOW)LIBFT %d%%\r$(RESET) " $$(echo $$(($(COUNT) * 100 / $(words $(SRCS)))))
+	@if [ $(COUNT) -eq $(words $(SRCS)) ]; then \
+		printf "Compiled $(DARK_GREEN)LIBFT  100%%$(RESET) "; \
+		printf "\n"; \
+	fi
+endef
+
+define comp_static_lib
+	$(COMP_STATIC_LIB)
+	printf "\n$(DARK_BLUE)$(NAME)$(RESET) is Ready \n"
+	printf "\n"
+endef
+
+# **************************************************************************** #
+#                                   RULES                                       #
+# **************************************************************************** #
 
 all: $(NAME)
 
-# Build the library
-$(NAME): $(OBJ_FILES)
-	@echo "$(BLUE)Creating library: $(NAME)$(RESET)"
-	@ar rcs $(NAME) $(OBJ_FILES)
-	@echo "$(GREEN)Library $(NAME) created successfully!$(RESET)"
+$(BUILD_DIR)%.o: %.c
+	$(call create_dir)
+	$(call comp_objs)
 
-# Compile source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@echo "$(YELLOW)Compiling $< -> $@$(RESET)"
-	@$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(call comp_static_lib)
 
-# Create object directory if it doesn't exist
-$(OBJ_DIR):
-	@echo "$(BLUE)Creating directory: $(OBJ_DIR)$(RESET)"
-	@mkdir -p $(OBJ_DIR)
-
-# Clean object files
 clean:
-	@echo "$(RED)Cleaning object files...$(RESET)"
-	@rm -rf $(OBJ_DIR)
+	$(RM) $(BUILD_DIR)
 
-# Full clean (object files and library)
 fclean: clean
-	@echo "$(RED)Removing library $(NAME)...$(RESET)"
-	@rm -f $(NAME)
+	$(RM) $(NAME)
 
-# Rebuild everything
 re: fclean all
+
+help:
+	@echo "Available targets:"
+	@echo "  all     - Build the library"
+	@echo "  clean   - Remove object files"
+	@echo "  fclean  - Remove object files and the library"
+	@echo "  re      - Rebuild everything"
+	@echo "  help    - Display this help message"
+
+-include $(DEPS)

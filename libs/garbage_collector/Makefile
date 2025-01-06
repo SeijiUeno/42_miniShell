@@ -3,6 +3,10 @@ NAME = garbage_collector.a
 .PHONY: all clean fclean re help
 .SILENT:
 
+# **************************************************************************** #
+#                                   COLORS                                      #
+# **************************************************************************** #
+
 DEFAULT=\033[39m
 BLACK=\033[30m
 DARK_RED=\033[31m
@@ -23,15 +27,27 @@ WHITE=\033[97m
 YELLOW = \033[33m
 RESET = \033[0m
 
+# **************************************************************************** #
+#                                   PATHS                                       #
+# **************************************************************************** #
+
 SRCS_PATH = src/
 INCS_PATH = include/ ../libft/include/
 BUILD_DIR := build/
+
+# **************************************************************************** #
+#                                   FILES                                       #
+# **************************************************************************** #
 
 SRCS =	$(addprefix $(SRCS_PATH),\
 		garbage_collector.c \
 		gc_tracker.c)
 OBJS = $(SRCS:%.c=$(BUILD_DIR)%.o)
 DEPS = $(OBJS:.o=.d)
+
+# **************************************************************************** #
+#                                   TOOLS                                       #
+# **************************************************************************** #
 
 MKDIR := mkdir -p
 RM := rm -rf
@@ -40,13 +56,20 @@ CC = cc
 AR = ar -rcs
 SHELL := /bin/bash
 
-CFLAGS = -Wall -Wextra -Werror -g3
+# **************************************************************************** #
+#                                   FLAGS                                       #
+# **************************************************************************** #
+
+CFLAGS = -Wall -Wextra -Werror
 DFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 LDLIBS = -ldl -lglfw -pthread
 CPPFLAGS = $(addprefix -I,$(INCS_PATH)) -MMD -MP
 COMP_OBJ = $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 COMP_STATIC_LIB = $(AR) $(NAME) $(OBJS)
 
+# **************************************************************************** #
+#                                   FUNCTIONS                                   #
+# **************************************************************************** #
 
 define create_dir
 	$(MKDIR) $(dir $@)
@@ -69,24 +92,40 @@ define comp_static_lib
 	printf "\n"
 endef
 
+# **************************************************************************** #
+#                                   RULES                                       #
+# **************************************************************************** #
+
 all: $(NAME)
 
+# Build object files with progress bar
 $(BUILD_DIR)%.o: %.c
 	$(call create_dir)
 	$(call comp_objs)
 
+# Build static library
 $(NAME): $(OBJS)
 	$(call comp_static_lib)
 
+# Clean object files
 clean:
 	$(RM) $(BUILD_DIR)
 
+# Full clean (object files and library)
 fclean: clean
 	$(RM) $(NAME)
 
+# Rebuild everything
 re: fclean all
 
+# Help Message
 help:
-	$(call help)
+	@echo "Available targets:"
+	@echo "  all     - Build the library"
+	@echo "  clean   - Remove object files"
+	@echo "  fclean  - Remove object files and the library"
+	@echo "  re      - Rebuild everything"
+	@echo "  help    - Display this help message"
 
+# Include dependencies
 -include $(DEPS)
