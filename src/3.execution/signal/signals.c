@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 14:05:31 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:21:01 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	signal_handle_execution(int signum)
 	}
 	else if (signum == SIGINT)
 	{
+		if (!g_in_subprocess)
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		status_control(signum + 128);
 	}
@@ -72,8 +77,8 @@ void	signal_handle(int signum)
 
 void	signal_setup(void)
 {
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		perror("Error: could not set SIGQUIT Behavior");
 	if (signal(SIGINT, &signal_handle) == SIG_ERR)
-		perror("Error setting SIGINT handler");
-	if (signal(SIGQUIT, &signal_handle) == SIG_ERR)
-		perror("Error setting SIGQUIT handler");
+		perror("Error could not set SIGINT Behavior");
 }
