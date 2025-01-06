@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:36:28 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 14:51:14 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:47:14 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	process_commands(t_ms *minishell)
 		execute(minishell);
 	else
 		status_control(status);
+	if (minishell->tokens == NULL)
+		status_control(0);
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 15:07:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:32:43 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	validate_input(char *input)
 
 	if (!input || !input[0])
 	{
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	if (validate_all_quotes(input) != EXIT_SUCCESS)
 	{
