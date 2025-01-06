@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 14:41:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:29:16 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	assign_operator_token_types(t_token **tokens)
 			else if (op_char == '<' || op_char == '>')
 				current->type = assign_redir_type(op_char, current->content);
 			else if (current->content[1] != '\0')
-				error("minishell", "syntax error near unexpected token", -1);
+				error("minishell", "syntax error near unexpected token", 2);
 		}
 		current = current->next;
 	}

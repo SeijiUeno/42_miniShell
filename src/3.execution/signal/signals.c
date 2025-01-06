@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 15:37:21 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 16:37:02 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,10 @@ void	signal_handle(int signum)
 	}
 }
 
-
-
 void	signal_setup(void)
 {
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		perror("Error: could not set SIGQUIT Behavior");
 	if (signal(SIGINT, &signal_handle) == SIG_ERR)
-		perror("Error setting SIGINT handler");
-	if (signal(SIGQUIT, &signal_handle) == SIG_ERR)
-		perror("Error setting SIGQUIT handler");
+		perror("Error could not set SIGINT Behavior");
 }
