@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:19 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/04 18:44:47 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:01:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,8 @@ void							termios_save(struct termios *original);
 void							termios_restore(const struct termios *original);
 void							signal_handle_heredoc(int signal);
 char							*env_get_value(char *env_name, char **envp);
-void							generate_tokens(char *input, t_token **tokens);
-void							assign_operator_token_types(t_token **tokens);
+int								generate_tokens(char *input, t_token **tokens);
+int								assign_operator_token_types(t_token **tokens);
 void							initialize_token_list(t_token **tokens);
 void							append_token(t_token **token_list,
 									t_token *new_token);

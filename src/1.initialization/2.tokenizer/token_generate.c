@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 14:41:30 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:07:30 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@ int		validate_input(char *input);
 t_token	*tokenize_input(char *input);
 int		validate_all_quotes(char *input);
 
-void	generate_tokens(char *input, t_token **tokens)
+int	generate_tokens(char *input, t_token **tokens)
 {
+	int	status;
+
 	if (validate_input(input))
 	{
 		*tokens = NULL;
-		return ;
+		return (2);
 	}
 	*tokens = tokenize_input(input);
 	if (tokens)
-		assign_operator_token_types(tokens);
+	{
+		status = assign_operator_token_types(tokens);
+		if (status != EXIT_SUCCESS)
+			return (2);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	validate_input(char *input)
@@ -34,8 +41,7 @@ int	validate_input(char *input)
 
 	if (!input || !input[0])
 	{
-		error_msg = "Empty input";
-		return (error("minishell: ", error_msg, EXIT_FAILURE));
+		return (EXIT_FAILURE);
 	}
 	if (validate_all_quotes(input) != EXIT_SUCCESS)
 	{
@@ -76,13 +82,15 @@ void	add_token(t_token_data *data, int start, int end)
 	*data->current = new_token;
 }
 
-void	assign_operator_token_types(t_token **tokens)
+int	assign_operator_token_types(t_token **tokens)
 {
 	t_token		*current;
 	char		op_char;
+	char		*msg;
 
 	if (!tokens || !*tokens)
-		return ;
+		return (-1);
+	msg = "syntax error near unexpected token";
 	current = *tokens;
 	while (current)
 	{
@@ -94,10 +102,11 @@ void	assign_operator_token_types(t_token **tokens)
 			else if (op_char == '<' || op_char == '>')
 				current->type = assign_redir_type(op_char, current->content);
 			else if (current->content[1] != '\0')
-				error("minishell", "syntax error near unexpected token", -1);
+				return (error("minishell", msg, 2));
 		}
 		current = current->next;
 	}
+	return (EXIT_SUCCESS);
 }
 
 t_token	*tokenize_input(char *input)

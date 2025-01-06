@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 20:07:10 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 21:04:08 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 15:05:51 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static int	check_leading_pipe(t_token *token)
 
 	if (!token || !token->content)
 		return (0);
-	error_msg = "syntax error near unexpected token `|'";
+	error_msg = "syntax error near unexpected token";
 	if (token && token->content[0] == '|')
-		return (error("ERROR", error_msg, 127));
-	return (0);
+		return (error("ERROR", error_msg, 2));
+	return (EXIT_SUCCESS);
 }
 
 static int	check_consecutive_operators(t_token *current)
@@ -30,20 +30,21 @@ static int	check_consecutive_operators(t_token *current)
 
 	if (!current || !current->next)
 		return (0);
-	if (current->type == OPERATOR && current->next->type == OPERATOR)
+	if (current->type == OPERATOR && current->next->type == OPERATOR
+		&& current->type != current->next->type)
 	{
 		if (!current->next)
 		{
-			error_msg = "trailing operator ";
-			return (error(error_msg, current->content, 127));
+			error_msg = "trailing operator";
+			return (error(error_msg, current->content, 2));
 		}
 		else if (current->next->type == PIPE)
 		{
-			error_msg = "consecutive operators ";
-			return (error(error_msg, current->next->content, 127));
+			error_msg = "consecutive operators";
+			return (error(error_msg, current->next->content, 2));
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	validate_tokens(t_token *tokens)
@@ -53,11 +54,11 @@ int	validate_tokens(t_token *tokens)
 
 	current = tokens;
 	if (check_leading_pipe(current))
-		return (1);
+		return (2);
 	while (current)
 	{
 		if (check_consecutive_operators(current))
-			return (1);
+			return (2);
 		current = current->next;
 	}
 	current = tokens;
@@ -66,15 +67,15 @@ int	validate_tokens(t_token *tokens)
 	if (is_redirection(current->type) || current->type == PIPE)
 	{
 		error_msg = "syntax error near unexpected end of input";
-		return (error("ERROR:", error_msg, -1));
+		return (error("ERROR:", error_msg, 2));
 	}
 	return (EXIT_SUCCESS);
 }
 
 int	is_redirection(int token_type)
 {
-	return (token_type == REDIR_IN
+	return (token_type == APPEND
+		|| token_type == REDIR_IN
 		|| token_type == REDIR_OUT
-		|| token_type == APPEND
 		|| token_type == HEREDOC);
 }
