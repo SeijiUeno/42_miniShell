@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 18:56:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/04 19:09:40 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:07:25 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	build_commands(t_ms *minishell)
 	if (minishell->tokens == NULL)
 		return (0);
 	if (handle_heredocs(minishell) != EXIT_SUCCESS)
+	{
+		g_in_subprocess = 0;
 		return (EXIT_FAILURE);
+	}
 	generate_ast(minishell);
 	return (EXIT_SUCCESS);
 }

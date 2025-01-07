@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 14:26:58 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 19:35:08 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:12:28 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int	heredoc(char **str, int index)
 	close(fd);
 	if (status != 0)
 	{
-		return (status);
+		if (g_in_subprocess == SUBPROCESS_INT_HDOC)
+			return (130);
+		ft_putchar_fd('\n', 1);
 	}
 	*str = filename;
 	return (0);
