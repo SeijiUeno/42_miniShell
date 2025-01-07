@@ -6,15 +6,15 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:42:46 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 17:42:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:59:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shell.h"
 
-int		validate_input(char *input);
-t_token	*tokenize_input(char *input);
-int		validate_all_quotes(char *input);
+static int		validate_input(char *input);
+static t_token	*tokenize_input(char *input);
+int				validate_all_quotes(char *input);
 
 void	generate_tokens(char *input, t_token **tokens)
 {
@@ -28,7 +28,7 @@ void	generate_tokens(char *input, t_token **tokens)
 		assign_operator_token_types(tokens);
 }
 
-int	validate_input(char *input)
+static int	validate_input(char *input)
 {
 	char	*error_msg;
 
@@ -103,7 +103,7 @@ void	assign_operator_token_types(t_token **tokens)
 	}
 }
 
-t_token	*tokenize_input(char *input)
+static t_token	*tokenize_input(char *input)
 {
 	t_token	*tokens;
 	t_token	*current;
