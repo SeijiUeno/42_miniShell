@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 15:00:43 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 20:12:33 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:37:08 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,18 @@ char	*expand_double_quotes(const char *input_str, int *index, t_ms *m)
 	char	*result;
 	char	*temp_str;
 
-	result = NULL;
-	if (input_str[*index] == '"')
-		(*index)++;
+	result = ft_strdup("");
 	if (input_str[*index] == '"')
 		(*index)++;
 	while (input_str[*index] && input_str[*index] != '"')
 	{
 		temp_str = process_inside_quotes(input_str, index, m);
-		result = join_word(result, temp_str);
-		if (!temp_str || !(result))
+		if (!temp_str)
 		{
 			gc_deallocate(result);
 			return (NULL);
 		}
+		result = join_word(result, temp_str);
 	}
 	if (input_str[*index] == '"')
 		(*index)++;
