@@ -1,7 +1,6 @@
 NAME = minishell
 .DEFAULT_GOAL := all
 .PHONY: all clean fclean re valgrind help
-.SILENT:
 
 # **************************************************************************** #
 #                                   COLORS                                      #
@@ -80,7 +79,6 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/redir/redirect_output.c \
 	3.execution/redir/redir_setup.c \
 	3.execution/redir/utils.c \
-	3.execution/signal/signals.c \
 	3.execution/fds_health.c \
 	3.execution/child_process.c \
 	3.execution/execution.c \
@@ -89,6 +87,7 @@ SRCS := $(addprefix $(SRCS_PATH), \
 	3.execution/path_handler/path_verification.c \
 	3.execution/pipeline.c \
 	3.execution/pipes.c \
+	signal/signals.c \
 	aux/error.c \
 	aux/free.c \
 	aux/terminal_health.c)
@@ -102,7 +101,6 @@ DEPS = $(OBJS:.o=.d)
 
 MKDIR := mkdir -p
 RM := rm -rf
-SLEEP = sleep 0.1
 CC = cc
 AR = ar -rcs
 SHELL := /bin/bash
@@ -134,14 +132,7 @@ define create_dir
 endef
 
 define comp_objs
-	$(eval COUNT=$(shell expr $(COUNT) + 1))
 	$(COMP_OBJ)
-	$(SLEEP)
-	printf "Compiling $(YELLOW)MINISHELL %d%%\r$(RESET) " $$(echo $$(($(COUNT) * 100 / $(words $(SRCS)))));
-	@if [ $(COUNT) -eq $(words $(SRCS)) ]; then \
-		printf "Compiled $(DARK_GREEN)MINISHELL  100%%$(RESET) "; \
-		printf "\n"; \
-	fi
 endef
 
 # **************************************************************************** #

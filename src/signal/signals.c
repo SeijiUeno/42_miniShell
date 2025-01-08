@@ -6,11 +6,11 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 17:05:23 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/06 16:37:02 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/08 20:43:05 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shell.h"
+#include "../includes/shell.h"
 
 volatile sig_atomic_t	g_in_subprocess = 0;
 
