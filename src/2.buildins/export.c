@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 15:22:39 by sueno-te          #+#    #+#             */
-/*   Updated: 2024/12/15 15:22:46 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:24:21 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	buildin_export(char **args, t_ms *minishell)
 		else
 			insert_env_var(args[i], minishell);
 	}
-	util_free_array(minishell->path);
 	minishell->path = get_paths(minishell->envp);
 	return (minishell->status);
 }

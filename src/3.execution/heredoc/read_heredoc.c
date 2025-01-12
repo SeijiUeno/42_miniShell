@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 15:18:02 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/04 19:18:12 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/07 20:04:57 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	setup_heredoc_signals(void)
 static void	reset_signals(void)
 {
 	signal(SIGINT, &signal_handle);
-	g_in_subprocess = 0;
 }
 
 static int	process_line(char *line, const char *delim, int fd)

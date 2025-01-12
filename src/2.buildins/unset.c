@@ -6,7 +6,7 @@
 /*   By: sueno-te <sueno-te@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/22 19:11:01 by sueno-te          #+#    #+#             */
-/*   Updated: 2025/01/03 14:39:29 by sueno-te         ###   ########.fr       */
+/*   Updated: 2025/01/09 21:16:09 by sueno-te         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,24 @@ static int	unset_env(const char *key, t_ms *minishell)
 
 int	unset(const char **keys, t_ms *minishell)
 {
-	int		status_error;
 	char	**key_iter;
 
-	status_error = 0;
 	if (!keys || !keys[1])
 		return (0);
 	key_iter = (char **)(keys + 1);
 	while (*key_iter)
 	{
 		if (var_validate_name(*key_iter))
-		{
 			minishell->status = error(*key_iter, "not a valid identifier", 1);
-		}
-		else if (is_key_in_envp(*key_iter, minishell) == EXIT_SUCCESS)
-		{
-			if (unset_env(*key_iter, minishell) == EXIT_FAILURE)
-				minishell->status = error(*key_iter,
-						"memory allocation failed", 1);
-		}
+		else if (is_key_in_envp(*key_iter, minishell) == EXIT_SUCCESS
+			&& unset_env(*key_iter, minishell) == EXIT_FAILURE)
+			minishell->status = error(*key_iter, "memory allocation failed", 1);
 		key_iter++;
 	}
-	util_free_array(minishell->path);
-	minishell->path = get_paths(minishell->envp);
-	return (status_error);
+	if (minishell->path)
+	{
+		util_free_array(minishell->path);
+		minishell->path = get_paths(minishell->envp);
+	}
+	return (0);
 }

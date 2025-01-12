@@ -51,7 +51,6 @@ DEPS = $(OBJS:.o=.d)
 
 MKDIR := mkdir -p
 RM := rm -rf
-SLEEP = sleep 0.1
 CC = cc
 AR = ar -rcs
 SHELL := /bin/bash
@@ -61,7 +60,7 @@ SHELL := /bin/bash
 # **************************************************************************** #
 
 CFLAGS = -Wall -Wextra -Werror
-DFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+DFLAGS = -Wall -Wextra -Werror -fsanitize=address
 LDLIBS = -ldl -lglfw -pthread
 CPPFLAGS = $(addprefix -I,$(INCS_PATH)) -MMD -MP
 COMP_OBJ = $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
@@ -76,20 +75,11 @@ define create_dir
 endef
 
 define comp_objs
-	$(eval COUNT=$(shell expr $(COUNT) + 1))
 	$(COMP_OBJ)
-	$(SLEEP)
-	printf "Compiling $(YELLOW)GARBAGE COLLECTOR %d%%\r$(RESET) " $$(echo $$(($(COUNT) * 100 / $(words $(SRCS)))))
-	@if [ $(COUNT) -eq $(words $(SRCS)) ]; then \
-		printf "Compiled $(DARK_GREEN)GARBAGE COLLECTOR  100%%$(RESET) "; \
-		printf "\n"; \
-	fi
 endef
 
 define comp_static_lib
 	$(COMP_STATIC_LIB)
-	printf "\n$(DARK_BLUE)$(NAME)$(RESET) is Ready \n"
-	printf "\n"
 endef
 
 # **************************************************************************** #
